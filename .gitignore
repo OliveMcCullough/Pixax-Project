@@ -1,0 +1,14 @@
+# Ignore sent_emails folder
+sent_emails/
+
+# Ignore local_settings.py
+local_settings.py
+
+# Ignore all pycache folders
+__pycache__/
+
+# Ignore database files
+*/*.sqlite3
+
+# Ignore .pyc files
+*.pyc
