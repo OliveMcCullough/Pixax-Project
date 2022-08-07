@@ -1,0 +1,17 @@
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}     
+        <div class="form_element_container">
+            {{ field.label_tag }}
+            <div class="form_input_container"> 
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="help_text_icon"> </div>
+                {% endif %}
+            </div>
+            <div class="help_text"> {{ field.help_text }} </div>
+            <div class="error_text"> {{ field.errors }} </div>
+        </div>
+    {% endfor %}
+    <button action="submit"> Register </button> 
+</form>
