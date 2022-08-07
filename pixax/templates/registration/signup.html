@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="half-column content_column">
+            <div class="core_content">
+                <h1> Welcome to Pixax </h1>
+                <p> Pixax is an application that lets you conveniently store, sort, share, and access photos. We look forward to seeing what you have in store for us. </p>
+                <div class="divider">  </div>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        
+                        <div class="form_element_container">
+                            {{ field.label_tag }}
+                            <div class="form_input_container"> 
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <div class="help_text_icon"> </div>
+                                {% endif %}
+                            </div>
+                            <div class="help_text"> {{ field.help_text }} </div>
+                            <div class="error_text"> {{ field.errors }} </div>
+                        </div>
+                    {% endfor %}
+                    <span class="note"> Please note that registration requests are currently considered on a case by case basis. </span>
+                    <button action="submit"> Register </button> 
+                </form>
+                <div class="divider"> <h2> Or </h2> </div>
+                <a class="button" href="TO DO"> Log In </a> 
+            </div>
+        </div>
+        <div class="half-column slideshow_column">
+            
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,249 @@
+$dark-green: #42706B; /* colour for main borders and text */
+$green: #64B6AC; /* colour for interactive elements and softer borders */
+$red: #AD482B; /* colour for errors and issues */
+$blue: #2B96AD; /* colour for info and highlights */
+
+$font-color: $dark-green;
+$border-color: $dark-green;
+$soft-border-color: $green;
+$error-color: $red;
+$information-color: $blue;
+
+$primary-button-color: $green;
+$primary-button-color-hover: mix($green, $dark-green, $weight: 50%);
+
+$default-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+$nav-bar-gradient: linear-gradient(to right, #93d9be 100px, #afe3cf 100%);
+$subtle-background-white-gradient: linear-gradient(to top, #F4F2FF, #eeeeee); /* for page backgrounds and large sections */
+$dark-background-gradient: linear-gradient(to top, #000000, #222E50); /* for page backgrounds and large sections */
+$fading-dark-green-gradient-to-left: linear-gradient(to right,  $dark-green, rgba(240,240,240,0));
+$fading-dark-green-gradient-to-right: linear-gradient(to left,  $dark-green, rgba(240,240,240,0));
+$fading-green-gradient-to-top: linear-gradient(to top, $green, rgba(240,240,240,0));
+
+$breakpoint-phone: 768px;
+$breakpoint-desktop: 1020px; 
+
+
+html, body {
+    margin: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: $font-color;
+    font-family: Tahoma;
+}
+
+
+
+.navbar{
+    background:$nav-bar-gradient;
+    height: 80px;
+    border-bottom: 1px $soft-border-color solid;
+    box-shadow: $default-box-shadow;
+    z-index: 2;
+    flex: 0 1 auto;
+    position: relative;
+}
+
+.nav_logo_link{
+    display:inline-block;
+    height:100%;
+    margin:auto;
+    border-right: 1px $soft-border-color solid;
+    /*
+    border-width: 0 3px 0;
+    border-style: solid;
+    border-image: $fading-green-gradient-to-top 1;
+    */
+}
+
+.nav_logo{
+    max-width:90%;
+    max-height:90%;
+    margin:5%;
+}
+
+.main{
+    flex: 1 1 auto;
+    display: flex;
+    @media screen and (max-width: $breakpoint-phone){
+        flex-direction: column-reverse;
+    }
+    flex-direction: row;
+    width: 100%;
+    background:$subtle-background-white-gradient;
+    z-index:1;
+}
+
+.half-column{
+    @media screen and (min-width: $breakpoint-desktop){
+        width: 50%;
+    }
+    & + .half-column{
+        @media screen and (max-width: $breakpoint-desktop) and (min-width: $breakpoint-phone){
+            min-width: 40%;
+        }
+    }
+    @media screen and (max-width: $breakpoint-phone){
+        width: 100%;
+    }
+}
+
+
+.core_content{
+    margin: 5%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.form_element_container{
+    width: 300px;
+    display:block;
+    margin: 10px auto;
+    position:relative;
+    text-align:left;
+}
+
+input[type=text], input[type=email], input[type=password]{
+    width: 300px;
+    height: 50px;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    display: block;
+    font-size:18px;
+    height: 50px;
+    box-shadow: $default-box-shadow;
+
+    &:focus{
+        outline: 2px solid $information-color;
+    }
+}
+
+.core_content{
+    text-align:center;
+}
+
+.form_input_container{
+    display: flex;
+    width: 350px;
+    vertical-align: middle;
+}
+
+.help_text_icon{
+    margin: 10px;
+    border-radius: 15px;
+    width: 30px;
+    height:30px;
+    color: white;
+    background-color: $information-color;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    cursor:pointer;
+    font-weight: bold;
+    &::after{
+        content:"?";
+    }
+    content:"?";
+}
+
+
+button, .button{
+    width:300px;
+    height:50px;
+    border: 0px solid $border-color;
+    display: block;
+    font-size:18px;
+    background-color: $primary-button-color;
+    color: white;
+    border-radius: 3px;
+    box-shadow: $default-box-shadow;
+    text-decoration: none;
+    line-height:50px;
+    text-align: center;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 25px;
+    transition: background-color 0.25s ease-in-out;
+
+    .button{
+        margin-bottom: 25px;
+    }
+
+    &:hover{
+        background-color: $primary-button-color-hover;
+    }
+}
+
+.content_column{
+    position: relative;
+}
+
+.slideshow_column{
+    background: linear-gradient(to top, #000000, #222E50);
+    background-image: url("../images/Crow.jpg");
+    background-size: cover;
+    z-index:-1;
+    position:relative;
+    min-height:400px;
+    background-position: center; 
+}
+
+.help_text, .error_text, .note{
+    font-size:13px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+
+    &.help_text{
+        max-height: 0px;
+        &.help_text_open{
+            max-height:250px;
+            transition: max-height 0.5s ease-in-out;
+        }
+    }
+}
+
+.error_text{
+    color: $error-color;
+    
+    ul{
+        list-style-position: none;
+        padding-left: 0px;
+        margin: 0;
+    }
+}
+
+.divider{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px auto;
+
+    &:before, &::after{
+        content: '';
+        display: block;
+        height: 3px;
+        min-width: 35%;
+    }
+
+    &:before{
+        background: $fading-dark-green-gradient-to-right;
+    }
+
+    &:after{
+        background: $fading-dark-green-gradient-to-left;
+    }
+
+    & > *{
+        margin: auto 2.5%;
+        max-width:25%;
+        text-align:center;
+    }
+}
