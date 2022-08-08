@@ -5,6 +5,7 @@
 {% block core_content %}
     <h1> Log In </h1>
     {% include "form_renderer.html" with submit_message="Log In" %}
+    <a class="button secondary" href="{% url "password_reset" %}"> I forgot my password </a> 
     <div class="divider"> <h2> Or </h2> </div>
     <p> If you don't have an account yet: </p>
     <a class="button" href="{% url "users:register" %}"> Sign Up </a> 

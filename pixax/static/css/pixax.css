@@ -310,6 +310,9 @@ button, .button {
   margin-top: 25px;
   transition: background-color 0.25s ease-in-out;
 }
+button.secondary, .button.secondary {
+  background-color: #93d9be;
+}
 button .button, .button .button {
   margin-bottom: 25px;
 }

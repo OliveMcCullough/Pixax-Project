@@ -1,5 +1,6 @@
 $dark-green: #42706B; /* colour for main borders and text */
 $green: #64B6AC; /* colour for interactive elements and softer borders */
+$light-green: #93d9be;
 $red: #AD482B; /* colour for errors and issues */
 $blue: #2B96AD; /* colour for info and highlights */
 
@@ -11,6 +12,7 @@ $information-color: $blue;
 
 $primary-button-color: $green;
 $primary-button-color-hover: mix($green, $dark-green, $weight: 50%);
+$secondary-button-color: $light-green;
 
 $default-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
@@ -302,6 +304,10 @@ button, .button{
     margin: auto;
     margin-top: 25px;
     transition: background-color 0.25s ease-in-out;
+
+    &.secondary{
+        background-color: $secondary-button-color;
+    }
 
     .button{
         margin-bottom: 25px;
