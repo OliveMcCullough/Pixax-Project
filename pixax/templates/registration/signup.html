@@ -8,5 +8,5 @@
     <div class="divider">  </div>
     {% include "form_renderer.html" with submit_message="Register" note="Please note that registration requests are currently considered on a case by case basis." %}
     <div class="divider"> <h2> Or </h2> </div>
-    <a class="button" href="TO DO"> Log In </a> 
+    <a class="button" href={% url "users:login" %}> Log In </a> 
 {% endblock %}

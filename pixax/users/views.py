@@ -1,5 +1,6 @@
+from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 
 from .forms import UserRegistrationForm
@@ -15,3 +16,16 @@ class RegisterView(CreateView):
             return super().dispatch(*args, **kwargs)
         else:
             return super().dispatch(*args, **kwargs)
+
+
+class LoginView(auth_views.LoginView):
+    template_name = 'registration/login.html'
+
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super().dispatch(*args, **kwargs)
+        else:
+            return super().dispatch(*args, **kwargs)
+
+    def get_success_url(self, *args, **kwargs):
+        return super().get_success_url(*args, **kwargs)
