@@ -1,22 +1,13 @@
-{% extends "base.html" %}
+{% extends "slideshow_presentation_base.html" %}
 
 {% block title %} Register {% endblock %}
 
-{% block content %}
-    <div class="main">
-        <div class="half-column content_column">
-            <div class="core_content">
-                <h1> Welcome to Pixax </h1>
-                <p> Pixax is an application that lets you conveniently store, sort, share, and access photos. We look forward to seeing what you have in store for us. </p>
-                <div class="divider">  </div>
-                {% include "form_renderer.html" %}
-                <span class="note"> Please note that registration requests are currently considered on a case by case basis. </span>
-                <div class="divider"> <h2> Or </h2> </div>
-                <a class="button" href="TO DO"> Log In </a> 
-            </div>
-        </div>
-        <div class="half-column slideshow_column">
-            
-        </div>
-    </div>
+{% block core_content %}
+    <h1> Welcome to Pixax </h1>
+    <p> Pixax is an application that lets you conveniently store, sort, share, and access photos. We look forward to seeing what you have in store for us. </p>
+    <div class="divider">  </div>
+    {% include "form_renderer.html" %}
+    <span class="note"> Please note that registration requests are currently considered on a case by case basis. </span>
+    <div class="divider"> <h2> Or </h2> </div>
+    <a class="button" href="TO DO"> Log In </a> 
 {% endblock %}
