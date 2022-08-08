@@ -26,7 +26,11 @@ $breakpoint-desktop: 1020px;
 
 $default-font-size:18px;
 $small-font-size:13px;
+
 $nav-elements-font-size:22px;
+$nav-elements-reduced-font-size:16px;
+
+$navbar-height:80px;
 
 @keyframes updown {
     0% {
@@ -83,7 +87,7 @@ html, body {
 
 .navbar{
     background:$nav-bar-gradient;
-    min-height: 80px;
+    min-height: $navbar-height;
     border-bottom: 1px $soft-border-color solid;
     box-shadow: $default-box-shadow;
     z-index: 2;
@@ -92,14 +96,14 @@ html, body {
     display: inline-block;
     a.nav_logo_link{
         float:left;
-        height:80px;
+        height:$navbar-height;
         margin:auto;
         border-right: 1px $soft-border-color solid;
         padding:0;
         img.nav_logo{
             display:inline-block;
-            max-height:72px;
-            margin:4px;
+            max-height:$navbar-height*0.9;
+            margin:$navbar-height*0.05;
         }
     }
     ul{
@@ -110,31 +114,41 @@ html, body {
         margin:0px;
         &.icon_list{
             border-left: 1px $soft-border-color solid;
-            height:60px;
-            padding:20px 0px 0 0;
+            height:$navbar-height*0.75;
+            padding:$navbar-height*0.25 0px 0 0;
             li{
                 padding:0px;
                 display: inline-block;
-                height:40px;
+                height:$navbar-height*0.5;
                 width:40px;
-                margin:0 13px;
+                margin:0 $navbar-height/16*3;
                 cursor:pointer;
                 &.profile_icon:hover img{
                     animation: updown 1s ease infinite;
                 }
-                &.menu_icon:hover img{
-                    animation: squish 1s ease infinite;
+                &.menu_icon{
+                    display:inline-block;
+                    @media screen and (min-width: ($breakpoint-phone+1)){
+                        display:none
+                    }
+                    &:hover img{
+                        animation: squish 1s ease infinite;
+                    }
                 }
                 img{
-                    max-height:40px;
+                    max-height:min(40px, 100%);
                     pointer-events: none;
                 }
             }
         }
         &.item_list{
-            height:60px;
+            display:none;
+            @media screen and (min-width: ($breakpoint-phone+1)){
+                display:inline-block
+            }
+            height:$navbar-height*0.75;
             background:linear-gradient(to right, rgba($green, 0) 0%,rgba($green, 0.3) 20%, rgba($green, 0.3) 80%, rgba($green, 0) 100%);
-            margin:20px 20px 0 0;
+            margin:$navbar-height*0.25 20px 0 0;
             padding:0 20px 0 20px;
             li{
                 margin:0;
@@ -143,6 +157,10 @@ html, body {
                 height:100%;
                 width: 135px;
                 margin:0 15px;
+                @media screen and (max-width: $breakpoint-desktop){
+                    width: 97px;
+                    margin:0 10px;
+                }
                 text-align: center;
                 position:relative;
                 transition: background-color 0.25s ease-in-out;
@@ -155,11 +173,14 @@ html, body {
                     text-decoration: none;
                     color:white;
                     font-size: $nav-elements-font-size;
+                    @media screen and (max-width: $breakpoint-desktop){
+                        font-size: $nav-elements-reduced-font-size;
+                    }
                     width:100%;
                     height:100%;
                     span{
                         position:absolute;
-                        bottom: 15px;
+                        bottom: $navbar-height/15*3;
                         display: block;
                         text-align: center;
                         width: 100%;
@@ -173,10 +194,10 @@ html, body {
 .main{
     flex: 1 1 auto;
     display: flex;
-    @media screen and (max-width: $breakpoint-phone){
-        flex-direction: column-reverse;
+    @media screen and (min-width: ($breakpoint-phone+1)){
+        flex-direction: row;
     }
-    flex-direction: row;
+    flex-direction: column-reverse;
     width: 100%;
     background:$subtle-background-white-gradient;
     z-index:1;
@@ -187,7 +208,7 @@ html, body {
         width: 50%;
     }
     & + .half-column{
-        @media screen and (max-width: $breakpoint-desktop) and (min-width: $breakpoint-phone){
+        @media screen and (max-width: $breakpoint-desktop) and (min-width: ($breakpoint-phone+1)){
             min-width: 40%;
         }
     }
