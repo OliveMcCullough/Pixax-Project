@@ -6,8 +6,7 @@
     <h1> Welcome to Pixax </h1>
     <p> Pixax is an application that lets you conveniently store, sort, share, and access photos. We look forward to seeing what you have in store for us. </p>
     <div class="divider">  </div>
-    {% include "form_renderer.html" %}
-    <span class="note"> Please note that registration requests are currently considered on a case by case basis. </span>
+    {% include "form_renderer.html" with submit_message="Register" note="Please note that registration requests are currently considered on a case by case basis." %}
     <div class="divider"> <h2> Or </h2> </div>
     <a class="button" href="TO DO"> Log In </a> 
 {% endblock %}

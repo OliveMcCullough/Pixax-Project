@@ -13,5 +13,8 @@
             <div class="error_text"> {{ field.errors }} </div>
         </div>
     {% endfor %}
-    <button action="submit"> Register </button> 
+    {% if note %}
+        <span class="note"> {{ note }} </span>
+    {% endif %}
+    <button action="submit"> {{ submit_message }} </button> 
 </form>

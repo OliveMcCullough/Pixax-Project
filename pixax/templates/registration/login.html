@@ -1,0 +1,10 @@
+{% extends "slideshow_presentation_base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block core_content %}
+    <h1> Log In </h1>
+    {% include "form_renderer.html" with submit_message="Log In" %}
+    <div class="divider"> <h2> Or </h2> </div>
+    <a class="button" href="TO DO"> Sign Up </a> 
+{% endblock %}
