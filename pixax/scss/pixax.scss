@@ -144,24 +144,41 @@ html, body {
             }
         }
         &.item_list{
-            display:none;
-            @media screen and (min-width: ($breakpoint-phone+1)){
-                display:inline-block
+            @media screen and (max-width: ($breakpoint-phone)){
+                position:absolute;
+                top:100%;
+                right:0px;
+                height:auto;
+                max-height:0px;
+                margin:0;
+                padding:0;
+                background:$nav-bar-gradient;
+                overflow:hidden;
+                transition: max-height 0.5s linear;
+            }
+            &.item_list_open{
+                @media screen and (max-width: ($breakpoint-phone)){
+                    max-height:400px;
+                }
             }
             height:$navbar-height*0.75;
             background:linear-gradient(to right, rgba($green, 0) 0%,rgba($green, 0.3) 20%, rgba($green, 0.3) 80%, rgba($green, 0) 100%);
             margin:$navbar-height*0.25 20px 0 0;
             padding:0 20px 0 20px;
             li{
-                margin:0;
                 padding:0px;
                 display: inline-block;
-                height:100%;
+                height:$navbar-height*0.75;
                 width: 135px;
                 margin:0 15px;
-                @media screen and (max-width: $breakpoint-desktop){
+                @media screen and (max-width: $breakpoint-desktop) and (min-width: ($breakpoint-phone+1)){
                     width: 97px;
                     margin:0 10px;
+                }
+                @media screen and (max-width: $breakpoint-phone){
+                    display: block;
+                    margin:0;
+                    width: 300px;
                 }
                 text-align: center;
                 position:relative;
@@ -206,7 +223,8 @@ html, body {
 }
 
 .half-column{
-    @media screen and (min-width: $breakpoint-desktop){
+    flex-grow: 1;
+    @media screen and (min-width: ($breakpoint-desktop)){
         width: 50%;
     }
     & + .half-column{
