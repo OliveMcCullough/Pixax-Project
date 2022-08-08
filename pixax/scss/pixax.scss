@@ -24,6 +24,53 @@ $fading-green-gradient-to-top: linear-gradient(to top, $green, rgba(240,240,240,
 $breakpoint-phone: 768px;
 $breakpoint-desktop: 1020px; 
 
+$default-font-size:18px;
+$small-font-size:13px;
+$nav-elements-font-size:22px;
+
+@keyframes updown {
+    0% {
+        transform: scale(1,1) translateY(0%);
+    }
+
+    10% {
+        transform: scale(1.1,.8) translateY(-15%);
+    }
+
+    30% {
+        transform: scale(.8,1.1) translateY(-15%);
+    }
+
+    50% {
+        transform: scale(1,1) translateY(-15%);
+    }
+
+    100% {
+        transform: scale(1,1) translateY(0%);
+    }
+}
+
+@keyframes squish {
+    0% {
+        transform: scale(1,1);
+    }
+
+    10% {
+        transform: scale(1.1,.8);
+    }
+
+    30% {
+        transform: scale(.8,1.1);
+    }
+
+    50% {
+        transform: scale(1,1);
+    }
+
+    100% {
+        transform: scale(1,1);
+    }
+}
 
 html, body {
     margin: 0px;
@@ -34,29 +81,93 @@ html, body {
     font-family: Tahoma;
 }
 
-
-
 .navbar{
     background:$nav-bar-gradient;
-    height: 80px;
+    min-height: 80px;
     border-bottom: 1px $soft-border-color solid;
     box-shadow: $default-box-shadow;
     z-index: 2;
     flex: 0 1 auto;
     position: relative;
-}
-
-.nav_logo_link{
-    display:inline-block;
-    height:100%;
-    margin:auto;
-    border-right: 1px $soft-border-color solid;
-}
-
-.nav_logo{
-    max-width:90%;
-    max-height:90%;
-    margin:5%;
+    display: inline-block;
+    a.nav_logo_link{
+        float:left;
+        height:80px;
+        margin:auto;
+        border-right: 1px $soft-border-color solid;
+        padding:0;
+        img.nav_logo{
+            display:inline-block;
+            max-height:72px;
+            margin:4px;
+        }
+    }
+    ul{
+        list-style-type: none;
+        vertical-align: top;
+        float:right;
+        padding:0px;
+        margin:0px;
+        &.icon_list{
+            border-left: 1px $soft-border-color solid;
+            height:60px;
+            padding:20px 0px 0 0;
+            li{
+                padding:0px;
+                display: inline-block;
+                height:40px;
+                width:40px;
+                margin:0 13px;
+                cursor:pointer;
+                &.profile_icon:hover img{
+                    animation: updown 1s ease infinite;
+                }
+                &.menu_icon:hover img{
+                    animation: squish 1s ease infinite;
+                }
+                img{
+                    max-height:40px;
+                    pointer-events: none;
+                }
+            }
+        }
+        &.item_list{
+            height:60px;
+            background:linear-gradient(to right, rgba($green, 0) 0%,rgba($green, 0.3) 20%, rgba($green, 0.3) 80%, rgba($green, 0) 100%);
+            margin:20px 20px 0 0;
+            padding:0 20px 0 20px;
+            li{
+                margin:0;
+                padding:0px;
+                display: inline-block;
+                height:100%;
+                width: 135px;
+                margin:0 15px;
+                text-align: center;
+                position:relative;
+                transition: background-color 0.25s ease-in-out;
+                background-color:rgba($green, 0);
+                &:hover{
+                    background-color:$green;
+                }
+                a{
+                    display:inline-block;
+                    text-decoration: none;
+                    color:white;
+                    font-size: $nav-elements-font-size;
+                    width:100%;
+                    height:100%;
+                    span{
+                        position:absolute;
+                        bottom: 15px;
+                        display: block;
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .main{
@@ -109,7 +220,7 @@ input[type=text], input[type=email], input[type=password]{
     border: 1px solid $border-color;
     border-radius: 3px;
     display: block;
-    font-size:18px;
+    font-size: $default-font-size;
     height: 50px;
     box-shadow: $default-box-shadow;
 
@@ -154,7 +265,7 @@ button, .button{
     height:50px;
     border: 0px solid $border-color;
     display: block;
-    font-size:18px;
+    font-size: $default-font-size;
     background-color: $primary-button-color;
     color: white;
     border-radius: 3px;
@@ -191,7 +302,7 @@ button, .button{
 }
 
 .help_text, .error_text, .note{
-    font-size:13px;
+    font-size:$small-font-size;
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
 
