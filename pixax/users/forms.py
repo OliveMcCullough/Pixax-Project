@@ -8,7 +8,7 @@ from .models import User
 class AdminUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ("username", "email", "application_accepted")
 
 
 class AdminUserChangeForm(UserChangeForm):
