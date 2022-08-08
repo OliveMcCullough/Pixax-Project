@@ -1,7 +1,7 @@
 <form method="post">
     {% csrf_token %}
     {% for field in form %}     
-        <div class="form_element_container">
+        <div class="form_element_container{% if field.errors %} field_has_error{%endif%}">
             {{ field.label_tag }}
             <div class="form_input_container"> 
                 {{ field }}

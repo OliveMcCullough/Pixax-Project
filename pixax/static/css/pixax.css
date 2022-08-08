@@ -244,6 +244,10 @@ form {
   text-align: left;
 }
 
+.field_has_error .form_input_container input {
+  border: 1px solid #AD482B;
+}
+
 input[type=text], input[type=email], input[type=password] {
   width: 300px;
   height: 50px;
@@ -332,15 +336,21 @@ button:hover, .button:hover {
   overflow: hidden;
   transition: max-height 0.5s ease-in-out;
 }
-.help_text.help_text, .error_text.help_text, .note.help_text {
+
+.help_text {
   max-height: 0px;
 }
-.help_text.help_text.help_text_open, .error_text.help_text.help_text_open, .note.help_text.help_text_open {
+.help_text.help_text_open {
   max-height: 250px;
   transition: max-height 0.5s ease-in-out;
 }
 
+.field_has_error .error_text {
+  display: block;
+}
+
 .error_text {
+  display: none;
   color: #AD482B;
 }
 .error_text ul {

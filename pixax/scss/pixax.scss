@@ -121,7 +121,7 @@ html, body {
                 display: inline-block;
                 height:$navbar-height*0.5;
                 width:40px;
-                margin:0 $navbar-height/16*3;
+                margin:0 $navbar-height*0.1875;
                 cursor:pointer;
                 &.profile_icon:hover img{
                     animation: updown 1s ease infinite;
@@ -180,7 +180,7 @@ html, body {
                     height:100%;
                     span{
                         position:absolute;
-                        bottom: $navbar-height/15*3;
+                        bottom: $navbar-height*0.2;
                         display: block;
                         text-align: center;
                         width: 100%;
@@ -233,6 +233,10 @@ form{
     margin: 10px auto;
     position:relative;
     text-align:left;
+}
+
+.field_has_error .form_input_container input{
+    border: 1px solid $error-color;
 }
 
 input[type=text], input[type=email], input[type=password]{
@@ -326,17 +330,22 @@ button, .button{
     font-size:$small-font-size;
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
+}
 
-    &.help_text{
-        max-height: 0px;
-        &.help_text_open{
-            max-height:250px;
-            transition: max-height 0.5s ease-in-out;
-        }
+.help_text{
+    max-height: 0px;
+    &.help_text_open{
+        max-height:250px;
+        transition: max-height 0.5s ease-in-out;
     }
 }
 
+.field_has_error .error_text{
+    display: block;
+}
+
 .error_text{
+    display: none;
     color: $error-color;
     
     ul{
