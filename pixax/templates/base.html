@@ -10,8 +10,26 @@
     <title> Pixax - {% block title %}{% endblock %}</title>
   </head>
 <body>
-    <nav class="navbar"><a href="TO DO" class="nav_logo_link"><img class="nav_logo" src="{% static 'images/logo.png' %}" alt="Pixax Logo"> </a>
-      <ul class="icon_list">{%if user.is_authenticated %}<li class="profile_icon"><img src="{%static "images/profile.png"%}" alt="Profile icon"/> </li>{%endif%}<li class="menu_icon"><img src="{%static "images/menu.png"%}" alt="Menu"/></li></ul>
-      <ul class="item_list"><li> <a href="TO DO"><span>Profile</span></a></li><li><a href="TO DO"><span>My Albums</span></a></li><li><a href="TO DO"><span>More</span></a></li><li><a href="TO DO"><span>Something</span></a></li></ul></nav > 
-    {% block content %} {% endblock %}
+  <div class="navbar-wrapper">
+    <nav class="navbar"><a href="TO DO" class="nav_logo_link"><img class="nav_logo" src="{% static 'images/logo.png' %}" alt="Pixax Logo"></a>
+      <ul class="icon_list">
+        {%if user.is_authenticated %}
+        <li class="profile_icon"><img src="{%static "images/profile.png"%}" alt="Profile icon"/> </li>
+        {%endif%}
+        <li class="menu_icon"><img src="{%static "images/menu.png"%}" alt="Menu"/></li>
+      </ul>
+      {%if user.is_authenticated %}
+      <ul class="profile_list">
+        <li> <a href="{% url "logout" %}"><span>Logout</span></a></li> 
+      </ul>
+      {%endif%}
+      <ul class="item_list">
+        <li> <a href="TO DO"><span>Profile</span></a></li>
+        <li><a href="TO DO"><span>My Albums</span></a></li>
+        <li><a href="TO DO"><span>More</span></a></li>
+        <li><a href="TO DO"><span>Something</span></a></li>
+      </ul>
+    </nav > 
+  </div>
+  {% block content %} {% endblock %}
 </body>

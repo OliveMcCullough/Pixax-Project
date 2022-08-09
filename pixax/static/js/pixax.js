@@ -7,41 +7,94 @@ function init() {
     setup_help_icons()
     setup_errored_inputs()
     setup_phone_toggle_menu()
+    setup_profile_toggle_menu()
+}
+
+/* Toggling the profile menu */
+
+function setup_profile_toggle_menu() {
+    let menu_icon = document.querySelector(".profile_icon")
+    menu_icon.addEventListener("click", toggle_profile_menu)
+    let profile_list_links = document.querySelectorAll("ul.profile_list li a");
+    for (let i=0; i < profile_list_links.length; i++) {
+        profile_list_links[i].addEventListener("focus", open_profile_menu)
+        profile_list_links[i].addEventListener("blur", close_profile_menu)
+    }
+}
+
+function toggle_profile_menu(e){
+    let profile_list = document.querySelector(".profile_list")
+    toggle_menu(profile_list)
+}
+
+function open_profile_menu(e){
+    let link = e.target
+    let menu = link.closest("ul")
+    menu.classList.add("open")
+}
+
+function close_profile_menu(e){
+    let link = e.target
+    let menu = link.closest("ul")
+    menu.classList.remove("open")
 }
 
 /* Toggling the phone menu */
 
 function setup_phone_toggle_menu() {
     window.addEventListener('resize', close_phone_toggle_menu_if_not_phone)
-    let menu_icon = document.querySelector(".menu_icon");
-    menu_icon.addEventListener('click', toggle_phone_menu);
+    let menu_icon = document.querySelector(".menu_icon")
+    menu_icon.addEventListener('click', toggle_phone_menu)
     let item_list_links = document.querySelectorAll("ul.item_list li a");
     for (let i=0; i < item_list_links.length; i++) {
-        item_list_links[i].addEventListener("focus", open_toggle_phone_menu_if_phone)
+        item_list_links[i].addEventListener("focus", open_phone_menu_if_phone)
+        item_list_links[i].addEventListener("blur", close_phone_menu)
     }
 }
 
-function open_toggle_phone_menu_if_phone(e) {
+function open_phone_menu_if_phone(e) {
+    if (window.innerWidth <= breakpoint_phone) {
+        let link = e.target
+        let menu = link.closest("ul")
+        menu.classList.add("open")
+    }
+}
+
+function close_phone_menu(e) {
     let link = e.target
     let menu = link.closest("ul")
-    menu.classList.add("open")
+    menu.classList.remove("open")
 }
 
 function toggle_phone_menu() {
     let item_list = document.querySelector(".item_list");
-    if (item_list.classList.contains("open")) {
-        item_list.classList.remove("open")
-    }
-    else {
-        item_list.classList.add("open")
-    }
+    toggle_menu(item_list)
 }
 
 function close_phone_toggle_menu_if_not_phone() {
-    open_item_list = document.querySelector(".item_list_open");
+    open_item_list = document.querySelector(".item_list.open");
     
     if (!!open_item_list && window.innerWidth > breakpoint_phone){
-        open_item_list.classList.remove("item_list_open");
+        open_item_list.classList.remove("open");
+    }
+}
+
+/* Menu functions */
+
+function toggle_menu(menu) {
+    if (menu.classList.contains("open")) {
+        menu.classList.remove("open")
+    }
+    else {
+        close_open_nav_bar_menus();
+        menu.classList.add("open")
+    }
+}
+
+function close_open_nav_bar_menus() {
+    let open_menus = document.querySelectorAll(".open")
+    for(let i=0; i<open_menus.length; i++){
+        open_menus[i].classList.remove("open");
     }
 }
 
