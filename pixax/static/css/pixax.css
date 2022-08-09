@@ -157,14 +157,14 @@ html, body {
     height: auto;
     max-height: 0px;
     margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, #93d9be 100px, #afe3cf 100%);
+    padding: 0px 1px 1px 1px;
+    background: #64B6AC;
     overflow: hidden;
     transition: max-height 0.5s linear;
   }
 }
 @media screen and (max-width: 768px) {
-  .navbar ul.item_list.item_list_open {
+  .navbar ul.item_list.open {
     max-height: 400px;
   }
 }
@@ -190,6 +190,10 @@ html, body {
     display: block;
     margin: 0;
     width: 300px;
+    background: linear-gradient(to right, #93d9be 100px, #afe3cf 100%);
+  }
+  .navbar ul.item_list li:hover {
+    background: #64B6AC;
   }
 }
 .navbar ul.item_list li:hover {
@@ -214,6 +218,10 @@ html, body {
   display: block;
   text-align: center;
   width: 100%;
+}
+
+input:focus-visible, a:focus-visible {
+  outline: 2px solid #2B96AD;
 }
 
 .main {

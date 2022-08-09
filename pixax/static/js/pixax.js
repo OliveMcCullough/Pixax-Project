@@ -12,22 +12,32 @@ function init() {
 /* Toggling the phone menu */
 
 function setup_phone_toggle_menu() {
-    window.addEventListener('resize', closePhoneToggleMenuIfNotPhone)
+    window.addEventListener('resize', close_phone_toggle_menu_if_not_phone)
     let menu_icon = document.querySelector(".menu_icon");
-    menu_icon.addEventListener('click', togglePhoneMenu);
+    menu_icon.addEventListener('click', toggle_phone_menu);
+    let item_list_links = document.querySelectorAll("ul.item_list li a");
+    for (let i=0; i < item_list_links.length; i++) {
+        item_list_links[i].addEventListener("focus", open_toggle_phone_menu_if_phone)
+    }
 }
 
-function togglePhoneMenu() {
+function open_toggle_phone_menu_if_phone(e) {
+    let link = e.target
+    let menu = link.closest("ul")
+    menu.classList.add("open")
+}
+
+function toggle_phone_menu() {
     let item_list = document.querySelector(".item_list");
-    if (item_list.classList.contains("item_list_open")) {
-        item_list.classList.remove("item_list_open")
+    if (item_list.classList.contains("open")) {
+        item_list.classList.remove("open")
     }
     else {
-        item_list.classList.add("item_list_open")
+        item_list.classList.add("open")
     }
 }
 
-function closePhoneToggleMenuIfNotPhone() {
+function close_phone_toggle_menu_if_not_phone() {
     open_item_list = document.querySelector(".item_list_open");
     
     if (!!open_item_list && window.innerWidth > breakpoint_phone){

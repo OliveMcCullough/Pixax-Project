@@ -151,12 +151,12 @@ html, body {
                 height:auto;
                 max-height:0px;
                 margin:0;
-                padding:0;
-                background:$nav-bar-gradient;
+                padding:0px 1px 1px 1px;
+                background:$soft-border-color;
                 overflow:hidden;
                 transition: max-height 0.5s linear;
             }
-            &.item_list_open{
+            &.open{
                 @media screen and (max-width: ($breakpoint-phone)){
                     max-height:400px;
                 }
@@ -179,6 +179,10 @@ html, body {
                     display: block;
                     margin:0;
                     width: 300px;
+                    background:$nav-bar-gradient;
+                    &:hover{
+                        background:$green;
+                    }
                 }
                 text-align: center;
                 position:relative;
@@ -208,6 +212,10 @@ html, body {
             }
         }
     }
+}
+
+input:focus-visible, a:focus-visible{
+    outline: 2px solid $blue;
 }
 
 .main{
