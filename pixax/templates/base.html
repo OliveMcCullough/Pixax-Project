@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{% static 'css/pixax.css' %}" />
     <script type="text/javascript" src="{% static 'js/pixax.js' %}"></script> 
+    <script type="text/javascript">
+      {%if slideshow_timer%} const seconds_between_slides = {{slideshow_timer}} {%endif%}
+    </script>
     <title> Pixax - {% block title %}{% endblock %}</title>
   </head>
 <body>

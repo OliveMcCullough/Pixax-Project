@@ -1,8 +1,6 @@
 const breakpoint_phone = 768
 const breakpoint_desktop = 1020
 
-const time_between_slides = 4000
-
 window.addEventListener("load", init)
 
 function init() {
@@ -23,12 +21,13 @@ function setup_slideshow() {
 }
 
 function set_slide_timeout(){
-    setTimeout(change_slide, time_between_slides);
+    setTimeout(change_slide, seconds_between_slides*1000);
 }
 
 function change_slide(){
     previous_slide = document.querySelector(".slideshow_presentation .slide.previous")
-    previous_slide.classList.remove("previous");
+    if (!!previous_slide)
+        previous_slide.classList.remove("previous");
 
     current_slide = document.querySelector(".slideshow_presentation .slide.current")
     current_slide.classList.add("previous")

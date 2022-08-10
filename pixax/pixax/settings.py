@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main.apps.MainConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -57,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.services.intro_slideshow_context_processor',
             ],
         },
     },
@@ -131,6 +133,10 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 AUTH_USER_MODEL = 'users.User'
+
+MEDIA_URL = '/media/' 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 try:
     from .local_settings import *
