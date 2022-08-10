@@ -445,6 +445,39 @@ button, .button{
             z-index:0;
         }
 
+        &.top-left img{
+            object-position: left top;
+        }
+
+        &.top img{
+            object-position: top;
+        }
+
+        &.top-right img{
+            object-position: right top;
+        }
+
+        &.center-left{
+            object-position: left;
+        }
+
+        &.center-right{
+            object-position: right;
+        }
+
+        &.bottom-left{
+            object-position: bottom left;
+        }
+
+        &.bottom{
+            object-position: bottom;
+        }
+
+        &.bottom-right{
+            object-position: bottom right;
+        }
+
+
         img{
             object-fit:cover;
             width:100%;

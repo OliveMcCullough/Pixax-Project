@@ -17,17 +17,18 @@ class Slide(models.Model):
     """
     A slide used in a slideshow
     """
-    CHOICES = (
-        ('top-left', 'Top-left'),
-        ('top','Top'),
-        ('top-right','Top-Right'),
-        ('center-left', 'Center'),
-        ('center', 'Center'),
-        ('center-right', 'Center-Right'),
-        ('bottom-left', 'Bottom-Left'),
-        ('bottom', 'Bottom'),
-        ('bottom-right', 'Bottom-Right')
-    )
+
+    class FocalPointChoice(models.TextChoices):
+        TOP_LEFT = 'top-left', ('Top-left')
+        TOP = 'top', ('Top')
+        TOP_RIGHT = 'top-right', ('Top-right')
+        CENTER_LEFT = 'center-left', ('Center-left')
+        CENTER = 'center', ('Center'),
+        CENTER_RIGTH = 'center-right', ('Center-right'),
+        BOTTOM_LEFT = 'bottom-left', ('Bottom-left'),
+        BOTTOM = 'bottom', ('Bottom'),
+        BOTTOM_RIGHT = 'bottom-right', ('Bottom-right')
+
     image = models.ImageField(upload_to='slideshow/')
     slideshow = models.ForeignKey(Slideshow, on_delete=models.CASCADE)
-    focal_point = models.CharField(max_length=20, choices = CHOICES, default='center')
+    focal_point = models.CharField(max_length=20, choices = FocalPointChoice.choices, default='center')

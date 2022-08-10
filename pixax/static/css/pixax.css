@@ -452,6 +452,38 @@ button:hover, .button:hover {
   opacity: 1;
   z-index: 0;
 }
+.slideshow_column .slide.top-left img {
+  -o-object-position: left top;
+     object-position: left top;
+}
+.slideshow_column .slide.top img {
+  -o-object-position: top;
+     object-position: top;
+}
+.slideshow_column .slide.top-right img {
+  -o-object-position: right top;
+     object-position: right top;
+}
+.slideshow_column .slide.center-left {
+  -o-object-position: left;
+     object-position: left;
+}
+.slideshow_column .slide.center-right {
+  -o-object-position: right;
+     object-position: right;
+}
+.slideshow_column .slide.bottom-left {
+  -o-object-position: bottom left;
+     object-position: bottom left;
+}
+.slideshow_column .slide.bottom {
+  -o-object-position: bottom;
+     object-position: bottom;
+}
+.slideshow_column .slide.bottom-right {
+  -o-object-position: bottom right;
+     object-position: bottom right;
+}
 .slideshow_column .slide img {
   -o-object-fit: cover;
      object-fit: cover;

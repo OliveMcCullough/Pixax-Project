@@ -1,4 +1,3 @@
-from this import d
 from .models import Slideshow
 import datetime
 
