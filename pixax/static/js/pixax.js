@@ -64,6 +64,7 @@ function toggle_profile_menu(e){
 }
 
 function open_profile_menu(e){
+    close_open_nav_bar_menus()
     let link = e.target
     let menu = link.closest("ul")
     menu.classList.add("open")
@@ -89,6 +90,7 @@ function setup_phone_toggle_menu() {
 }
 
 function open_phone_menu_if_phone(e) {
+    close_open_nav_bar_menus()
     if (window.innerWidth <= breakpoint_phone) {
         let link = e.target
         let menu = link.closest("ul")
