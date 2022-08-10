@@ -1,5 +1,7 @@
-breakpoint_phone = 768
-breakpoint_desktop = 1020
+const breakpoint_phone = 768
+const breakpoint_desktop = 1020
+
+const time_between_slides = 4000
 
 window.addEventListener("load", init)
 
@@ -8,6 +10,41 @@ function init() {
     setup_errored_inputs()
     setup_phone_toggle_menu()
     setup_profile_toggle_menu()
+    setup_slideshow()
+}
+
+/* Setup slideshow */
+
+function setup_slideshow() {
+    let slideshow = document.querySelector(".slideshow_presentation")
+    if(!!slideshow){
+        set_slide_timeout()
+    }
+}
+
+function set_slide_timeout(){
+    setTimeout(change_slide, time_between_slides);
+}
+
+function change_slide(){
+    previous_slide = document.querySelector(".slideshow_presentation .slide.previous")
+    previous_slide.classList.remove("previous");
+
+    current_slide = document.querySelector(".slideshow_presentation .slide.current")
+    current_slide.classList.add("previous")
+    current_slide.classList.remove("current")
+
+    slides = document.querySelectorAll(".slideshow_presentation .slide")
+    amount_slides = slides.length;
+    current_slide_number = Array.prototype.indexOf.call(slides, current_slide)
+    new_slide_number = current_slide_number+1
+    if(new_slide_number == amount_slides){
+        new_slide_number = 0;
+    }
+    new_slide = slides[new_slide_number];
+    new_slide.classList.add("current");
+
+    set_slide_timeout()
 }
 
 /* Toggling the profile menu */

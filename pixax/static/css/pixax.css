@@ -422,17 +422,46 @@ button:hover, .button:hover {
 .content_column {
   position: relative;
   z-index: 1;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
 }
 
 .slideshow_column {
   background: linear-gradient(to top, #000000, #222E50);
-  background-image: url("../images/Crow.jpg");
-  background-size: cover;
   position: relative;
   min-height: 400px;
-  background-position: center;
+  max-height: 99vh;
   z-index: -1;
+}
+.slideshow_column .slide {
+  position: absolute;
+  /* background-image: url("../images/Crow.jpg");
+  background-size: cover;
+  background-position: center; */
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  overflow-y: hidden;
+  z-index: -2;
+  transition: opacity 0.6s;
+}
+.slideshow_column .slide.previous {
+  opacity: 1;
+  z-index: -1;
+}
+.slideshow_column .slide.current {
+  opacity: 1;
+  z-index: 0;
+}
+.slideshow_column .slide img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
 }
 
 .help_text, .error_text, .note {

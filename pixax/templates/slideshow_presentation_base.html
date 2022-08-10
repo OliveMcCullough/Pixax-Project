@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
     <div class="main slideshow_presentation">
@@ -8,7 +9,21 @@
             </div>
         </div>
         <div class="half-column slideshow_column">
-            
+            <div class="slide previous"> <img src="{% static '/images/slide1.jpg' %}"/> </div>
+            <div class="slide current"> <img src="{% static '/images/slide2.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide3.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide4.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide5.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide6.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide7.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide8.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide9.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide10.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide11.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide12.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide13.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide14.jpg' %}"/> </div>
+            <div class="slide"> <img src="{% static '/images/slide15.jpg' %}"/> </div>
         </div>
     </div>
 {% endblock %}
