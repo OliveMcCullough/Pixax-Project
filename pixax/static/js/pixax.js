@@ -50,11 +50,13 @@ function change_slide(){
 
 function setup_profile_toggle_menu() {
     let menu_icon = document.querySelector(".profile_icon")
-    menu_icon.addEventListener("click", toggle_profile_menu)
-    let profile_list_links = document.querySelectorAll("ul.profile_list li a");
-    for (let i=0; i < profile_list_links.length; i++) {
-        profile_list_links[i].addEventListener("focus", open_profile_menu)
-        profile_list_links[i].addEventListener("blur", close_profile_menu)
+    if(!!menu_icon){
+        menu_icon.addEventListener("click", toggle_profile_menu)
+        let profile_list_links = document.querySelectorAll("ul.profile_list li a");
+        for (let i=0; i < profile_list_links.length; i++) {
+            profile_list_links[i].addEventListener("focus", open_profile_menu)
+            profile_list_links[i].addEventListener("blur", close_profile_menu)
+        }    
     }
 }
 

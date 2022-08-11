@@ -13,7 +13,7 @@ class RegisterView(CreateView):
 
     def dispatch(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return super().dispatch(*args, **kwargs)
+            return redirect('main:home')
         else:
             return super().dispatch(*args, **kwargs)
 
@@ -23,7 +23,7 @@ class LoginView(auth_views.LoginView):
 
     def dispatch(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return super().dispatch(*args, **kwargs)
+            return redirect('main:home')
         else:
             return super().dispatch(*args, **kwargs)
 

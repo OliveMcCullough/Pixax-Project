@@ -429,7 +429,6 @@ button:hover, .button:hover {
   background: linear-gradient(to top, #000000, #222E50);
   position: relative;
   min-height: 400px;
-  max-height: 99vh;
   z-index: -1;
 }
 .slideshow_column .slide {
