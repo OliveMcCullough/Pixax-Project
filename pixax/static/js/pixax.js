@@ -4,11 +4,50 @@ const breakpoint_desktop = 1020
 window.addEventListener("load", init)
 
 function init() {
+    setup_form_popup()
     setup_help_icons()
     setup_errored_inputs()
     setup_phone_toggle_menu()
     setup_profile_toggle_menu()
     setup_slideshow()
+}
+
+/* Setup form popup button */
+
+function setup_form_popup(){
+    let popup_form_with_error = document.querySelector(".popup_has_error")
+    if(popup_form_with_error){
+        open_form_popup()
+    }
+    let form_popup_button = document.querySelector(".form_popup_button")
+    if(!!form_popup_button){
+        form_popup_button.addEventListener("click", open_form_popup)
+    }
+    let form_popup_close_buttons = document.querySelectorAll(".popup .close_button")
+    for(let i=0; i<form_popup_close_buttons.length; i++){
+        form_popup_close_buttons[i].addEventListener("click", close_button_close_form_popup)
+    }
+}
+
+function open_form_popup(){
+    let form_popup = document.querySelector(".form_popup")
+    let backgroundUI = document.querySelectorAll(".main, .navbar_wrapper")
+    form_popup.classList.add("open");
+    for(let i=0; i< backgroundUI.length; i++){
+        backgroundUI[i].inert = true
+        console.log(backgroundUI[i])
+    }
+}
+
+function close_button_close_form_popup(e){
+    let close_button = e.target;
+    let backgroundUI = document.querySelectorAll(".main, .navbar_wrapper")
+    let popup = close_button.closest(".popup")
+    popup.classList.remove("open")
+    for(let i=0; i< backgroundUI.length; i++){
+        backgroundUI[i].inert = false
+        console.log(backgroundUI[i])
+    }
 }
 
 /* Setup slideshow */
@@ -51,28 +90,28 @@ function change_slide(){
 function setup_profile_toggle_menu() {
     let menu_icon = document.querySelector(".profile_icon")
     if(!!menu_icon){
-        menu_icon.addEventListener("click", toggle_profile_menu)
+        menu_icon.addEventListener("click", menu_icon_toggle_profile_menu)
         let profile_list_links = document.querySelectorAll("ul.profile_list li a");
         for (let i=0; i < profile_list_links.length; i++) {
-            profile_list_links[i].addEventListener("focus", open_profile_menu)
-            profile_list_links[i].addEventListener("blur", close_profile_menu)
+            profile_list_links[i].addEventListener("focus", link_focus_open_profile_menu)
+            profile_list_links[i].addEventListener("blur", link_blur_close_profile_menu)
         }    
     }
 }
 
-function toggle_profile_menu(e){
+function menu_icon_toggle_profile_menu(e){
     let profile_list = document.querySelector(".profile_list")
     toggle_menu(profile_list)
 }
 
-function open_profile_menu(e){
+function link_focus_open_profile_menu(e){
     close_open_nav_bar_menus()
     let link = e.target
     let menu = link.closest("ul")
     menu.classList.add("open")
 }
 
-function close_profile_menu(e){
+function link_blur_close_profile_menu(e){
     let link = e.target
     let menu = link.closest("ul")
     menu.classList.remove("open")
@@ -81,17 +120,17 @@ function close_profile_menu(e){
 /* Toggling the phone menu */
 
 function setup_phone_toggle_menu() {
-    window.addEventListener('resize', close_phone_toggle_menu_if_not_phone)
+    window.addEventListener('resize', resize_close_phone_toggle_menu_if_not_phone)
     let menu_icon = document.querySelector(".menu_icon")
     menu_icon.addEventListener('click', toggle_phone_menu)
     let item_list_links = document.querySelectorAll("ul.item_list li a");
     for (let i=0; i < item_list_links.length; i++) {
-        item_list_links[i].addEventListener("focus", open_phone_menu_if_phone)
-        item_list_links[i].addEventListener("blur", close_phone_menu)
+        item_list_links[i].addEventListener("focus", link_focus_open_phone_menu_if_phone)
+        item_list_links[i].addEventListener("blur", link_blur_close_phone_menu)
     }
 }
 
-function open_phone_menu_if_phone(e) {
+function link_focus_open_phone_menu_if_phone(e) {
     close_open_nav_bar_menus()
     if (window.innerWidth <= breakpoint_phone) {
         let link = e.target
@@ -100,7 +139,7 @@ function open_phone_menu_if_phone(e) {
     }
 }
 
-function close_phone_menu(e) {
+function link_blur_close_phone_menu(e) {
     let link = e.target
     let menu = link.closest("ul")
     menu.classList.remove("open")
@@ -111,7 +150,7 @@ function toggle_phone_menu() {
     toggle_menu(item_list)
 }
 
-function close_phone_toggle_menu_if_not_phone() {
+function resize_close_phone_toggle_menu_if_not_phone() {
     open_item_list = document.querySelector(".item_list.open");
     
     if (!!open_item_list && window.innerWidth > breakpoint_phone){
@@ -132,7 +171,7 @@ function toggle_menu(menu) {
 }
 
 function close_open_nav_bar_menus() {
-    let open_menus = document.querySelectorAll(".open")
+    let open_menus = document.querySelectorAll(".navbar .open")
     for(let i=0; i<open_menus.length; i++){
         open_menus[i].classList.remove("open");
     }

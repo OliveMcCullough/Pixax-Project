@@ -1,0 +1,37 @@
+{%if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            {% if page_obj.previous_page_number != 1 %}
+                <li>
+                    <a class="page-link" href="?page=1&#38;q={{query}}">1</a>
+                </li>
+            {% endif %}
+            {% if page_obj.previous_page_number > 2 %}
+                <li class="break">
+                    <span>&#8230;</span>
+                </li>
+            {% endif %}
+            <li>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&#38;q={{query}}">{{ page_obj.previous_page_number }}</a>
+            </li>
+        {% endif %}
+        <li class="current">
+            <span>{{page_obj.number}}</span>
+        </li>
+        {% if page_obj.has_next %}
+            <li>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&#38;q={{query}}">{{ page_obj.next_page_number }}</a>
+            </li>
+            {% if page_obj.next_page_number|add:"1" < page_obj.paginator.num_pages %}
+            <li class="break">
+                <span>&#8230;</span>
+            </li>
+            {% endif %}
+            {% if page_obj.next_page_number != page_obj.paginator.num_pages%}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&#38;q={{query}}">{{ page_obj.paginator.num_pages }}</a>
+                </li>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endif %}

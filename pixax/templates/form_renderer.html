@@ -1,4 +1,5 @@
-<form method="post">
+
+<form method="post" id="{{form_id}}">
     {% csrf_token %}
     {% for field in form %}     
         <div class="form_element_container{% if field.errors %} field_has_error{%endif%}">
@@ -16,5 +17,5 @@
     {% if note %}
         <span class="note"> {{ note }} </span>
     {% endif %}
-    <button action="submit"> {{ submit_message }} </button> 
+    <button class="button" action="submit" form="{{form_id}}"> {{ submit_message }} </button> 
 </form>

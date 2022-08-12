@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator 
 
+from users.models import User
+
 
 class Slideshow(models.Model):
     """
@@ -32,3 +34,11 @@ class Slide(models.Model):
     image = models.ImageField(upload_to='slideshow/')
     slideshow = models.ForeignKey(Slideshow, on_delete=models.CASCADE)
     focal_point = models.CharField(max_length=20, choices = FocalPointChoice.choices, default='center')
+
+
+class Album(models.Model):
+    """
+    An album created by a user that corresponds to a set of photos
+    """
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=20)
