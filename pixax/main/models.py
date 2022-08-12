@@ -1,5 +1,8 @@
-from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator 
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+from django.shortcuts import get_object_or_404
 
 from users.models import User
 
@@ -34,6 +37,12 @@ class Slide(models.Model):
     image = models.ImageField(upload_to='slideshow/')
     slideshow = models.ForeignKey(Slideshow, on_delete=models.CASCADE)
     focal_point = models.CharField(max_length=20, choices = FocalPointChoice.choices, default='center')
+
+
+@receiver(pre_delete, sender=Slide)
+def delete_uploaded_image(sender, instance, **kwargs):
+    slide = instance
+    slide.image.delete()
 
 
 class Album(models.Model):
