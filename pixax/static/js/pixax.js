@@ -4,12 +4,54 @@ const breakpoint_desktop = 1020
 window.addEventListener("load", init)
 
 function init() {
+    setup_multiple_select()
+    setup_file_inputs()
     setup_form_popup()
     setup_help_icons()
     setup_errored_inputs()
     setup_phone_toggle_menu()
     setup_profile_toggle_menu()
     setup_slideshow()
+}
+
+/* Setup select inputs */
+
+function setup_multiple_select(){
+    let multiple_selects = document.querySelectorAll("select[multiple]")
+    for(let i=0; i<multiple_selects.length; i++){
+        multiple_selects[i]
+        let options = multiple_selects[i].querySelectorAll("option");
+        for (let j = 0; j < options.length; j++) {
+            options[j].addEventListener("mousedown", toggle_multiple_select)
+        }
+        multiple_selects[i].classList.add("enabled")
+    }
+}
+
+function toggle_multiple_select(e){
+    if(e.buttons === 1){
+        e.preventDefault()
+        option = e.target
+        multiple_select = option.closest("select")
+        if(option.selected){
+            option.selected = false
+        }else{
+            option.selected = true
+        }
+    }
+}
+
+/* Setup file inputs */
+
+function setup_file_inputs(){
+    let file_inputs = document.querySelectorAll("input[type=file]")
+    for(let i=0; i<file_inputs.length; i++){
+        file_inputs[i].addEventListener("change", file_input_display)
+    }
+}
+
+function file_input_display(e){
+    console.log(e.target)
 }
 
 /* Setup form popup button */
