@@ -16,15 +16,14 @@
             <div class="album_section">
                 <div class= "album_block"> <div class="album_block_content"> <button title="Add album" class="form_popup_button">Add album<div></div></button> </div> 
             </div>{% for album in albums %}<div class="album_block"> 
-                <a class= "album_block_content" href="TO DO"><div class="album_illustration"> </div> <span> {{album.name}} </span> </a>
+                <a class= "album_block_content" href="{% url 'main:album' album.id %}"><div class="album_illustration"> </div> <span> {{album.name}} </span> </a>
                 </div>{% endfor %} 
             </div>
             {% include "pagination.html"%}
         </div>
     </div>
-
 {% endblock %}
 
 {% block popups %}
-    <div class="form_popup popup {%if form.errors%} popup_has_error{%endif%}"> <div> <button class="close_button"> </button> {% include "form_renderer.html" with submit_message="Create Album" form_id="create_album_form" %} </div> </div>
+    <div class="form_popup popup {%if form.errors%} popup_has_error{%endif%}"> <div> <button class="close_button"> </button> {% include "form_renderer.html" with submit_message="Create Album" %} </div> </div>
 {% endblock %}
