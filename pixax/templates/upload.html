@@ -1,0 +1,9 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} My Albums {% endblock %}
+
+{% block core_content %}
+    <h1> Upload </h1>
+    {% include "form_renderer.html" with submit_message="Upload Pictures" enctype="multipart/form-data"%}
+{% endblock %}
