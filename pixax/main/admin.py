@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Slideshow, Slide
+from .models import Slideshow, Slide, Picture
 
 
 class SlideInline(admin.TabularInline):
@@ -12,4 +12,9 @@ class SlideshowAdmin(admin.ModelAdmin):
     inlines = [SlideInline]
 
 
+class PictureAdmin(admin.ModelAdmin):
+    model = Picture
+
+
 admin.site.register(Slideshow, SlideshowAdmin)
+admin.site.register(Picture, PictureAdmin)
