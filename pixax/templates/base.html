@@ -29,8 +29,12 @@
       </ul>
       {%endif%}
       <ul class="item_list">
-        {% if user.is_authenticated %}<li><a href="{% url 'main:albums' %}"><span>My Albums</span></a></li>{% endif %}
-        <li> <a href="TO DO"><span>Upload</span></a></li>
+        {% if user.is_authenticated %}<li><a href="{% url 'main:albums' %}"><span>My Albums</span></a></li>
+        <li> <a href="{% url 'main:upload' %}"><span>Upload</span></a></li>
+        {%else%}
+        <li> <a href="{% url 'users:register' %}"><span>Sign Up</span></a> </li>
+        <li> <a href="{% url 'users:login' %}"><span>Login</span></a> </li>
+        {% endif %}
         <li><a href="TO DO"><span>About</span></a></li>
       </ul>
     </nav > 
