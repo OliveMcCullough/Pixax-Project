@@ -23,7 +23,7 @@ class LoginView(auth_views.LoginView):
 
     def dispatch(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('main:home')
+            return redirect('main:root')
         else:
             return super().dispatch(*args, **kwargs)
 
