@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="half-column slideshow_column">
-            {% for slide in intro_slideshow.slide_set.all %}
+            {% for slide in intro_slideshow.slides.all %}
                 <div class="slide{% if forloop.counter == current_slide_number %} current{%endif%} {{slide.focal_point}}">
                     <img src="{{slide.image.url}}" alt="Slide {{forloop.counter}}"/>
                 </div>
