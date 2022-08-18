@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{album.name}} {% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="container_80"> 
+            <h1> {{album.name}}  </h1>
+            TO DO: add edit, delete button, and display pictures, rate and sort options
+            {% include "pagination.html"%}
+        </div>
+    </div>
+{% endblock %}
