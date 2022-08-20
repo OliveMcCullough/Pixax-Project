@@ -7,8 +7,23 @@
     <div class="main">
         <div class="container_80"> 
             <h1> {{album.name}}  </h1>
-            TO DO: add edit, delete button, and display pictures, rate and sort options
-            {% include "pagination.html"%}
+            <div class="button_row">
+                <a title="Edit album name" class="button button_hide_text edit_name_button" href="="> Edit album name </a>
+                <a title="Delete Album" class="button button_hide_text delete_button" href="{% url 'main:album_delete' album.id %}"> Delete album </a>
+            </div>
+            <p>TO DO: add edit, delete button, and rate and sort options</p>
         </div>
+        {% if pictures %}
+            <div class="gallery">
+                <div class="divider"> </div>
+                {% for picture in pictures %}
+                    <div class="picture_container">
+                        <img src="{{picture.image.url}}"/>
+                    </div>
+                {% endfor %}
+                <div class="divider"> </div>
+            </div>
+        {% endif %}
+        {% include "pagination.html"%}
     </div>
 {% endblock %}

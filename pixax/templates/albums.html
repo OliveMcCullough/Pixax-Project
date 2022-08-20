@@ -10,13 +10,15 @@
 
             <form action="./" method="get" id="search_form" class="search_form">
                 <input type="text" id="q" name="q" placeholder="Search..." value="{{query}}"/>
-                <button type="submit" form= id="search_form" class="button_hide_text">Search</button>
+                <button type="submit" class="button_hide_text">Search</button>
             </form> 
 
             <div class="album_section">
                 <div class= "album_block"> <div class="album_block_content"> <button title="Add album" class="form_popup_button">Add album<div></div></button> </div> 
-            </div>{% for album in albums %}<div class="album_block"> 
-                <a class= "album_block_content" href="{% url 'main:album' album.id %}"><div class="album_illustration"> </div> <span> {{album.name}} </span> </a>
+            </div>{% if unsorted_picture %}<div class="album_block">
+                <a class= "album_block_content" href="{% url 'main:unsorted' %}"><div class="album_illustration album_unsorted_pics"> <img src="{{unsorted_picture.image.url}}"/> <div class="warning unsorted_picture_warning" title="Unsorted pictures"> ! </div> </div> <span> Unsorted pictures </span> </a>
+                </div>{% endif %}{% for album in albums %}<div class="album_block"> 
+                <a class= "album_block_content" href="{% url 'main:album' album.id %}"><div class="album_illustration"> {% if album.cover_picture %} <img src="{{album.cover_picture.image.url}}"/> {%else%} <div class="empty_background"> <div class="fly"> </div> </div> {% endif %} <div class="file_bottom"></div> <div class="file_top"></div> {% if album.has_unrated %} <div class="warning unrated_warning" title="Unrated pictures"> ! </div> {%endif%} </div> <span> {{album.name}} </span> </a>
                 </div>{% endfor %} 
             </div>
             {% include "pagination.html"%}

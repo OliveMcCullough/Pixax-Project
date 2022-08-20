@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Unsorted Pictures {% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="container_80"> 
+            <h1> Unsorted pictures  </h1>
+        </div>
+        <div class="gallery">
+            <div class="divider"> </div>
+            {% for picture in pictures %}
+                <div class="picture_container">
+                    <img src="{{picture.image.url}}"/>
+                </div>
+            {% endfor %}
+            <div class="divider"> </div>
+        </div>
+    </div>
+{% endblock %}
