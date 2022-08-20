@@ -1,5 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.db import models
+from django.db.models import Count
+from sql_util.utils import SubqueryCount
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
@@ -48,10 +50,28 @@ class Album(models.Model):
     An album created by a user that corresponds to a set of photos
     """
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
+
+    def cover_picture(self):
+        return self.ordered_pictures().first()
+
+    def is_empty(self):
+        return self.pictures.count() == 0
+
+    def has_unrated(self):
+        return self.pictures.filter(rating=None).count() > 0
+
+    def ordered_pictures(self):
+        return self.pictures.all().order_by('-rating', '-id')
+
+
+@receiver(pre_delete, sender=Album)
+def delete_exclusive_pictures(sender, instance, **kwargs):
+    album = instance
+    album.pictures.annotate(num_albums=Count('albums')).filter(num_albums=1).delete()
 
 
 class Picture(models.Model):
@@ -59,8 +79,8 @@ class Picture(models.Model):
     A picture that can be accessed via an album, or via unsorted pictures
     """
     image = models.ImageField(upload_to='pictures/')
-    suggested_albums = models.ManyToManyField(Album, related_name='potential_pictures')
-    albums = models.ManyToManyField(Album, related_name='pictures')
+    suggested_albums = models.ManyToManyField(Album, related_name='potential_pictures', blank=True)
+    albums = models.ManyToManyField(Album, related_name='pictures', blank=True)
     rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(5)])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
