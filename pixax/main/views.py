@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models.functions import Lower
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import RedirectView, CreateView, FormView, DetailView
+from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView
 
 from .forms import AlbumCreateForm, PictureUploadForm
 from .models import Album, Picture
@@ -26,7 +28,7 @@ class MyAlbumsView(CreateView):
     model = Album
     success_url = reverse_lazy("main:albums")
     form_class = AlbumCreateForm
-    paginate_by = 11
+    paginate_by_default = 11
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -44,23 +46,85 @@ class MyAlbumsView(CreateView):
         page_number = int(self.request.GET.get("page", 1))
         query = str(self.request.GET.get("q",""))
         albums = Album.objects.filter(author=self.request.user, name__icontains=query).order_by(Lower('name'))
-        paginator = Paginator(albums, self.paginate_by)
+
+        unsorted_pictures = Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating", "-id")
+        if unsorted_pictures.count()>0:
+            paginate_by = self.paginate_by_default - 1
+        else:
+            paginate_by = self.paginate_by_default
+
+        paginator = Paginator(albums, paginate_by)
         page = paginator.get_page(page_number)
-        start_item = self.paginate_by * (page_number-1)
-        end_item = self.paginate_by * page_number
-        kwargs['albums'] = albums[start_item:end_item]
+        start_item = paginate_by * (page_number-1)
+        end_item = paginate_by * page_number
+
+        albums_sub_set = albums[start_item:end_item]
+        if albums_sub_set.count() == 0:
+            raise Http404
+        kwargs['albums'] = albums_sub_set
         kwargs['page_obj'] = page
         kwargs['query'] = query
+        kwargs['unsorted_picture'] = unsorted_pictures.first()
         return super().get_context_data(**kwargs)
 
 
-class AlbumDetailView(DetailView):
+class AlbumView(ListView):
+    context_object_name = "pictures"
     template_name = "album.html"
-    model = Album
+    model = Picture
+    paginate_by = 15
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        user = self.request.user
+        album = Album.objects.filter(id=pk).first()
+        if album == None:
+            raise Http404
+        if album.author != user:
+            raise Http404
+        context["album"] = album
+        return context
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset()
+        pk = self.kwargs['pk']
+        album = Album.objects.filter(id=pk)
+        return qs.filter(albums__in=album).order_by("-rating")    
+
+
+class AlbumDeleteView(DeleteView):
+    model = Album
+    template_name = "album_delete.html"
+    success_url = reverse_lazy('main:albums')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_object(self):
+        album = super().get_object()
+        if not album.author == self.request.user:
+            raise Http404
+        return album
+
+
+class UnsortedPicturesView(ListView):
+    context_object_name = "pictures"
+    template_name = "unsorted.html"
+    model = Picture
+    paginate_by = 15
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        return Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating")
 
 
 class UploadPicturesView(FormView):
