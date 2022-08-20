@@ -73,6 +73,34 @@
     transform: scale(1, 1);
   }
 }
+@-webkit-keyframes fly {
+  0% {
+    transform: rotate(0deg) translateX(0px) translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: rotate(-120deg) translateX(60px) translateY(60px) rotate(120deg);
+  }
+  50% {
+    transform: rotate(-220deg) translateX(-100px) translateY(-40px) rotate(220deg);
+  }
+  100% {
+    transform: rotate(-280deg) translateX(-280px) translateY(-80px) rotate(280deg);
+  }
+}
+@keyframes fly {
+  0% {
+    transform: rotate(0deg) translateX(0px) translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: rotate(-120deg) translateX(60px) translateY(60px) rotate(120deg);
+  }
+  50% {
+    transform: rotate(-220deg) translateX(-100px) translateY(-40px) rotate(220deg);
+  }
+  100% {
+    transform: rotate(-280deg) translateX(-280px) translateY(-80px) rotate(280deg);
+  }
+}
 html, body {
   margin: 0px;
   height: 100%;
@@ -441,6 +469,27 @@ input:focus-visible, a:focus-visible, select:focus-visible {
 .album_section .album_block .album_block_content {
   display: inline-block;
   margin: auto;
+  text-decoration: none;
+  color: #456990;
+}
+.album_section .album_block .album_block_content:hover .album_illustration .file_top {
+  transform: scale(1, 0.9);
+  transform: skew(-5deg, 0deg);
+  transform-origin: 50% 100%;
+}
+.album_section .album_block .album_block_content:hover .album_illustration .warning {
+  -webkit-animation: squish 1s ease infinite;
+          animation: squish 1s ease infinite;
+  -webkit-animation: updown 1s ease infinite;
+          animation: updown 1s ease infinite;
+}
+.album_section .album_block .album_block_content:hover .fly {
+  -webkit-animation: fly 2s linear 1;
+          animation: fly 2s linear 1;
+}
+.album_section .album_block .album_block_content span {
+  display: inline-block;
+  width: 150px;
 }
 .album_section .album_block .album_block_content .album_illustration {
   margin: auto;
@@ -448,6 +497,59 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   height: 150px;
   background: linear-gradient(to top, #F4F2FF, #eeeeee);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
+  overflow: none;
+}
+.album_section .album_block .album_block_content .album_illustration .warning {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  right: 2px;
+  top: 2px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+.album_section .album_block .album_block_content .album_illustration .unsorted_picture_warning {
+  background-image: url("../images/UnsortedWarning.png");
+}
+.album_section .album_block .album_block_content .album_illustration .unrated_warning {
+  background-image: url("../images/RatingWarning.png");
+}
+.album_section .album_block .album_block_content .album_illustration .file_bottom {
+  background-image: url("../images/filePieceBottom.png");
+}
+.album_section .album_block .album_block_content .album_illustration .file_top {
+  background-image: url("../images/filePieceTop.png");
+}
+.album_section .album_block .album_block_content .album_illustration .file_bottom, .album_section .album_block .album_block_content .album_illustration .file_top {
+  transition: all 0.1s ease-in-out;
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  background-size: cover;
+  bottom: 0;
+}
+.album_section .album_block .album_block_content .album_illustration .empty_background, .album_section .album_block .album_block_content .album_illustration img {
+  top: 5%;
+  left: 5%;
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-color: lightgrey;
+  overflow-y: hidden;
+}
+.album_section .album_block .album_block_content .album_illustration .fly {
+  position: absolute;
+  bottom: 15px;
+  left: 28px;
+  width: 10px;
+  height: 10px;
+  background-image: url("../images/Fly.png");
+  background-size: cover;
 }
 .album_section .album_block .album_block_content .form_popup_button {
   margin: auto;
@@ -468,8 +570,36 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   background-size: cover;
 }
 
+.gallery {
+  flex-grow: 90;
+  width: 99%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  margin: 0.5%;
+}
+.gallery .picture_container {
+  margin: 0.5%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  text-align: center;
+}
+.gallery .picture_container img {
+  max-height: 600px;
+  max-width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+}
+
 .button_hide_text {
-  font-size: 0;
+  font-size: 0 !important;
 }
 
 .popup {
@@ -759,9 +889,32 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
   content: "?";
 }
 
+.button_row {
+  display: flex;
+  justify-content: right;
+}
+.button_row button, .button_row .button {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 20px;
+  min-width: 40px;
+  margin: 0 5px;
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.delete_button {
+  background-image: url("../images/DeleteIcon.png");
+}
+
+.edit_name_button {
+  background-image: url("../images/EditName.png");
+}
+
 button, .button {
-  width: 300px;
-  height: 50px;
+  width: 280px;
   border: 0px solid #42706B;
   display: block;
   font-size: 18px;
@@ -770,7 +923,8 @@ button, .button {
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-decoration: none;
-  line-height: 50px;
+  line-height: 30px;
+  padding: 10px 0;
   text-align: center;
   cursor: pointer;
   margin: auto;

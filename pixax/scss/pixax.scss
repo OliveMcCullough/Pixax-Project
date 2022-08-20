@@ -28,6 +28,7 @@ $fading-green-gradient-to-top: linear-gradient(to top, $green, rgba(240,240,240,
 $breakpoint-phone: 768px;
 $breakpoint-desktop: 1020px; 
 
+$large-font-size:24px;
 $default-font-size:18px;
 $small-font-size:13px;
 
@@ -79,6 +80,24 @@ $album-block-size: 150px;
 
     100% {
         transform: scale(1,1);
+    }
+}
+
+@keyframes fly {
+    0% {
+        transform: rotate(0deg) translateX(0px) translateY(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-120deg) translateX(60px) translateY(60px) rotate(120deg);
+    }
+
+    50%{
+        transform: rotate(-220deg) translateX(-100px) translateY(-40px) rotate(220deg);
+    }
+
+    100% {
+        transform: rotate(-280deg) translateX(-280px) translateY(-80px) rotate(280deg);
     }
 }
 
@@ -415,14 +434,84 @@ input:focus-visible, a:focus-visible, select:focus-visible{
         vertical-align: top;
         display: inline-block;
         .album_block_content{
+            &:hover .album_illustration .file_top{
+                transform: scale(1.0, 0.9);
+                transform: skew(-5deg, 0deg);
+                transform-origin : 50% 100%;
+            }
+            &:hover .album_illustration .warning{
+                animation: squish 1s ease infinite;
+                animation: updown 1s ease infinite;
+            }
+            &:hover .fly{
+                animation: fly 2s linear 1;
+            }
             display: inline-block;
             margin:auto;
+            text-decoration: none;
+            color: $dark-blue;
+            span{
+                display:inline-block;
+                width:$album-block-size;
+            }
             .album_illustration{
                 margin:auto;
                 width:$album-block-size;
                 height:$album-block-size;
                 background: $subtle-background-white-gradient;
                 box-shadow: $default-box-shadow;
+                position:relative;
+                overflow:none;
+                .warning{
+                    position:absolute;
+                    width:35px;
+                    height:35px;
+                    background-size: cover;
+                    right:2px;
+                    top:2px;
+                    color:white;
+                    font-size:$large-font-size;
+                    font-weight:bold;
+                }
+                .unsorted_picture_warning{
+                    background-image:url('../images/UnsortedWarning.png');
+                }
+                .unrated_warning{
+                    background-image:url('../images/RatingWarning.png');
+                }
+                .file_bottom{
+                    background-image:url('../images/filePieceBottom.png');
+                }
+                .file_top{
+                    background-image:url('../images/filePieceTop.png');
+                }
+                .file_bottom, .file_top{
+                    transition: all 0.1s ease-in-out;
+                    position:absolute;
+                    width:50px;
+                    height:40px;
+                    background-size: cover;
+                    bottom:0;
+                }
+                .empty_background, img{
+                    top:5%;
+                    left:5%;
+                    position:absolute;
+                    width:90%;
+                    height:90%;
+                    object-fit: cover;
+                    background-color:lightgrey;
+                    overflow-y:hidden;
+                }
+                .fly{
+                    position:absolute;
+                    bottom:15px;
+                    left:28px;
+                    width:10px;
+                    height:10px;
+                    background-image:url('../images/Fly.png');
+                    background-size:cover;
+                }
             }
             .form_popup_button{
                 margin:auto;
@@ -446,8 +535,31 @@ input:focus-visible, a:focus-visible, select:focus-visible{
     }
 }
 
+.gallery{
+    flex-grow:90;
+    width:99%;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin:0.5%;
+    .picture_container{
+        margin:0.5%;
+        height:fit-content;
+        text-align:center;
+        img{
+            max-height:600px;
+            max-width:100%;
+            box-shadow: $default-box-shadow;
+            user-select: none;
+            pointer-events: none;
+        }
+    }
+}
+
 .button_hide_text{
-    font-size: 0;
+    font-size: 0 !important;
 }
 
 .popup{
@@ -713,10 +825,30 @@ input[type=text], input[type=email], input[type=password]{
     content:"?";
 }
 
+.button_row{
+    display: flex;
+    justify-content: right;
+    button, .button{
+        width:fit-content;
+        height:20px;
+        min-width: 40px;
+        margin:0 5px;
+        background-size: 80% 80%;
+        background-position:center;
+        background-repeat:no-repeat;
+    }
+}
+
+.delete_button{
+    background-image: url("../images/DeleteIcon.png");
+}
+
+.edit_name_button{
+    background-image: url("../images/EditName.png")
+}
 
 button, .button{
-    width:300px;
-    height:50px;
+    width:280px;
     border: 0px solid $border-color;
     display: block;
     font-size: $default-font-size;
@@ -725,7 +857,8 @@ button, .button{
     border-radius: 3px;
     box-shadow: $default-box-shadow;
     text-decoration: none;
-    line-height:50px;
+    line-height:30px;
+    padding:10px 0;
     text-align: center;
     cursor: pointer;
     margin: auto;
