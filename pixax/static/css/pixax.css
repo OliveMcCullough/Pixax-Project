@@ -914,7 +914,7 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
 }
 
 button, .button {
-  width: 280px;
+  width: 300px;
   border: 0px solid #42706B;
   display: block;
   font-size: 18px;
