@@ -44,7 +44,7 @@ class MyAlbumsView(CreateView):
 
     def get_context_data(self, **kwargs):
         page_number = int(self.request.GET.get("page", 1))
-        query = str(self.request.GET.get("q",""))
+        query = str(self.request.GET.get("q","")).strip()
         albums = Album.objects.filter(author=self.request.user, name__icontains=query).order_by(Lower('name'))
 
         unsorted_pictures = Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating", "-id")
@@ -59,7 +59,7 @@ class MyAlbumsView(CreateView):
         end_item = paginate_by * page_number
 
         albums_sub_set = albums[start_item:end_item]
-        if albums_sub_set.count() == 0:
+        if albums_sub_set.count() == 0 and page_number > 1:
             raise Http404
         kwargs['albums'] = albums_sub_set
         kwargs['page_obj'] = page
@@ -88,13 +88,21 @@ class AlbumView(ListView):
         if album.author != user:
             raise Http404
         context["album"] = album
+        context["order"] = self.get_ordering()[0]
         return context
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset()
         pk = self.kwargs['pk']
         album = Album.objects.filter(id=pk)
-        return qs.filter(albums__in=album).order_by("-rating")    
+        return qs.filter(albums__in=album)
+
+    def get_ordering(self):
+        ordering = self.request.GET.get('order_by', '-rating')
+        if not ordering in ["-rating", "rating", "-date_uploaded", "date_uploaded"]:
+            ordering = "-rating"
+        ordering = [ordering, "-id"]
+        return ordering
 
 
 class AlbumEditNameView(UpdateView):
@@ -143,11 +151,23 @@ class UnsortedPicturesView(ListView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["order"] = self.get_ordering()[0]
+        return context
+
     def get_queryset(self):
         unsorted_pictures = Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating")
         if unsorted_pictures.count() == 0:
             raise Http404
         return unsorted_pictures
+
+    def get_ordering(self):
+        ordering = self.request.GET.get('order_by', '-rating')
+        if not ordering in ["-rating", "rating", "-date_uploaded", "date_uploaded"]:
+            ordering = "-rating"
+        ordering = [ordering, "-id"]
+        return ordering
 
 
 class UploadPicturesView(FormView):
