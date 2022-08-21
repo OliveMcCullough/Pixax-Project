@@ -111,6 +111,12 @@ html, body {
     font-size:$default-font-size;
 }
 
+a{
+    color:$blue;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 #id_image_field::before{
     content:"«";
     background-color:black;
@@ -141,6 +147,7 @@ html, body {
         /* position: relative; */
         display: inline-block;
         a.nav_logo_link{
+            font-weight:normal;
             float:left;
             height:$navbar-height;
             /* margin:auto; */
@@ -287,6 +294,7 @@ html, body {
                         background-color:$green;
                     }
                     a{
+                        font-weight: normal;
                         display:inline-block;
                         text-decoration: none;
                         color:white;
@@ -450,6 +458,7 @@ input:focus-visible, a:focus-visible, select:focus-visible{
             margin:auto;
             text-decoration: none;
             color: $dark-blue;
+            font-weight:normal;
             span{
                 display:inline-block;
                 width:$album-block-size;
@@ -899,6 +908,7 @@ button, .button{
     margin: auto;
     margin-top: 25px;
     transition: background-color 0.25s ease-in-out;
+    font-weight: normal;
 
     &.secondary{
         background-color: $secondary-button-color;

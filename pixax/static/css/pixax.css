@@ -111,6 +111,12 @@ html, body {
   font-size: 18px;
 }
 
+a {
+  color: #2B96AD;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 #id_image_field::before {
   content: "«";
   background-color: black;
@@ -146,6 +152,7 @@ html, body {
   outline-offset: -2px;
 }
 .navbar_wrapper .navbar a.nav_logo_link {
+  font-weight: normal;
   float: left;
   height: 80px;
   /* margin:auto; */
@@ -305,6 +312,7 @@ html, body {
   background-color: #64B6AC;
 }
 .navbar_wrapper .navbar ul.item_list li a {
+  font-weight: normal;
   display: inline-block;
   text-decoration: none;
   color: white;
@@ -471,6 +479,7 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   margin: auto;
   text-decoration: none;
   color: #456990;
+  font-weight: normal;
 }
 .album_section .album_block .album_block_content:hover .album_illustration .file_top {
   transform: scale(1, 0.9);
@@ -965,6 +974,7 @@ button, .button {
   margin: auto;
   margin-top: 25px;
   transition: background-color 0.25s ease-in-out;
+  font-weight: normal;
 }
 button.secondary, .button.secondary {
   background-color: #93d9be;

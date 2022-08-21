@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView
+from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView, TemplateView
 
 from .forms import AlbumCreateForm, PictureUploadForm, RateAndSortIntroForm
 from .models import Album, Picture
@@ -230,3 +230,6 @@ class AlbumRateSortView(FormView):
         form = RateAndSortIntroForm(initial={'order_select':ordering})
         return form
 
+
+class AboutView(TemplateView):
+    template_name = "about.html"
