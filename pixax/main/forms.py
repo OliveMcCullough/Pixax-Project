@@ -28,3 +28,21 @@ class PictureUploadForm(forms.Form):
             choices=[(album.id, str(album)) for album in album_list],
             widget=CustomCheckboxSelectMultiple
         )
+
+
+class RateAndSortIntroForm(forms.Form):
+    ORDER_CHOICES = [
+        ("-rating","Highest rating"),
+        ("rating","Lowest rating"),
+        ("-date_uploaded","Newest"),
+        ("date_uploaded","Oldest")
+    ]
+    RATE_SORT_CHOICES = [
+        ("rate_only","Rate"),
+        ("sort_only", "Sort"),
+        ("both","Rate and Sort")
+    ]
+    
+    order_select = forms.ChoiceField(label="Sort the pictures in which order?", choices = ORDER_CHOICES)
+    rate_sort_select = forms.ChoiceField(label="Rate or sort the pictures?", choices = RATE_SORT_CHOICES)
+    only_rate_unrated_pics = forms.BooleanField(label="Limit rating to unrated pictures?")
