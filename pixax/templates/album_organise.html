@@ -1,10 +1,10 @@
 {% extends "slideshow_presentation_base.html" %}
 {% load static %}
 
-{% block title %} {{album.name}} - Rate and sort pictures {% endblock %}
+{% block title %} {{album.name}} - Rate and Sort Pictures {% endblock %}
 
 {% block core_content %}
-    <h1> Rate and sort pictures </h1>
+    <h1> Rate and Sort "{{album.name}}" Pictures </h1>
     <p> Here you can rate photos from the "{{album.name}}" album, and organise them into albums. </p>
     {% include "form_renderer.html" with submit_message="Get started" %}
 {% endblock %}
