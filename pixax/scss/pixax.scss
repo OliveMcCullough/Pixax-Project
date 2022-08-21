@@ -669,6 +669,37 @@ form{
     }
 }
 
+.order_form{
+    display:flex;
+    flex-direction:row;
+    justify-content: right;
+    button{
+        margin:0;
+        width:40px;
+        height:40px;
+        border-radius:0 5px 5px 0;
+        background-image: url("../images/SortByIcon.png");
+        background-size:80% 80%;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    select{
+        margin:0;
+        border-radius:5px 0 0 5px;
+    }
+}
+
+select{
+    margin:auto;
+    background-color:white;
+    width:300px;
+    height: 40px;
+    font-size:$default-font-size;
+    box-shadow: $default-box-shadow;
+    border-radius:5px;
+    border:none;
+}
+
 /*
 select[multiple]{
     &:not(.enabled){
@@ -831,8 +862,12 @@ input[type=text], input[type=email], input[type=password]{
     button, .button{
         width:fit-content;
         height:20px;
-        min-width: 40px;
         margin:0 5px;
+        line-height:20px;
+        min-width: 140px;
+    }
+    .delete_button, .edit_name_button{
+        min-width: 40px;
         background-size: 80% 80%;
         background-position:center;
         background-repeat:no-repeat;

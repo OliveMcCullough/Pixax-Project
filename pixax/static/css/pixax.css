@@ -714,6 +714,37 @@ form {
   margin: 0;
 }
 
+.order_form {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+.order_form button {
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 0 5px 5px 0;
+  background-image: url("../images/SortByIcon.png");
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.order_form select {
+  margin: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+select {
+  margin: auto;
+  background-color: white;
+  width: 300px;
+  height: 40px;
+  font-size: 18px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  border: none;
+}
+
 /*
 select[multiple]{
     &:not(.enabled){
@@ -898,8 +929,12 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
   width: -moz-fit-content;
   width: fit-content;
   height: 20px;
-  min-width: 40px;
   margin: 0 5px;
+  line-height: 20px;
+  min-width: 140px;
+}
+.button_row .delete_button, .button_row .edit_name_button {
+  min-width: 40px;
   background-size: 80% 80%;
   background-position: center;
   background-repeat: no-repeat;
