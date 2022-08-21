@@ -1,0 +1,9 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} {{album.name}} - Delete {% endblock %}
+
+{% block core_content %}
+    <h1> Edit album name </h1>
+    {% include "form_renderer.html" with submit_message="Change name" %}
+{% endblock %}
