@@ -7,7 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView
 
-from .forms import AlbumCreateForm, PictureUploadForm
+from .forms import AlbumCreateForm, PictureUploadForm, RateAndSortIntroForm
 from .models import Album, Picture
 
 
@@ -205,3 +205,28 @@ class UploadPicturesView(FormView):
         return kwargs
 
     
+class AlbumRateSortView(FormView):
+    template_name = "album_organise.html"
+    form_class = RateAndSortIntroForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        album_id=self.kwargs['pk']
+        album = Album.objects.filter(id=album_id).first()
+        if album.author != self.request.user:
+            raise Http404
+        context["album"] = album
+        return context
+
+    def get_form(self):
+        ordering = self.request.GET.get('order_by', '-rating')
+        if not ordering in ["-rating", "rating", "-date_uploaded", "date_uploaded"]:
+            ordering = "-rating"
+        ordering = [ordering, "-id"]
+        form = RateAndSortIntroForm(initial={'order_select':ordering})
+        return form
+
