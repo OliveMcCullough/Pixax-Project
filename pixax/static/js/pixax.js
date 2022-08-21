@@ -5,7 +5,6 @@ window.addEventListener("load", init)
 
 function init() {
     setup_multiple_select()
-    setup_file_inputs()
     setup_form_popup()
     setup_help_icons()
     setup_errored_inputs()
@@ -39,19 +38,6 @@ function toggle_multiple_select(e){
             option.selected = true
         }
     }
-}
-
-/* Setup file inputs */
-
-function setup_file_inputs(){
-    let file_inputs = document.querySelectorAll("input[type=file]")
-    for(let i=0; i<file_inputs.length; i++){
-        file_inputs[i].addEventListener("change", file_input_display)
-    }
-}
-
-function file_input_display(e){
-    console.log(e.target)
 }
 
 /* Setup form popup button */
