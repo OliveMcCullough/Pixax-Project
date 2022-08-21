@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView
+from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView
 
 from .forms import AlbumCreateForm, PictureUploadForm
 from .models import Album, Picture
@@ -97,6 +97,26 @@ class AlbumView(ListView):
         return qs.filter(albums__in=album).order_by("-rating")    
 
 
+class AlbumEditNameView(UpdateView):
+    model = Album
+    template_name = "album_name_change.html"
+    fields = ["name"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_object(self):
+        album = super().get_object()
+        if not album.author == self.request.user:
+            raise Http404
+        return album
+
+    def get_success_url(self):
+          album_id=self.kwargs['pk']
+          return reverse_lazy('main:album', kwargs={'pk': album_id})
+
+
 class AlbumDeleteView(DeleteView):
     model = Album
     template_name = "album_delete.html"
@@ -124,7 +144,10 @@ class UnsortedPicturesView(ListView):
         return super().dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        return Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating")
+        unsorted_pictures = Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating")
+        if unsorted_pictures.count() == 0:
+            raise Http404
+        return unsorted_pictures
 
 
 class UploadPicturesView(FormView):
