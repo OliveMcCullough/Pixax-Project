@@ -735,7 +735,6 @@ form {
 }
 
 select {
-  margin: auto;
   background-color: white;
   width: 300px;
   height: 40px;
@@ -923,13 +922,14 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
 .button_row {
   display: flex;
   justify-content: right;
+  margin: 10px 0 10px 0;
 }
 .button_row button, .button_row .button {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   height: 20px;
-  margin: 0 5px;
+  margin: 0 0 0 10px;
   line-height: 20px;
   min-width: 140px;
 }
