@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.db import models
 from django.db.models import Count
@@ -71,7 +72,7 @@ class Album(models.Model):
 @receiver(pre_delete, sender=Album)
 def delete_exclusive_pictures(sender, instance, **kwargs):
     album = instance
-    album.pictures.annotate(num_albums=Count('albums')).filter(num_albums=1).delete()
+    album.pictures.annotate(num_albums=SubqueryCount('albums')).filter(num_albums=1).delete()
 
 
 class Picture(models.Model):
@@ -83,6 +84,7 @@ class Picture(models.Model):
     albums = models.ManyToManyField(Album, related_name='pictures', blank=True)
     rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(5)])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_uploaded = models.DateTimeField(default=datetime.now, blank=True)
 
 
 @receiver(pre_delete, sender=Picture)
