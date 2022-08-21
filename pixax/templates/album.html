@@ -8,10 +8,13 @@
         <div class="container_80"> 
             <h1> {{album.name}}  </h1>
             <div class="button_row">
+                <a title="Rate/Sort" class="button rate_sort_button" href="TO DO"> Rate/Sort </a>
                 <a title="Edit album name" class="button button_hide_text edit_name_button" href="{% url 'main:album_edit_name' album.id %}"> Edit album name </a>
                 <a title="Delete Album" class="button button_hide_text delete_button" href="{% url 'main:album_delete' album.id %}"> Delete album </a>
             </div>
             <p>TO DO: add rate and sort options</p>
+            <p>Rate/Sort options: Order (select), Rate/Sort/Rate and sort (select), Only rate unrated (checkbox)</p>
+            {% if pictures %}{% include "order_by_form_renderer.html"%}{% endif %}
         </div>
         {% if pictures %}
             <div class="gallery">

@@ -1,0 +1,9 @@
+<form method="get" class="order_form">
+    <select name="order_by">
+        <option value="-rating" {%if order == "-rating"%} selected {%endif%}> Highest rated </option>
+        <option value="rating" {%if order == "rating"%} selected {%endif%}> Lowest rated </option>
+        <option value="-date_uploaded" {%if order == "-date_uploaded"%} selected {%endif%}> Newest </option>
+        <option value="date_uploaded" {%if order == "date_uploaded"%} selected {%endif%}> Oldest </option>
+    </select>
+    <button action="submit"><span class="button_hide_text">Set order</span></button>
+</form>
