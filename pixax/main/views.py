@@ -219,6 +219,8 @@ class AlbumRateSortView(FormView):
         album = Album.objects.filter(id=album_id).first()
         if album.author != self.request.user:
             raise Http404
+        if album.pictures.count() == 0:
+            raise Http404
         context["album"] = album
         return context
 

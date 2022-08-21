@@ -8,7 +8,7 @@
         <div class="container_80"> 
             <h1> {{album.name}}  </h1>
             <div class="button_row">
-                <a title="Rate/Sort" class="button rate_sort_button" href="{% url 'main:album_organise' album.id %}{% if order %}?order_by={{order}}{% endif %}"> Rate/Sort </a>
+                {%if pictures %}<a title="Rate/Sort" class="button rate_sort_button" href="{% url 'main:album_organise' album.id %}{% if order %}?order_by={{order}}{% endif %}"> Rate/Sort </a>{% endif %}
                 <a title="Edit album name" class="button button_hide_text edit_name_button" href="{% url 'main:album_edit_name' album.id %}"> Edit album name </a>
                 <a title="Delete Album" class="button button_hide_text delete_button" href="{% url 'main:album_delete' album.id %}"> Delete album </a>
             </div>
