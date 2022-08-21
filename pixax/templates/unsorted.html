@@ -6,8 +6,10 @@
 {% block content %}
     <div class="main">
         <div class="container_80"> 
-            <h1> Unsorted pictures  </h1>
-            <p>TO DO: add rate and sort options</p>
+            <h1> Unsorted Pictures  </h1>
+            <div class="button_row">
+                {%if pictures %}<a title="Rate/Sort" class="button rate_sort_button" href="{% url 'main:unsorted_organise' %}{% if order %}?order_by={{order}}{% endif %}"> Rate/Sort </a>{% endif %}
+            </div>
             {% include "order_by_form_renderer.html"%}
         </div>
         <div class="gallery">

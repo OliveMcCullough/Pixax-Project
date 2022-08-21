@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AlbumView, RootRedirectView, MyAlbumsView, UploadPicturesView, UnsortedPicturesView, AlbumDeleteView, AlbumEditNameView, AlbumRateSortView, AboutView
+from .views import AlbumView, RootRedirectView, MyAlbumsView, UploadPicturesView, UnsortedPicturesView, AlbumDeleteView, AlbumEditNameView, AlbumRateSortView, AboutView, UnsortedRateSortView
 
 app_name = "main"
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('albums/<int:pk>/organise/setup/', AlbumRateSortView.as_view(), name="album_organise"),
     path('upload/', UploadPicturesView.as_view(), name="upload"),
     path('albums/unsorted/', UnsortedPicturesView.as_view(), name="unsorted"),
+    path('albums/unsorted/organise/setup/', UnsortedRateSortView.as_view(), name="unsorted_organise"),
     path('about/', AboutView.as_view(), name="about"),
 ]

@@ -233,5 +233,30 @@ class AlbumRateSortView(FormView):
         return form
 
 
+class UnsortedRateSortView(FormView):
+    template_name = "unsorted_organise.html"
+    form_class = RateAndSortIntroForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        user = self.request.user
+        unsorted_pictures = Picture.objects.filter(user=user, albums=None)
+        if unsorted_pictures.count() == 0:
+            raise Http404
+        return context
+
+    def get_form(self):
+        ordering = self.request.GET.get('order_by', '-rating')
+        if not ordering in ["-rating", "rating", "-date_uploaded", "date_uploaded"]:
+            ordering = "-rating"
+        ordering = [ordering, "-id"]
+        form = RateAndSortIntroForm(initial={'order_select':ordering})
+        return form
+
+
 class AboutView(TemplateView):
     template_name = "about.html"
