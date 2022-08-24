@@ -1,5 +1,5 @@
 
-<form method="post" enctype="{{enctype}}">
+<form method="post" {% if enctype %}enctype="{{enctype}}"{% endif %} {% if form_id %}id="{{form_id}}"{% endif %}>
     {% csrf_token %}
     {% for field in form %}     
         <div class="form_element_container{% if field.errors %} field_has_error{%endif%}">
