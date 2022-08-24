@@ -34,7 +34,7 @@ class LoginView(auth_views.LoginView):
         try:
             user = User.objects.filter(username=user_name).first()
             if not user.is_active:
-                form.add_error("username", """You account is not active. It may still be awaiting admin approval.""")
+                form.add_error("username", """Your account is not active. It may still be awaiting admin approval.""")
                 return super().form_invalid(form)
         except:
             return form_invalid
