@@ -157,7 +157,8 @@ class UnsortedPicturesView(ListView):
         return context
 
     def get_queryset(self):
-        unsorted_pictures = Picture.objects.filter(user=self.request.user, albums=None).order_by("-rating")
+        qs = super().get_queryset()
+        unsorted_pictures = qs.filter(user=self.request.user, albums=None)
         if unsorted_pictures.count() == 0:
             raise Http404
         return unsorted_pictures
@@ -323,12 +324,17 @@ class RateSortActiveViewBase(FormView):
             show_sort = True
         else:
             show_sort = False
-        
-        suggested_albums = picture.suggested_albums.all() | picture.albums.all()
+
+        possible_albums = picture.suggested_albums.all()
+        current_albums = picture.albums.all()
+        suggested_albums = (possible_albums | current_albums).distinct()
+
         other_albums = Album.objects.all().exclude(id__in=suggested_albums)
 
         suggested_albums=suggested_albums.order_by(Lower("name"))
         other_albums=other_albums.order_by(Lower("name"))
+
+        
 
         context["picture"] = picture
         context["show_rating"] = show_rating
