@@ -1,0 +1,62 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pixax.css' %}" />
+    <script type="text/javascript" src="{% static 'js/pixax.js' %}"></script> 
+    <script type="text/javascript">
+      {%if slideshow_timer%} const seconds_between_slides = {{slideshow_timer}} {%endif%}
+    </script>
+    <title> Pixax - Rate and Sort Unsorted Pictures </title>
+  </head>
+<body>
+    <div class="organise_display">
+        {%if form.errors %}<div class="error"> {{form.id.errors}} </div> {%endif%}
+        <img src="{{picture.image.url}}">
+        {%if show_sort %}
+        <div class="out_of_form checkbox_container inactive">
+            <div>
+                {% for album in albums_main %}
+                <div>
+                    <label for="checkbox_album_{{album.id}}"><input type="checkbox" id="checkbox_album_{{album.id}}" value="{{album.id}}" {%if album in picture.albums.all %}checked{%endif%}/> <span> {{album.name}} </span> </label>
+                </div>
+                {%endfor%}
+                {%if albums_main %}
+                    <div> <span> &nbsp; </span> </div>
+                {%endif%}
+                {% for album in albums_other %}
+                <div>
+                    <label for="checkbox_album_{{album.id}}"><input type="checkbox" id="checkbox_album_{{album.id}}" value="{{album.id}}"/> <span> {{album.name}} </span> </label>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        {% endif %}
+        {%if show_rating %}
+        <div class="star_rating inactive">
+            <div class="star_visual" style="background: linear-gradient(to right, #f0e464 0%,#f0e464 {%if picture.rating%}{{picture.rating}}{%else%}0{%endif%}%,rgba(255, 255, 255, 0.75) {%if picture.rating%}{{picture.rating|add:0.1}}{%else%}0{%endif%}%,rgba(255, 255, 255, 0.75) 100%);"> </div>
+        </div>
+        {% endif %}
+        <a class="close_button" href="{% url 'main:albums'%}"></a>
+        <button class="next_button" form="organise_form"> </button>
+    </div>
+    <div class="hidden">
+        {% include "form_renderer.html" with submit_message="Submit" form_id="organise_form" %}
+    </div>
+
+    <svg width="0" height="0">
+        <defs>
+            <clipPath id="star_clip">
+                <polygon points="50,5 63,37, 95,40 71,62 78,95, 50,78 22,95 28,62 5,39 37,36"/>
+                <polygon points="150,5 163,37, 195,40 171,62 178,95, 150,78 122,95 128,62 105,39 137,36"/>
+                <polygon points="250,5 263,37, 295,40 271,62 278,95, 250,78 222,95 228,62 205,39 237,36"/>
+                <polygon points="350,5 363,37, 395,40 371,62 378,95, 350,78 322,95 328,62 305,39 337,36"/>
+                <polygon points="450,5 463,37, 495,40 471,62 478,95, 450,78 422,95 428,62 405,39 437,36"/>
+            </clipPath>
+        </defs>
+    </svg>
+
+</body>
