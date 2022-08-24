@@ -7,13 +7,13 @@ from .forms import AdminUserChangeForm, AdminUserCreationForm
 
 class UserAdmin(BaseUserAdmin):
     model = User
-    list_display = ["email", "username", "application_accepted"]
+    list_display = ["email", "username", "is_active"]
 
     form = AdminUserChangeForm
     add_form = AdminUserCreationForm
 
     fieldsets = (
-        (None, {'fields': ('email','username', "application_accepted")}),
+        (None, {'fields': ('email','username', "is_active")}),
     )
 
     add_fieldsets = (
