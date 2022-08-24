@@ -173,18 +173,20 @@ class UnsortedPicturesView(ListView):
 class UploadPicturesView(FormView):
     template_name = "upload.html"
     form_class = PictureUploadForm
-    success_url=reverse_lazy("main:albums")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        form_valid = super().form_valid(form)
         picture_files = self.request.FILES.getlist('picture_files')
         user = self.request.user
         same_or_different_albums = form.cleaned_data.get("same_or_different_albums")
         album_ids = form.cleaned_data.get("which_albums")
+        self.same_or_different_albums=same_or_different_albums
+
+        form_valid = super().form_valid(form)
+        
         for picture_file in picture_files:
             picture = Picture(image = picture_file, user = user)
             picture.save()
@@ -196,7 +198,14 @@ class UploadPicturesView(FormView):
                 for album_id in album_ids:
                     suggested_album_obj = Album.objects.get(id=int(album_id))
                     picture.suggested_albums.add(suggested_album_obj)
+        self.same_or_different_albums = same_or_different_albums
         return form_valid
+
+    def get_success_url(self):
+        if self.same_or_different_albums=="same":
+            return reverse_lazy("main:albums")
+        else:
+            return reverse_lazy("main:unsorted")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
