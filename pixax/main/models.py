@@ -80,9 +80,9 @@ class Picture(models.Model):
     A picture that can be accessed via an album, or via unsorted pictures
     """
     image = models.ImageField(upload_to='pictures/')
-    suggested_albums = models.ManyToManyField(Album, related_name='potential_pictures', blank=True)
-    albums = models.ManyToManyField(Album, related_name='pictures', blank=True)
-    rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    suggested_albums = models.ManyToManyField(Album, related_name='potential_pictures', blank=True, null=True)
+    albums = models.ManyToManyField(Album, related_name='pictures', blank=True, null=True)
+    rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_uploaded = models.DateTimeField(default=datetime.now, blank=True)
 
