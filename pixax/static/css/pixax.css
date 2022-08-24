@@ -111,6 +111,112 @@ html, body {
   font-size: 18px;
 }
 
+.organise_display {
+  position: relative;
+  min-height: 450px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(to top, #000000, #02101F);
+  overflow: hidden;
+}
+.organise_display .inactive {
+  right: 500px;
+  display: none;
+}
+.organise_display .error {
+  position: absolute;
+  top: 10px;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(50, 50, 50, 0.2);
+  text-align: center;
+  color: #AD482B;
+}
+.organise_display .star_rating {
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: 250px;
+  height: 50px;
+  transition: right 0.5s linear;
+}
+.organise_display .star_rating .star_visual {
+  transform-origin: top left;
+  -webkit-clip-path: url(#star_clip);
+          clip-path: url(#star_clip);
+  scale: 0.5;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+}
+.organise_display .checkbox_container {
+  height: 170px;
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  background-color: rgba(50, 50, 50, 0.2);
+  text-align: left;
+  transition: right 0.5s linear;
+}
+.organise_display .checkbox_container label {
+  flex-grow: 0 !important;
+}
+.organise_display .checkbox_container label span {
+  background-color: rgba(50, 50, 50, 0.5);
+  color: white;
+}
+.organise_display .next_button {
+  position: absolute;
+  right: 10px;
+  top: 30%;
+  width: 20px;
+  height: 60px;
+  background-color: transparent !important;
+  padding: 0px;
+}
+.organise_display .next_button::before {
+  display: block;
+  content: "";
+  width: 20px;
+  height: 60px;
+  -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);
+          clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);
+  background-color: white;
+}
+.organise_display img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.close_button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  margin: 0px;
+  background-color: transparent;
+  box-shadow: none;
+  background-image: url("../images/CloseIcon.png");
+  background-size: cover;
+}
+.close_button:hover {
+  background-color: transparent;
+}
+
+.hidden {
+  display: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  height: 0px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 a {
   color: #2B96AD;
   font-weight: bold;
@@ -239,6 +345,7 @@ a {
   background: #64B6AC;
 }
 .navbar_wrapper .navbar ul.profile_list li a {
+  font-weight: normal;
   display: inline-block;
   text-decoration: none;
   color: white;
@@ -640,18 +747,6 @@ input:focus-visible, a:focus-visible, select:focus-visible {
     margin: -250px 0%;
   }
 }
-.popup.open > div .close_button {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  width: 30px;
-  height: 30px;
-  margin: 0px;
-  background-color: transparent;
-  box-shadow: none;
-  background-image: url("../images/CloseIcon.png");
-  background-size: cover;
-}
 
 .half-column {
   flex-grow: 1;
@@ -798,7 +893,7 @@ input[type=radio], input[type=checkbox] {
   place-content: center;
   border: 2px solid #42706B;
 }
-input[type=radio]:before, input[type=checkbox]:before {
+input[type=radio]::before, input[type=checkbox]::before {
   content: "";
   width: 22px;
   height: 22px;

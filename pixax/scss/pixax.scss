@@ -4,6 +4,7 @@ $light-green: #93d9be;
 $red: #AD482B; /* colour for errors and issues */
 $blue: #2B96AD; /* colour for info and highlights */
 $dark-blue: #456990;
+$yellow: #f0e464;
 
 $font-color: $dark-green;
 $border-color: $dark-green;
@@ -20,7 +21,7 @@ $strong-box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
 
 $nav-bar-gradient: linear-gradient(to right, #93d9be 100px, #afe3cf 100%);
 $subtle-background-white-gradient: linear-gradient(to top, #F4F2FF, #eeeeee); /* for page backgrounds and large sections */
-$dark-background-gradient: linear-gradient(to top, #000000, #222E50); /* for page backgrounds and large sections */
+$dark-background-gradient: linear-gradient(to top, #000000, #02101F); /* for page backgrounds and large sections */
 $fading-dark-green-gradient-to-left: linear-gradient(to right,  $dark-green, rgba(240,240,240,0));
 $fading-dark-green-gradient-to-right: linear-gradient(to left,  $dark-green, rgba(240,240,240,0));
 $fading-green-gradient-to-top: linear-gradient(to top, $green, rgba(240,240,240,0));
@@ -110,6 +111,108 @@ html, body {
     font-family: Tahoma;
     font-size:$default-font-size;
 }
+
+.organise_display{
+    position:relative;
+    min-height:450px;
+    height:100%;
+    width:100%;
+    text-align: center;
+    background:$dark-background-gradient;
+    overflow:hidden;
+    .inactive{
+        right:500px;
+        display: none;
+    }
+    .error{
+        position:absolute;
+        top:10px;
+        height:50px;
+        width:100%;
+        background-color:rgba(50, 50, 50, 0.2);
+        text-align:center;
+        color:$error-color;
+    }
+    .star_rating{
+        cursor:pointer;
+        position: absolute;
+        bottom:10px;
+        right:20px;
+        width:250px;
+        height:50px;
+        transition:right 0.5s linear;
+        .star_visual{
+            transform-origin: top left;
+            clip-path: url(#star_clip);
+            scale:0.5;
+            width:200%;
+            height:200%;
+            pointer-events: none;
+        }
+    }
+    .checkbox_container{
+        height:170px;
+        position: absolute;
+        bottom:60px;
+        right: 20px;
+        background-color:rgba(50, 50, 50, 0.2);
+        text-align:left;
+        transition:right 0.5s linear;
+        label{
+            flex-grow:0 !important;
+            span{
+                background-color:rgba(50, 50, 50, 0.5);
+                color:white;
+            }
+        }
+    }
+    .next_button{
+        position:absolute;
+        right:10px;
+        top:30%;
+        width:20px;
+        height:60px;
+        background-color:transparent !important;
+        padding:0px;
+        &::before{
+            display: block;
+            content: "";
+            width:20px;
+            height:60px;
+            clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);
+            background-color:white;
+        }
+    }
+    img{
+        max-height:100%;
+        max-width: 100%;
+    }
+}
+
+.close_button{
+    position:absolute;
+    right:20px;
+    top:20px;
+    width: 30px;
+    height: 30px;
+    margin:0px;
+    background-color:transparent;
+    box-shadow: none;
+    background-image:url('../images/CloseIcon.png');
+    background-size: cover;
+    &:hover{
+        background-color:transparent;
+    }
+}
+
+.hidden{
+    display:none;
+    user-select:none;
+    height:0px;
+    overflow:hidden;
+    pointer-events: none;
+}
+
 
 a{
     color:$blue;
@@ -226,6 +329,7 @@ a{
                     /* text-align: center; */
                     position:relative;
                     a {
+                        font-weight:normal;
                         display:inline-block;
                         text-decoration: none;
                         color:white;
@@ -595,18 +699,6 @@ input:focus-visible, a:focus-visible, select:focus-visible{
             width: 50%;
             margin: -250px 25%;
             position:relative;
-            .close_button{
-                position:absolute;
-                right:20px;
-                top:20px;
-                width: 30px;
-                height: 30px;
-                margin:0px;
-                background-color:transparent;
-                box-shadow: none;
-                background-image:url('../images/CloseIcon.png');
-                background-size: cover;
-            }
         }
     }
 }
@@ -751,7 +843,7 @@ input[type=radio], input[type=checkbox]{
     display:inline-grid;
     place-content: center;
     border: 2px solid $border-color;
-    &:before{
+    &::before{
         content:"";
         width: 22px;
         height: 22px;
