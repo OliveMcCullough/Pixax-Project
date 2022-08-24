@@ -4,6 +4,7 @@ const breakpoint_desktop = 1020
 window.addEventListener("load", init)
 
 function init() {
+    setup_organise_form()
     setup_multiple_select()
     setup_form_popup()
     setup_help_icons()
@@ -11,6 +12,48 @@ function init() {
     setup_phone_toggle_menu()
     setup_profile_toggle_menu()
     setup_slideshow()
+}
+
+/* Setup organise form */
+
+function setup_organise_form(){
+    star_rating_ui = document.querySelector(".star_rating")
+    if (!!star_rating_ui){
+        star_rating_ui.addEventListener("click", update_rating)
+        star_rating_ui.classList.remove("inactive")
+    }
+    album_list_ui = document.querySelector(".out_of_form.checkbox_container")
+    if (!!album_list_ui){
+        album_list_ui.classList.remove("inactive")
+        album_list_checkboxes = album_list_ui.querySelectorAll("input")
+        for(let i=0; i < album_list_checkboxes.length; i++){
+            album_list_checkboxes[i].addEventListener("change", update_albums)
+        }
+        
+    }
+}
+
+function update_rating(e){
+    star_rating_element = e.target
+    element_x = star_rating_element.getBoundingClientRect().left
+    click_x_pos_pixels = e. clientX - element_x
+    precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100
+    percentage_rounded = Math.round(precise_percentage/5)*5
+    star_visual = star_rating_element.querySelector(".star_visual")
+    star_visual.style.background = "linear-gradient(to right, #f0e464 0%,#f0e464 "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) 100%)"
+    
+    form_rating = document.getElementById("id_rating")
+    form_rating.value = percentage_rounded
+}
+
+function update_albums(e){
+    checkbox = e.target
+    checkbox_value = checkbox.value
+    checkbox_checked = checkbox.checked
+    
+    equivalent_checkbox = document.querySelector("form input[type=checkbox][value='"+ checkbox_value + "']")
+    console.log(equivalent_checkbox)
+    equivalent_checkbox.checked = checkbox_checked
 }
 
 /* Setup select inputs */
@@ -150,11 +193,13 @@ function link_blur_close_profile_menu(e){
 function setup_phone_toggle_menu() {
     window.addEventListener('resize', resize_close_phone_toggle_menu_if_not_phone)
     let menu_icon = document.querySelector(".menu_icon")
-    menu_icon.addEventListener('click', toggle_phone_menu)
-    let item_list_links = document.querySelectorAll("ul.item_list li a");
-    for (let i=0; i < item_list_links.length; i++) {
-        item_list_links[i].addEventListener("focus", link_focus_open_phone_menu_if_phone)
-        item_list_links[i].addEventListener("blur", link_blur_close_phone_menu)
+    if(!!menu_icon){
+        menu_icon.addEventListener('click', toggle_phone_menu)
+        let item_list_links = document.querySelectorAll("ul.item_list li a");
+        for (let i=0; i < item_list_links.length; i++) {
+            item_list_links[i].addEventListener("focus", link_focus_open_phone_menu_if_phone)
+            item_list_links[i].addEventListener("blur", link_blur_close_phone_menu)
+        }
     }
 }
 
