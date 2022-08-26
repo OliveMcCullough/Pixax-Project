@@ -1,6 +1,7 @@
 $dark-green: #42706B; /* colour for main borders and text */
 $green: #64B6AC; /* colour for interactive elements and softer borders */
 $light-green: #93d9be;
+$lightest-green: #afe3cf;
 $red: #AD482B; /* colour for errors and issues */
 $blue: #2B96AD; /* colour for info and highlights */
 $dark-blue: #456990;
@@ -19,7 +20,7 @@ $secondary-button-color: $light-green;
 $default-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 $strong-box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
 
-$nav-bar-gradient: linear-gradient(to right, #93d9be 100px, #afe3cf 100%);
+$nav-bar-gradient: linear-gradient(to right, $light-green 100px, $lightest-green 100%);
 $subtle-background-white-gradient: linear-gradient(to top, #F4F2FF, #eeeeee); /* for page backgrounds and large sections */
 $dark-background-gradient: linear-gradient(to top, #000000, #02101F); /* for page backgrounds and large sections */
 $fading-dark-green-gradient-to-left: linear-gradient(to right,  $dark-green, rgba(240,240,240,0));
@@ -186,6 +187,58 @@ html, body {
     img{
         max-height:100%;
         max-width: 100%;
+    }
+}
+
+.user_profile_display{
+    display:flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    .profile_pic{
+        min-width:160px;
+        height:160px;
+        background-color:white;
+        box-shadow: $default-box-shadow;
+        img{
+            margin:5%;
+            width:90%;
+            height:90%;
+            background-color:$lightest-green;
+            user-select:none;
+        }
+    }
+    .user_info{
+        padding-left:20px;
+        flex-grow: 1;
+        text-align:left;
+        h1{
+            word-wrap: anywhere;
+            margin: 5px 0;
+            display: inline-block;
+            width:100%;
+        }
+        h2{
+            word-wrap: anywhere;
+            margin: 5px 0; 
+            font-size: $default-font-size;
+            display: inline-block;
+            width:100%;
+        }
+        > span{
+            display: inline-block;
+            width:100%;
+        }
+        .edit_icon{
+            display:inline-block;
+            background-image: url('../images/EditIcon.png');
+            background-size: contain;
+            font-size:0;
+            width:16px;
+            height:16px;
+            vertical-align: middle;
+            margin-left:2px;
+            user-select:none;
+        }
     }
 }
 

@@ -1,9 +1,12 @@
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, TemplateView, UpdateView
 
-from .forms import UserRegistrationForm
+
+from .forms import UserRegistrationForm, ProfileUsernameEditForm
 from .models import User
 
 
@@ -41,3 +44,21 @@ class LoginView(auth_views.LoginView):
 
     def get_success_url(self, *args, **kwargs):
         return super().get_success_url(*args, **kwargs)
+
+
+class ProfileView(TemplateView):
+    template_name = "profile.html"
+
+
+class ProfileUsernameEditView(UpdateView):
+    template_name = "profile_username_edit.html"
+    model = User
+    form_class = ProfileUsernameEditForm
+    success_url = reverse_lazy("users:profile")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_object(self):
+        return self.request.user

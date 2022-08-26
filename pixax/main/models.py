@@ -50,7 +50,7 @@ class Album(models.Model):
     """
     An album created by a user that corresponds to a set of photos
     """
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='albums')
     name = models.CharField(max_length=30)
 
     def __str__(self):
@@ -83,7 +83,7 @@ class Picture(models.Model):
     suggested_albums = models.ManyToManyField(Album, related_name='potential_pictures', blank=True, null=True)
     albums = models.ManyToManyField(Album, related_name='pictures', blank=True, null=True)
     rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pictures')
     date_uploaded = models.DateTimeField(default=datetime.now, blank=True)
 
 
