@@ -190,6 +190,64 @@ html, body {
   max-width: 100%;
 }
 
+.user_profile_display {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.user_profile_display .profile_pic {
+  min-width: 160px;
+  height: 160px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.user_profile_display .profile_pic img {
+  margin: 5%;
+  width: 90%;
+  height: 90%;
+  background-color: #afe3cf;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.user_profile_display .user_info {
+  padding-left: 20px;
+  flex-grow: 1;
+  text-align: left;
+}
+.user_profile_display .user_info h1 {
+  word-wrap: anywhere;
+  margin: 5px 0;
+  display: inline-block;
+  width: 100%;
+}
+.user_profile_display .user_info h2 {
+  word-wrap: anywhere;
+  margin: 5px 0;
+  font-size: 18px;
+  display: inline-block;
+  width: 100%;
+}
+.user_profile_display .user_info > span {
+  display: inline-block;
+  width: 100%;
+}
+.user_profile_display .user_info .edit_icon {
+  display: inline-block;
+  background-image: url("../images/EditIcon.png");
+  background-size: contain;
+  font-size: 0;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-left: 2px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 .close_button {
   position: absolute;
   right: 20px;

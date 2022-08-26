@@ -27,3 +27,11 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email')
+
+
+class ProfileUsernameEditForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        model = User
+        fields = ['username']

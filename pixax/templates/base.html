@@ -24,7 +24,7 @@
       {%if user.is_authenticated %}
       <ul class="profile_list">
         {%if user.is_staff %}<li> <a href="/admin/"><span>Admin</span></a></li>{%endif%}
-        <!--<li> <a href="TO DO"><span>Profile</span></a></li>-->
+        <li> <a href="{% url "users:profile" %}"><span>Profile</span></a></li>
         <li> <a href="{% url "logout" %}"><span>Logout</span></a></li> 
       </ul>
       {%endif%}

@@ -1,0 +1,9 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} {{user.username}} Edit Username {% endblock %}
+
+{% block core_content %}
+    <h1> Edit Username </h1>
+    {% include 'form_renderer.html' with submit_message="Save Username"%}
+{% endblock %}
