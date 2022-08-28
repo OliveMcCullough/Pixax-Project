@@ -1,12 +1,13 @@
 from datetime import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.db import models
-from django.db.models import Count
 from sql_util.utils import SubqueryCount
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
+import uuid
 
 from users.models import User
+from .services import remove_exif
 
 
 class Slideshow(models.Model):
@@ -85,6 +86,16 @@ class Picture(models.Model):
     rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_uploaded = models.DateTimeField(default=datetime.now, blank=True)
+
+    def save(self):
+        unique_base_file_name = str(uuid.uuid4())
+        final_file = remove_exif(self.image, unique_base_file_name, "pictures/")
+        self.image = final_file
+        save = super().save()
+        return save
+
+    def clean(self):
+        return super().clean()
 
 
 @receiver(pre_delete, sender=Picture)

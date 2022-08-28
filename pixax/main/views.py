@@ -193,8 +193,8 @@ class UploadPicturesView(FormView):
         
         for picture_file in picture_files:
             unique_base_file_name = str(uuid.uuid4())
-            file = remove_exif(picture_file, unique_base_file_name, "/pictures/")
-            picture = Picture(image = file, user = user)
+            final_file = remove_exif(picture_file, unique_base_file_name, "pictures/")
+            picture = Picture(image = picture_file, user = user)
             picture.save()
             if same_or_different_albums == "same":
                 for album_id in album_ids:

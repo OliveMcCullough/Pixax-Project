@@ -61,7 +61,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.services.intro_slideshow_context_processor',
+                'main.context_processors.intro_slideshow',
             ],
         },
     },
@@ -137,7 +137,7 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 AUTH_USER_MODEL = 'users.User'
 
-MEDIA_URL = '/media/' 
+MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
