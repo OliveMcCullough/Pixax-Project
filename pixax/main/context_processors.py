@@ -5,10 +5,13 @@ from .models import Slideshow
 
 def intro_slideshow(request):
     intro_slideshow = Slideshow.objects.filter(name="introduction_slideshow").first()
-    slideshow_timer = intro_slideshow.timer
-    amount_of_slides = intro_slideshow.slides.all().count()
-    current_slide_number = get_slide_number(slideshow_timer, amount_of_slides)
-    return {"intro_slideshow": intro_slideshow, "current_slide_number": current_slide_number, "slideshow_timer":slideshow_timer}
+    if intro_slideshow != None:
+        slideshow_timer = intro_slideshow.timer
+        amount_of_slides = intro_slideshow.slides.all().count()
+        current_slide_number = get_slide_number(slideshow_timer, amount_of_slides)
+        return {"intro_slideshow": intro_slideshow, "current_slide_number": current_slide_number, "slideshow_timer":slideshow_timer}
+    else:
+        return {"intro_slideshow": None, "current_slide_number": 0, "slideshow_timer":5}
 
 
 def get_slide_number(slideshow_timer, amount_of_slides):
