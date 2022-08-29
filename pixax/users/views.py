@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, TemplateView, UpdateView
 
 
-from .forms import UserRegistrationForm, ProfileUsernameEditForm
+from .forms import UserRegistrationForm, ProfileUsernameEditForm, ProfilePicEditForm
 from .models import User
 
 
@@ -54,6 +54,20 @@ class ProfileUsernameEditView(UpdateView):
     template_name = "profile_username_edit.html"
     model = User
     form_class = ProfileUsernameEditForm
+    success_url = reverse_lazy("users:profile")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_object(self):
+        return self.request.user
+
+
+class ProfilePicEditView(UpdateView):
+    template_name = "profile_pic_edit.html"
+    model = User
+    form_class = ProfilePicEditForm
     success_url = reverse_lazy("users:profile")
 
     @method_decorator(login_required)

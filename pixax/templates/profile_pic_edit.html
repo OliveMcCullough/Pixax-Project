@@ -1,0 +1,9 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} {{user.username}} Upload New Profile Pic {% endblock %}
+
+{% block core_content %}
+    <h1> Upload New Profile Pic </h1>
+    {% include 'form_renderer.html' with submit_message="Save Profile Pic" enctype="multipart/form-data"%}
+{% endblock %}

@@ -7,9 +7,11 @@ from django.db.models.signals import post_save
 class User(AbstractUser):
     email = models.EmailField('email address', unique=True, blank = False, null=False)
     is_active = models.BooleanField(default=True)
+    profile_pic = models.ImageField(upload_to="profile_pics/", null=True, blank=True, default=None)
 
     def __str__(self):
         return self.username
+
 
 @receiver(post_save, sender=User)
 def user_to_inactive(sender, instance, created, update_fields, **kwargs):

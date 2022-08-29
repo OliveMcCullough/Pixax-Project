@@ -205,11 +205,12 @@ html, body {
   margin: 5%;
   width: 90%;
   height: 90%;
-  background-color: #afe3cf;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .user_profile_display .user_info {
   padding-left: 20px;
@@ -1057,12 +1058,13 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
 
 .form_input_container {
   display: flex;
+  flex-wrap: wrap;
   width: 350px;
   vertical-align: middle;
 }
 
 .help_text_icon {
-  margin: 10px;
+  margin: 10px 0px 10px 10px;
   border-radius: 15px;
   width: 30px;
   height: 30px;

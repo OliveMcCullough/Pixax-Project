@@ -5,9 +5,9 @@
 
 {% block core_content %}
     <div class="user_profile_display">
-        <div class="profile_pic">
-            <img src="{% static '/images/DefaultProfile.png' %}" alt="Profile pic"/>
-        </div>
+        <a class="profile_pic" href="{%url 'users:profile_pic_edit' %}">
+            <img src="{%if user.profile_pic %}{{user.profile_pic.url}}{%else%}{% static '/images/DefaultProfile.png' %}{%endif%}" alt="Profile pic"/>
+        </a>
         <div class="user_info">
             <h1> {{user.username}} <a title="Edit Username" class="edit_icon" href="{%url 'users:profile_username_edit'%}"> Edit username </a> </h1>
             <h2> {{user.email}} </h2>
