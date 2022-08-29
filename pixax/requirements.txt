@@ -11,7 +11,7 @@ Click==7.0
 #cloud-init==22.2
 #cmdtest==0.32+git
 colorama==0.4.3
-command-not-found==0.3
+#command-not-found==0.3
 configobj==5.0.6
 constantly==15.1.0
 cryptography==2.8
