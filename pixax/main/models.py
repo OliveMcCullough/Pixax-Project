@@ -2,7 +2,7 @@ from datetime import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.db import models
 from sql_util.utils import SubqueryCount
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
 import uuid
 
@@ -39,6 +39,23 @@ class Slide(models.Model):
     image = models.ImageField(upload_to='slideshow/')
     slideshow = models.ForeignKey(Slideshow, on_delete=models.CASCADE, related_name='slides')
     focal_point = models.CharField(max_length=20, choices = FocalPointChoice.choices, default='center')
+
+    def save(self):
+        save = super().save()
+        return save
+
+
+@receiver(pre_save, sender=Slide)
+def anonymise_slide_image(sender, instance, **kwargs):
+    """pre_save function to anonymise the image on a slide
+    IMPORTANT: Non-standard for this to accompany save function, probably acceptable here because slide updates are admin-only and rare uploads"""
+    
+    """Check if we are creating the slide to determine if we need to anonymise it"""
+    slide = instance
+    if slide._state.adding is True:
+        unique_base_file_name = str(uuid.uuid4())
+        final_file = remove_exif(slide.image, unique_base_file_name, "slideshow/")
+        slide.image  = final_file
 
 
 @receiver(pre_delete, sender=Slide)
@@ -86,16 +103,6 @@ class Picture(models.Model):
     rating = models.FloatField(default=None, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_uploaded = models.DateTimeField(default=datetime.now, blank=True)
-
-    def save(self):
-        unique_base_file_name = str(uuid.uuid4())
-        final_file = remove_exif(self.image, unique_base_file_name, "pictures/")
-        self.image = final_file
-        save = super().save()
-        return save
-
-    def clean(self):
-        return super().clean()
 
 
 @receiver(pre_delete, sender=Picture)

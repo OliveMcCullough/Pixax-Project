@@ -14,6 +14,7 @@ class SlideshowAdmin(admin.ModelAdmin):
 
 class PictureAdmin(admin.ModelAdmin):
     model = Picture
+    readonly_fields = ('image','user', 'date_uploaded', 'albums', 'suggested_albums', 'rating')
 
 
 admin.site.register(Slideshow, SlideshowAdmin)
