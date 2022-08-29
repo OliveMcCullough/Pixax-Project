@@ -15,3 +15,6 @@ __pycache__/
 
 # Ignore media folder
 media/
+
+# Ignore environment folder
+env/
