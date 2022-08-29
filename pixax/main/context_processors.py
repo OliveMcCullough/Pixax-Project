@@ -5,7 +5,7 @@ from .models import Slideshow
 
 def intro_slideshow(request):
     intro_slideshow = Slideshow.objects.filter(name="introduction_slideshow").first()
-    if intro_slideshow != None:
+    if intro_slideshow != None and intro_slideshow.slides.count() != 0:
         slideshow_timer = intro_slideshow.timer
         amount_of_slides = intro_slideshow.slides.all().count()
         current_slide_number = get_slide_number(slideshow_timer, amount_of_slides)
