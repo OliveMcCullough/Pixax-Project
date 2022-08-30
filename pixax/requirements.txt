@@ -73,7 +73,7 @@ simplejson==3.16.0
 sqlparse==0.4.2
 ssh-import-id==5.10
 #systemd-python==234
-ttystatus==0.38
+#ttystatus==0.38
 Twisted==18.9.0
 #ubuntu-advantage-tools==27.9
 #ufw==0.36
