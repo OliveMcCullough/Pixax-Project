@@ -40,7 +40,8 @@ class LoginView(auth_views.LoginView):
                 form.add_error("username", """Your account is not active. It may still be awaiting admin approval.""")
                 return super().form_invalid(form)
         except:
-            return form_invalid
+            pass
+        return form_invalid
 
 
 class ProfileView(TemplateView):
