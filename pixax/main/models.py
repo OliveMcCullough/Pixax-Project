@@ -41,19 +41,6 @@ class Slide(models.Model):
     focal_point = models.CharField(max_length=20, choices = FocalPointChoice.choices, default='center')
 
 
-@receiver(pre_save, sender=Slide)
-def anonymise_slide_image(sender, instance, **kwargs):
-    """pre_save function to anonymise the image on a slide
-    IMPORTANT: Non-standard for this to accompany save function, probably acceptable here because slide updates are admin-only and rare uploads"""
-    
-    """Check if we are creating the slide to determine if we need to anonymise it"""
-    slide = instance
-    if slide._state.adding is True:
-        unique_base_file_name = str(uuid.uuid4())
-        final_file = remove_exif(slide.image, unique_base_file_name, "slideshow/")
-        slide.image  = final_file
-
-
 @receiver(pre_delete, sender=Slide)
 def delete_uploaded_image(sender, instance, **kwargs):
     slide = instance
