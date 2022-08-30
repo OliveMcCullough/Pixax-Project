@@ -382,11 +382,19 @@ class RateSortActiveViewBase(FormView):
         form_valid = super().form_valid(form)
         picture = Picture.objects.filter(id=form.cleaned_data.get("id")).first()
         user = self.request.user
+        rating = form.cleaned_data.get("rating")
+        albums = form.cleaned_data.get("albums")
+
         if picture.user_id != user.id:
             form.add_error("id", "This picture belongs to someone else, you cannot edit it.")
             return super().form_invalid(form)
-        rating = form.cleaned_data.get("rating")
-        albums = form.cleaned_data.get("albums")
+
+        for album in albums:
+            album_obj = Album.objects.filter(id=album).first()
+            if album_obj.author != user.id:
+                form.add_error("albums", "One or more of the albums you selected belong to someone else, you cannot use them.")
+                return super().form_invalid(form)
+
         picture.rating = rating
         picture.albums.set(albums)
         if len(albums)!=0:

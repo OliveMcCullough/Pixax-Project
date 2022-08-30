@@ -14,7 +14,7 @@
   </head>
 <body>
     <div class="organise_display">
-        {%if form.errors %}<div class="error"> {{form.id.errors}} </div> {%endif%}
+        {%if form.errors %}<div class="error"> <p>{{form.id.errors}}</p> </p>{{form.albums.errors}}</p> </div> {%endif%}
         <img src="{{picture.image.url}}">
         {%if show_sort %}
         <div class="out_of_form checkbox_container inactive">
