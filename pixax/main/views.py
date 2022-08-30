@@ -391,7 +391,7 @@ class RateSortActiveViewBase(FormView):
 
         for album in albums:
             album_obj = Album.objects.filter(id=album).first()
-            if album_obj.author != user.id:
+            if album_obj.author.id != user.id:
                 form.add_error("albums", "One or more of the albums you selected belong to someone else, you cannot use them.")
                 return super().form_invalid(form)
 
