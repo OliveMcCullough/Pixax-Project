@@ -12,8 +12,8 @@
             <h1> {{user.username}} <a title="Edit Username" class="edit_icon" href="{%url 'users:profile_username_edit'%}"> Edit username </a> </h1>
             <h2> {{user.email}} </h2>
             <h2> <a href="{%url 'password_change'%}">Change password<span class="edit_icon"> </span></a> </h2>
-            <span> {{user.albums.count}} {%if user.albums.count == 0%}album{%else%}albums{%endif%} </span>
-            <span> {{user.pictures.count}} {%if user.pictures.count == 0%}picture{%else%}pictures{%endif%} </span>
+            <span> {{user.albums.count}} {%if user.albums.count == 1%}album{%else%}albums{%endif%} </span>
+            <span> {{user.pictures.count}} {%if user.pictures.count == 1%}picture{%else%}pictures{%endif%} </span>
         </div>
     </div>
     <div class="divider"> </div>
