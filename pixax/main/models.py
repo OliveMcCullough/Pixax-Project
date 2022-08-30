@@ -40,10 +40,6 @@ class Slide(models.Model):
     slideshow = models.ForeignKey(Slideshow, on_delete=models.CASCADE, related_name='slides')
     focal_point = models.CharField(max_length=20, choices = FocalPointChoice.choices, default='center')
 
-    def save(self):
-        save = super().save()
-        return save
-
 
 @receiver(pre_save, sender=Slide)
 def anonymise_slide_image(sender, instance, **kwargs):

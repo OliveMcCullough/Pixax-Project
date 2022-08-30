@@ -1,8 +1,9 @@
 from django import forms
 from django.db.models.functions import Lower
+import uuid
 
 from .models import Album, Picture
-from .services import CustomCheckboxSelectMultiple
+from .services import CustomCheckboxSelectMultiple, remove_exif
 
 
 class AlbumCreateForm(forms.ModelForm):
@@ -28,6 +29,15 @@ class PictureUploadForm(forms.Form):
             choices=[(album.id, str(album)) for album in album_list],
             widget=CustomCheckboxSelectMultiple
         )
+
+    def clean_picture_files(self):
+        picture_files = self.files.getlist('picture_files')
+        new_picture_files = []
+        for picture_file in picture_files:
+            unique_base_file_name = str(uuid.uuid4())
+            new_picture_file = remove_exif(picture_file, unique_base_file_name, "pictures/")
+            new_picture_files.append(new_picture_file)
+        return new_picture_files
 
 
 class RateAndSortIntroForm(forms.Form):

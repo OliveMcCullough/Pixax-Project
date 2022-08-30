@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.paginator import Paginator
 from django.db.models.functions import Lower
 from django.http import Http404
@@ -7,11 +6,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView, TemplateView
-import uuid
 
 from .forms import AlbumCreateForm, PictureUploadForm, RateAndSortIntroForm, RateAndSortActiveForm
 from .models import Album, Picture
-from .services import remove_exif
 
 
 class RootRedirectView(RedirectView):
@@ -183,7 +180,7 @@ class UploadPicturesView(FormView):
         return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        picture_files = self.request.FILES.getlist('picture_files')
+        picture_files = form.cleaned_data.get("picture_files")
         user = self.request.user
         same_or_different_albums = form.cleaned_data.get("same_or_different_albums")
         album_ids = form.cleaned_data.get("which_albums")
@@ -192,8 +189,6 @@ class UploadPicturesView(FormView):
         form_valid = super().form_valid(form)
         
         for picture_file in picture_files:
-            """unique_base_file_name = str(uuid.uuid4())
-            final_file = remove_exif(picture_file, unique_base_file_name, "pictures/")"""
             picture = Picture(image = picture_file, user = user)
             picture.save()
             if same_or_different_albums == "same":
