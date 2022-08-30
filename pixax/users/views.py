@@ -42,9 +42,6 @@ class LoginView(auth_views.LoginView):
         except:
             return form_invalid
 
-    def get_success_url(self, *args, **kwargs):
-        return super().get_success_url(*args, **kwargs)
-
 
 class ProfileView(TemplateView):
     template_name = "profile.html"
