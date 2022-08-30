@@ -302,6 +302,7 @@ class RateSortActiveViewBase(FormView):
         return get
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
         sort_group_name = self.get_sort_group_name()
         context = super().get_context_data(**kwargs)
         try:
@@ -329,7 +330,7 @@ class RateSortActiveViewBase(FormView):
         current_albums = picture.albums.all()
         suggested_albums = (possible_albums | current_albums).distinct()
 
-        other_albums = Album.objects.all().exclude(id__in=suggested_albums)
+        other_albums = Album.objects.all().filter(author=user).exclude(id__in=suggested_albums)
 
         suggested_albums=suggested_albums.order_by(Lower("name"))
         other_albums=other_albums.order_by(Lower("name"))
