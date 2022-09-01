@@ -1,12 +1,11 @@
 {% extends "base_no_nav.html" %}
 
-{% block title %} Rate and Sort Pictures {%endblock%}
+{% block title %} Picture {%endblock%}
 
 {% block content %}
     <div class="full_pic_display">
         {%if form.errors %}<div class="error"> <p>{{form.id.errors}}</p> </p>{{form.albums.errors}}</p> </div> {%endif%}
         <img src="{{picture.image.url}}"/>
-        {%if show_sort %}
         <div class="out_of_form checkbox_container inactive">
             <div>
                 {% for album in albums_main %}
@@ -24,13 +23,13 @@
                 {%endfor%}
             </div>
         </div>
-        {% endif %}
-        {%if show_rating %}
+
         <div class="star_rating inactive">
             <div class="star_visual" style="background: linear-gradient(to right, #f0e464 0%,#f0e464 {%if picture.rating%}{{picture.rating}}{%else%}0{%endif%}%,rgba(255, 255, 255, 0.75) {%if picture.rating%}{{picture.rating|add:0.1}}{%else%}0{%endif%}%,rgba(255, 255, 255, 0.75) 100%);"> </div>
         </div>
-        {% endif %}
-        <a class="close_button" href="{% url 'main:albums'%}"></a>
+
+        <a class="close_button" href="{% if album %}{% url 'main:album' pk=album.id %}{%else%}{% url 'main:albums'%}{% endif %}"></a>
+        <a class="delete_button" href="{% if album %}{% url 'main:pic_delete' album_id=album.id pk=picture.id %}{%else%}{% url 'main:pic_delete' pk=picture.id %}{% endif %}"></a>
         <button class="next_button" form="organise_form"> </button>
     </div>
     <div class="hidden">

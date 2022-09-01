@@ -113,7 +113,7 @@ html, body {
     font-size:$default-font-size;
 }
 
-.organise_display{
+.full_pic_display{
     position:relative;
     min-height:450px;
     height:100%;
@@ -183,6 +183,16 @@ html, body {
             clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);
             background-color:white;
         }
+    }
+    .delete_button{
+        position:absolute;
+        display:block;
+        bottom:10px;
+        left:20px;
+        height:50px;
+        width:50px;
+        background-image:url("../images/DeleteIcon.png");
+        background-size:contain;
     }
     img{
         height:100%;

@@ -18,9 +18,9 @@
             <div class="gallery">
                 <div class="divider"> </div>
                 {% for picture in pictures %}
-                    <div class="picture_container">
+                    <a class="picture_container" href="{% url 'main:pic_edit' album.id picture.id %}">
                         <img src="{{picture.image.url}}"/>
-                    </div>
+                    </a>
                 {% endfor %}
                 <div class="divider"> </div>
             </div>

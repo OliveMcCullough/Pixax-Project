@@ -1,18 +1,7 @@
+{% extends "base_no_nav.html" %}
 {% load static %}
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/pixax.css' %}" />
-    <script type="text/javascript" src="{% static 'js/pixax.js' %}"></script> 
-    <script type="text/javascript">
-      {%if slideshow_timer%} const seconds_between_slides = {{slideshow_timer}} {%endif%}
-    </script>
-    <title> Pixax - {% block title %}{% endblock %}</title>
-  </head>
-<body>
+{% block nav %}
   <div class="navbar_wrapper">
     <nav class="navbar"><a href="/" class="nav_logo_link"><img class="nav_logo" src="{% static 'images/logo.png' %}" alt="Pixax Logo"></a>
       <ul class="icon_list">
@@ -41,4 +30,4 @@
   </div>
   {% block content %} {% endblock %}
   {% block popups %} {% endblock %}
-</body>
+{% endblock %}

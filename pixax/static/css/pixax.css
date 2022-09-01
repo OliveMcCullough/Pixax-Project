@@ -111,7 +111,7 @@ html, body {
   font-size: 18px;
 }
 
-.organise_display {
+.full_pic_display {
   position: relative;
   min-height: 450px;
   height: 100%;
@@ -120,11 +120,11 @@ html, body {
   background: linear-gradient(to top, #000000, #02101F);
   overflow: hidden;
 }
-.organise_display .inactive {
+.full_pic_display .inactive {
   right: 500px;
   display: none;
 }
-.organise_display .error {
+.full_pic_display .error {
   position: absolute;
   top: 10px;
   height: 50px;
@@ -133,7 +133,7 @@ html, body {
   text-align: center;
   color: #AD482B;
 }
-.organise_display .star_rating {
+.full_pic_display .star_rating {
   cursor: pointer;
   position: absolute;
   bottom: 10px;
@@ -142,7 +142,7 @@ html, body {
   height: 50px;
   transition: right 0.5s linear;
 }
-.organise_display .star_rating .star_visual {
+.full_pic_display .star_rating .star_visual {
   transform-origin: top left;
   -webkit-clip-path: url(#star_clip);
           clip-path: url(#star_clip);
@@ -151,7 +151,7 @@ html, body {
   height: 200%;
   pointer-events: none;
 }
-.organise_display .checkbox_container {
+.full_pic_display .checkbox_container {
   height: 170px;
   position: absolute;
   bottom: 60px;
@@ -160,14 +160,14 @@ html, body {
   text-align: left;
   transition: right 0.5s linear;
 }
-.organise_display .checkbox_container label {
+.full_pic_display .checkbox_container label {
   flex-grow: 0 !important;
 }
-.organise_display .checkbox_container label span {
+.full_pic_display .checkbox_container label span {
   background-color: rgba(50, 50, 50, 0.5);
   color: white;
 }
-.organise_display .next_button {
+.full_pic_display .next_button {
   position: absolute;
   right: 10px;
   top: 30%;
@@ -176,7 +176,7 @@ html, body {
   background-color: transparent !important;
   padding: 0px;
 }
-.organise_display .next_button::before {
+.full_pic_display .next_button::before {
   display: block;
   content: "";
   width: 20px;
@@ -185,7 +185,17 @@ html, body {
           clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);
   background-color: white;
 }
-.organise_display img {
+.full_pic_display .delete_button {
+  position: absolute;
+  display: block;
+  bottom: 10px;
+  left: 20px;
+  height: 50px;
+  width: 50px;
+  background-image: url("../images/DeleteIcon.png");
+  background-size: contain;
+}
+.full_pic_display img {
   height: 100%;
   max-width: 100%;
   -o-object-fit: contain;

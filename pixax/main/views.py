@@ -441,5 +441,83 @@ class UnsortedRateSortActiveView(RateSortActiveViewBase):
         return "unsorted"
 
 
+class PictureDeleteView(DeleteView):
+    template_name = "pic_delete.html"
+    model = Picture
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_object(self):
+        picture = super().get_object()
+        if not picture.user == self.request.user:
+            raise Http404
+        return picture
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = super().get_context_data(**kwargs)
+        album_id = self.kwargs.get('album_id')
+        album = Album.objects.filter(id=album_id).first()
+        if album != None:
+            if album.author != user:
+                raise Http404
+        context["album"] = album
+        return context
+
+    def get_success_url(self):
+        album_id = self.kwargs.get('album_id')
+        if album_id == None:
+            return reverse("main:albums")
+        else:
+            return reverse("main:album", kwargs={"pk":album_id})
+
+
+class PictureEditView(UpdateView):
+    template_name = "pic_edit.html"
+    model = Picture
+    fields = ["rating","albums"]
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+        
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+        picture = context["picture"]
+
+        if user != picture.user:
+            raise Http404
+
+        album_id = self.kwargs.get('album_id')
+        album = Album.objects.filter(id=album_id).first()
+        if album != None:
+            if album.author != user:
+                raise Http404
+        context["album"] = album
+
+        possible_albums = picture.suggested_albums.all()
+        current_albums = picture.albums.all()
+        suggested_albums = (possible_albums | current_albums).distinct()
+
+        other_albums = Album.objects.all().filter(author=user).exclude(id__in=suggested_albums)
+
+        context["albums_main"] = suggested_albums
+        context["albums_other"] = other_albums
+
+        return context
+
+    def get_success_url(self):
+        album_id = self.kwargs.get('album_id')
+        if album_id == None:
+            return reverse("main:albums")
+        else:
+            return reverse("main:album", kwargs={"pk":album_id})
+
+
 class AboutView(TemplateView):
     template_name = "about.html"
