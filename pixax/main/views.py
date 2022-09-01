@@ -519,5 +519,10 @@ class PictureEditView(UpdateView):
             return reverse("main:album", kwargs={"pk":album_id})
 
 
+class MakeAlbumPublicView(FormView):
+    template_name = "album_make_public.html"
+    fields = []
+
+
 class AboutView(TemplateView):
     template_name = "about.html"

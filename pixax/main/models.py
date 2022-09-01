@@ -53,6 +53,7 @@ class Album(models.Model):
     """
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='albums')
     name = models.CharField(max_length=30)
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
