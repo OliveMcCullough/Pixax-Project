@@ -1104,7 +1104,8 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
 
 .button_row {
   display: flex;
-  justify-content: right;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   margin: 10px 0 10px 0;
 }
 .button_row button, .button_row .button {
@@ -1112,7 +1113,7 @@ input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
   width: -moz-fit-content;
   width: fit-content;
   height: 20px;
-  margin: 0 0 0 10px;
+  margin: 5px 0 5px 10px;
   line-height: 20px;
   min-width: 140px;
 }

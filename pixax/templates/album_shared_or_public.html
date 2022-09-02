@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{album.name}} {% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="container_80"> 
+            <h1> {{album.name}}  </h1>
+            {% if pictures %}{% include "order_by_form_renderer.html"%}{% endif %}
+        </div>
+        {% if pictures %}
+            <div class="gallery">
+                <div class="divider"> </div>
+                {% for picture in pictures %}
+                    <div class="picture_container">
+                        <img src="{{picture.image.url}}"/>
+                    </div>
+                {% endfor %}
+                <div class="divider"> </div>
+            </div>
+        {% endif %}
+        {% include "pagination.html"%}
+    </div>
+{% endblock %}

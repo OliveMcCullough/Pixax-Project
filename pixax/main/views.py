@@ -7,7 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView, TemplateView
 
-from .forms import AlbumCreateForm, PictureUploadForm, RateAndSortIntroForm, RateAndSortActiveForm
+from .forms import AlbumCreateForm, AlbumShareSettingsForm, PictureUploadForm, RateAndSortIntroForm, RateAndSortActiveForm
 from .models import Album, Picture
 
 
@@ -68,25 +68,16 @@ class MyAlbumsView(CreateView):
         return super().get_context_data(**kwargs)
 
 
-class AlbumView(ListView):
+class AlbumBaseView(ListView):
     context_object_name = "pictures"
     template_name = "album.html"
     model = Picture
     paginate_by = 15
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs['pk']
-        user = self.request.user
         album = Album.objects.filter(id=pk).first()
-        if album == None:
-            raise Http404
-        if album.author != user:
-            raise Http404
         context["album"] = album
         context["order"] = self.get_ordering()[0]
         return context
@@ -103,6 +94,48 @@ class AlbumView(ListView):
             ordering = "-rating"
         ordering = [ordering, "-id"]
         return ordering
+
+class AlbumView(AlbumBaseView):
+    template_name = "album.html"
+
+    def dispatch(self, *args, **kwargs):
+        pk = self.kwargs['pk']
+        user = self.request.user
+        album = Album.objects.filter(id=pk).first()
+
+        if album == None:
+            if user.is_authenticated: raise Http404 
+            else: return self.dispatch_login_required(*args, **kwargs)
+
+        if album.author != user:
+            if album.share_status == "public":
+                url = reverse("main:album_public", kwargs={"pk":pk}) + "?order_by=" + self.get_ordering()[0]
+                return redirect(url) 
+            else:
+                if user.is_authenticated: raise Http404
+                else: return self.dispatch_login_required(*args, **kwargs)
+
+        return super().dispatch(*args, **kwargs)
+
+    @method_decorator(login_required)
+    def dispatch_login_required(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class AlbumPublicView(AlbumBaseView):
+    template_name = "album_shared_or_public.html"
+
+    def dispatch(self, *args, **kwargs):
+        pk = self.kwargs['pk']
+        album = Album.objects.filter(id=pk).first()
+
+        if album == None:
+            raise Http404
+
+        if album.share_status != "public":
+            raise Http404
+
+        return super().dispatch(*args, **kwargs)
 
 
 class AlbumEditNameView(UpdateView):
@@ -519,9 +552,15 @@ class PictureEditView(UpdateView):
             return reverse("main:album", kwargs={"pk":album_id})
 
 
-class MakeAlbumPublicView(FormView):
-    template_name = "album_make_public.html"
-    fields = []
+class SetAlbumShareSettings(UpdateView):
+    template_name = "album_share_settings_set.html"
+    model = Album
+    form_class = AlbumShareSettingsForm
+
+    def get_success_url(self):
+        pk = self.kwargs.get('pk')
+        return reverse_lazy("main:album", kwargs={"pk":pk})
+    
 
 
 class AboutView(TemplateView):

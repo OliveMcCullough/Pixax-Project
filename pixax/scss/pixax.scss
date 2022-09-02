@@ -1030,12 +1030,13 @@ input[type=text], input[type=email], input[type=password]{
 
 .button_row{
     display: flex;
-    justify-content: right;
+    flex-wrap:wrap;
+    justify-content: flex-end;
     margin: 10px 0 10px 0;
     button, .button{
         width:fit-content;
         height:20px;
-        margin:0 0 0 10px;
+        margin:5px 0 5px 10px;
         line-height:20px;
         min-width: 140px;
     }

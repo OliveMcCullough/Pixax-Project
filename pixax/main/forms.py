@@ -70,11 +70,6 @@ class RateAndSortActiveForm(forms.Form):
         widget=CustomCheckboxSelectMultiple, required=False
     )
 
-    class Meta:
-        model = Picture
-        fields = ["albums","rating", "id"]
-        exclude = ["user_id"]
-
     def __init__(self, instance, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         album_list = Album.objects.filter(author=user).order_by(Lower('name'))
@@ -83,3 +78,8 @@ class RateAndSortActiveForm(forms.Form):
         self.initial['rating'] = instance.rating
         self.initial['id'] = instance.id
         
+
+class AlbumShareSettingsForm(forms.ModelForm):
+    class Meta:
+        model = Album
+        fields = ["share_status"]

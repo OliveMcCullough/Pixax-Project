@@ -1,0 +1,18 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} {{album.name}} - Make Public {% endblock %}
+
+{% block core_content %}
+    <h1> Share Settings </h1>
+    <p> This album is currently {{album.get_share_status_display|lower}}{%if album.share_status == "shared"%} with nobody{%endif%}. </p>
+    <p> <strong>Private:</strong> Only you can see the album </p>
+    <p> <strong>Shared:</strong> The specific friends you share the album with can access it. </p>
+    <p> <strong>Public:</strong> Anyone with a direct link to the album can access it.</p>
+    <p> <strong>Do not:</strong> <ul>
+        <li> Make an album public or shared with any identifying information in its name or contents or anything you want to keep private.</li>
+        <li> Depict anyone in a public or shared album without their explicit authorisation. </li>
+    </ul> </p>
+    <p> The username or contact information of album authors will not be shown publicly. </p>
+    {% include "form_renderer.html" with submit_message="Save share settings" %}
+{% endblock %}
