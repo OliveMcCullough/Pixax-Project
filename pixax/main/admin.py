@@ -1,10 +1,10 @@
 from django import forms
-from django.forms import inlineformset_factory
 from django.contrib import admin
 from django.contrib.admin.decorators import display
+from django.utils.html import format_html
 import uuid
 
-from .models import Slideshow, Slide, Picture
+from .models import Slideshow, Slide, Picture, Album
 from .services import remove_exif
 
 
@@ -46,5 +46,37 @@ class PictureAdmin(admin.ModelAdmin):
         return "\n".join([album.name for album in obj.albums.all()])
 
 
+class PictureInline(admin.TabularInline):
+    model = Album.pictures.through
+    extra = 0
+    readonly_fields = ['picture_image']
+
+    def picture_image(self, instance):
+        return format_html("<a href=" + instance.picture.image.url + ">" + str(instance.picture.image) + "</a>")
+
+    def has_add_permission(self, request, obj=None): 
+        return False
+    
+    def has_change_permission(self, request, obj=None): 
+        return False
+
+    def has_delete_permission(self, request, obj=None): 
+        return False
+
+
+class AlbumAdmin(admin.ModelAdmin):
+    model = Album
+    fields = ('name', 'share_status', 'author')
+    readonly_fields = ('author',)
+    list_display = ('name', 'author', 'get_pictures')
+    inlines = [PictureInline]
+
+    @display(description='Pictures')
+    def get_pictures(self, obj):
+        pictures = obj.pictures
+        return pictures.count()
+
+
+admin.site.register(Album, AlbumAdmin)
 admin.site.register(Slideshow, SlideshowAdmin)
 admin.site.register(Picture, PictureAdmin)
