@@ -35,8 +35,8 @@ class UserRegistrationForm(UserCreationForm):
         """Make sure the username is not the same as another user but with different case"""
         if User.objects.filter(username__iexact=username).exists():
             raise ValidationError("User with this Username already exists.")
-
-
+        return username
+        
 
 class ProfileUsernameEditForm(UserChangeForm):
     password = None
