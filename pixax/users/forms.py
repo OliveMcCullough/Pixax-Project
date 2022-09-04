@@ -30,6 +30,13 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ('username', 'email')
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        """Make sure the username is not the same as another user but with different case"""
+        if User.objects.filter(username__iexact=username).exists():
+            raise ValidationError("User with this Username already exists.")
+        return username
+        
 
 class ProfileUsernameEditForm(UserChangeForm):
     password = None
