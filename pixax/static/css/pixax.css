@@ -206,9 +206,11 @@ html, body {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  margin: 10px 0 10px;
 }
 .user_profile_display .profile_pic {
   min-width: 160px;
+  width: 160px;
   height: 160px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -559,7 +561,8 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   text-align: right;
   display: flex;
   flex-direction: row;
-  height: 40px;
+  flex-wrap: wrap;
+  min-height: 40px;
   width: 90%;
   margin: 20px auto;
   justify-content: flex-end;
@@ -587,6 +590,10 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   padding: 0;
   margin: 0;
   height: 40px;
+}
+.search_form ul {
+  display: block;
+  width: 100%;
 }
 
 .pagination {
@@ -848,6 +855,33 @@ input:focus-visible, a:focus-visible, select:focus-visible {
 .core_content {
   margin: 5%;
   z-index: 1;
+}
+
+.text_copier {
+  width: 302px;
+  display: block;
+  margin: auto;
+  display: flex;
+}
+.text_copier input[type=text] {
+  width: 250px;
+  border-radius: 3px 0px 0px 3px;
+  border-right: none;
+}
+.text_copier button {
+  margin: 0px;
+  width: 50px;
+  border-radius: 0px 3px 3px 0px;
+  border: 1px solid #42706B;
+  border-left: none;
+}
+
+.copy_button {
+  background-image: url("../images/CopyIcon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 85%;
 }
 
 form {
@@ -1240,10 +1274,11 @@ button:focus, .button:focus {
   pointer-events: none;
 }
 
-.help_text, .error_text, .note {
+.help_text, .error_text, .note, .errorlist {
   font-size: 13px;
   overflow: hidden;
   transition: max-height 0.5s ease-in-out;
+  color: #AD482B;
 }
 
 .help_text {

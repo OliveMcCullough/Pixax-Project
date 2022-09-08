@@ -4,6 +4,7 @@ const breakpoint_desktop = 1020
 window.addEventListener("load", init)
 
 function init() {
+    setup_text_copier()
     setup_organise_form()
     setup_multiple_select()
     setup_form_popup()
@@ -13,6 +14,24 @@ function init() {
     setup_profile_toggle_menu()
     setup_slideshow()
 }
+
+/* Setup text copiers */
+
+function setup_text_copier(){
+    text_copier_buttons = document.querySelectorAll(".text_copier button")
+    for(let i=0; i<text_copier_buttons.length; i++){
+        text_copier_buttons[i].addEventListener("click",copy_text_to_clipboard)
+    }
+}
+
+function copy_text_to_clipboard(e){
+    text_copy_button = e.target
+    text_copy_div = text_copy_button.closest(".text_copier")
+    text_copy_input = text_copy_div.querySelector("input")
+    navigator.clipboard.writeText(text_copy_input.value);
+    alert("Link copied to clipboard")
+}
+
 
 /* Setup organise form */
 

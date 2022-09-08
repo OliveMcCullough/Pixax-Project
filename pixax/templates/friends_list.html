@@ -1,0 +1,27 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} Your Friends {% endblock %}
+
+{% block core_content %}
+    <h1> My Friends </h1>
+    <div class="button_row"> 
+        <a title="Add Friends" class="button" href="{%url 'users:friend_add' %}"> Add Friends </a>
+        <a title="Friend Requests" class="button" href="{%url 'users:friend_requests' %}"> Friend Requests </a>
+    </div>
+    {% if friends%}
+        {% for friend in friends %}
+            <div class="user_profile_display">
+                <div class="profile_pic">
+                    <img src="{%if friend.profile_pic %}{{friend.profile_pic.url}}{%else%}{% static '/images/DefaultProfile.png' %}{%endif%}" alt="Profile pic"/>
+                </div>
+                <div class="user_info">
+                    <h1> {{friend.username}}</h1>
+                </div>
+            </div>
+        {%endfor%}
+        {% include "pagination.html"%}
+    {% else %}
+        <p> You don't currently have any friends on your account. </p>
+    {% endif %}
+{% endblock %}

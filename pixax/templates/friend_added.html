@@ -1,0 +1,10 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} Success {% endblock %}
+
+{% block core_content %}
+    <h1> You've added {{}} </h1>
+    
+    {% include "form_renderer.html" with submit_message="Confirm" %}
+{% endblock %}

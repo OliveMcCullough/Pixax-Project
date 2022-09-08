@@ -205,8 +205,10 @@ html, body {
     display:flex;
     flex-direction:row;
     flex-wrap: nowrap;
+    margin: 10px 0 10px;
     .profile_pic{
         min-width:160px;
+        width:160px;
         height:160px;
         background-color:white;
         box-shadow: $default-box-shadow;
@@ -529,7 +531,8 @@ input:focus-visible, a:focus-visible, select:focus-visible{
     text-align:right;
     display:flex;
     flex-direction: row;
-    height:40px;
+    flex-wrap:wrap;
+    min-height:40px;
     width:90%;
     margin: 20px auto;
     justify-content:flex-end;
@@ -554,6 +557,10 @@ input:focus-visible, a:focus-visible, select:focus-visible{
         padding:0;
         margin:0;
         height:40px;
+    }
+    ul{
+        display:block;
+        width:100%;
     }
 }
 
@@ -793,6 +800,33 @@ input:focus-visible, a:focus-visible, select:focus-visible{
 .core_content{
     margin: 5%;
     z-index:1;
+}
+
+.text_copier{
+    width:302px;
+    display:block;
+    margin:auto;
+    display: flex;
+    input[type=text]{
+        width:250px;
+        border-radius: 3px 0px 0px 3px;
+        border-right: none;
+    }
+    button{
+        margin:0px;
+        width:50px;
+        border-radius: 0px 3px 3px 0px;
+        border: 1px solid $border-color;
+        border-left: none;
+    }
+}
+
+.copy_button{
+    background-image: url("../images/CopyIcon.png");
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:85%;
 }
 
 form{
@@ -1168,10 +1202,11 @@ button, .button{
     }
 }
 
-.help_text, .error_text, .note{
+.help_text, .error_text, .note, .errorlist{
     font-size:$small-font-size;
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
+    color: $error-color;
 }
 
 .help_text{
