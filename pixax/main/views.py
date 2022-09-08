@@ -7,7 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, CreateView, DetailView, FormView, ListView, DeleteView, UpdateView, TemplateView
 
-from .forms import AlbumCreateForm, AlbumShareSettingsForm, PictureUploadForm, RateAndSortIntroForm, RateAndSortActiveForm
+from .forms import AlbumCreateForm, AlbumShareSettingsForm, PictureEditForm, PictureUploadForm, RateAndSortIntroForm, RateAndSortActiveForm
 from .models import Album, Picture
 from users.models import Friendship, User
 
@@ -533,13 +533,12 @@ class PictureDeleteView(DeleteView):
 class PictureEditView(UpdateView):
     template_name = "pic_edit.html"
     model = Picture
-    fields = ["rating","albums"]
+    form_class=PictureEditForm
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
         
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -562,8 +561,8 @@ class PictureEditView(UpdateView):
 
         other_albums = Album.objects.all().filter(author=user).exclude(id__in=suggested_albums)
 
-        context["albums_main"] = suggested_albums
-        context["albums_other"] = other_albums
+        context["albums_main"] = suggested_albums.order_by("name")
+        context["albums_other"] = other_albums.order_by("name")
 
         return context
 
@@ -573,6 +572,12 @@ class PictureEditView(UpdateView):
             return reverse("main:albums")
         else:
             return reverse("main:album", kwargs={"pk":album_id})
+
+    def get_form_kwargs(self):
+        user = self.request.user
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs["user"] = user
+        return form_kwargs
 
 
 class SetAlbumShareSettings(UpdateView):

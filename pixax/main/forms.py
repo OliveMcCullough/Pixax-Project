@@ -42,6 +42,21 @@ class PictureUploadForm(forms.Form):
         return new_picture_files
 
 
+class PictureEditForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        fields = ["rating","albums"]
+        
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        album_list = Album.objects.filter(author=user).order_by(Lower('name'))
+        self.fields['albums'] = forms.MultipleChoiceField(
+            widget=CustomCheckboxSelectMultiple, 
+            required=False,
+            choices=[(album.id, str(album)) for album in album_list]
+        )
+
+
 class RateAndSortIntroForm(forms.Form):
     ORDER_CHOICES = [
         ("-rating","Highest rating"),
