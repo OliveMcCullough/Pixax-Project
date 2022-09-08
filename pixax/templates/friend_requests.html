@@ -1,0 +1,28 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} Pending Friend Requests {% endblock %}
+
+{% block core_content %}
+    <h1> Pending Friend Requests </h1>
+    {%if requests %}
+        <p> You've received the following friend requests. </p>
+        {% for request in requests %}
+            <div class="user_profile_display">
+                <div class="profile_pic">
+                    <img src="{%if request.profile_pic %}{{request.profile_pic.url}}{%else%}{% static '/images/DefaultProfile.png' %}{%endif%}" alt="Profile pic"/>
+                </div>
+                <div class="user_info">
+                    <h1> {{request.username}}</h1>
+                </div>
+            </div>
+            <div class="button_row"> 
+                <a class="button" href="{% url 'users:friend_request_accept' request.id %}"> Accept </a>
+                <a class="button negative" href="{% url 'users:friend_request_reject' request.id %}"> Reject </a>
+             </div>
+        {%endfor%}
+        {% include "pagination.html"%}
+    {% else %}
+        <p> You don't have any currently pending friend requests from other users. </p>
+    {% endif %}
+{% endblock %}

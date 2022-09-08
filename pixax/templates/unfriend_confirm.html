@@ -1,0 +1,10 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} Friend Link {% endblock %}
+
+{% block core_content %}
+    <h1> Are you sure you want to unfriend {{friend.username}}? </h1>
+    {% include "form_renderer.html" with submit_message="Yes, unfriend them" %}
+    <a class="button secondary" href="{% url 'users:friends' %}"> No, take me back </a>
+{% endblock %}

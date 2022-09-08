@@ -1,0 +1,16 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} Add Friends {% endblock %}
+
+{% block core_content %}
+    <h1> Add Friends </h1>
+    <p> Get a link to send to your friends and they can use to connect directly: </p>
+    <div class="text_copier">
+        <input type="text" value="{{request.get_host}}{% url 'users:friend_add_link_confirm' user.unique_link_id %}" readonly/>
+        <button class="copy_button button_hide_text" title="Copy Link"> Copy Link </button>
+    </div>
+    <div class="divider"> <h2> Or </h2> </div>
+    <p> Enter your friend's account email. Make sure you enter the correct email without any typos. </p>
+    {% include "form_renderer.html" with submit_message="Send Friend Request" %}
+{% endblock %}

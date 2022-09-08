@@ -64,3 +64,14 @@ class ProfilePicEditForm(UserChangeForm):
         unique_base_file_name = str(uuid.uuid4())
         data = remove_exif(profile_pic, unique_base_file_name, "pictures/")
         return data
+
+
+class FriendAddForm(forms.Form):
+    friend_email = forms.EmailField(label="")
+
+
+class FriendLinkConfirmForm(forms.Form):
+    pass
+
+class UnfriendConfirmationForm(forms.Form):
+    pass

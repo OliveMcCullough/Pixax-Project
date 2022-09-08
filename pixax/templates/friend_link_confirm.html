@@ -1,0 +1,10 @@
+{% extends "slideshow_presentation_base.html" %}
+{% load static %}
+
+{% block title %} Friend Link {% endblock %}
+
+{% block core_content %}
+    <h1> Someone wants to become friends </h1>
+    <p> Make sure this link was sent to you from someone you trust. </p>
+    {% include "form_renderer.html" with submit_message="Confirm" %}
+{% endblock %}
