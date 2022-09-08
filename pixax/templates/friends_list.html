@@ -9,6 +9,7 @@
         <a title="Add Friends" class="button" href="{%url 'users:friend_add' %}"> Add Friends </a>
         <a title="Friend Requests" class="button" href="{%url 'users:friend_requests' %}"> Friend Requests </a>
     </div>
+    <div class="divider"> </div>
     {% if friends%}
         {% for friend in friends %}
             <div class="user_profile_display">
@@ -19,6 +20,9 @@
                     <h1> {{friend.username}}</h1>
                 </div>
             </div>
+            <div class="button_row">
+                <a class="button" href="{% url 'users:unfriend' friend.id %}"> Unfriend </a>
+             </div>
         {%endfor%}
         {% include "pagination.html"%}
     {% else %}

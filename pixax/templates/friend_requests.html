@@ -16,6 +16,10 @@
                     <h1> {{request.username}}</h1>
                 </div>
             </div>
+            <div class="button_row"> 
+                <a class="button" href="{% url 'users:friend_request_accept' request.id %}"> Accept </a>
+                <a class="button negative" href="{% url 'users:friend_request_reject' request.id %}"> Reject </a>
+             </div>
         {%endfor%}
         {% include "pagination.html"%}
     {% else %}
