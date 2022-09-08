@@ -53,8 +53,10 @@ class PictureEditForm(forms.ModelForm):
         self.fields['albums'] = forms.MultipleChoiceField(
             widget=CustomCheckboxSelectMultiple, 
             required=False,
-            choices=[(album.id, str(album)) for album in album_list]
+            choices=[(album.id, str(album)) for album in album_list],
         )
+        instance = kwargs["instance"]
+        self.initial['albums'] = [album.id for album in instance.albums.all()] 
 
 
 class RateAndSortIntroForm(forms.Form):
