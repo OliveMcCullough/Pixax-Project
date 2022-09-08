@@ -639,7 +639,6 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.24);
   background-color: rgba(0, 0, 0, 0.02);
   border-radius: 10px;
-  min-height: 400px;
 }
 .album_section .album_block {
   text-align: center;
