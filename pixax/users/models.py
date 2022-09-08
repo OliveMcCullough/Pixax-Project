@@ -79,6 +79,9 @@ class Friendship(models.Model):
                     """Make friendship instead if there is already a reverse friend request"""
                     Friendship.create_friendship(from_user, to_user)
 
+    def check_friend_request_exists(from_user, to_user):
+        return FriendRequest.objects.filter(from_user=from_user, to_user=to_user).count() > 0
+
     def reject_friend_request(from_user, to_user):
         """Reject all pending friend requests from other user"""
         existing_friend_requests = FriendRequest.objects.filter(from_user=from_user, to_user=to_user)
