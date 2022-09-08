@@ -46,10 +46,32 @@ class PictureAdmin(admin.ModelAdmin):
         return "\n".join([album.name for album in obj.albums.all()])
 
 
+class SharedToUsersInline(admin.TabularInline):
+    model = Album.shared_with.through
+    extra = 0
+    readonly_fields = ["user_username"]
+    verbose_name = "Shared with"
+    verbose_name_plural = "Shared with"
+
+    def user_username(self, instance):
+        return instance.user.username
+
+    def has_add_permission(self, request, obj=None): 
+        return False
+    
+    def has_change_permission(self, request, obj=None): 
+        return False
+
+    def has_delete_permission(self, request, obj=None): 
+        return False
+
+
 class PictureInline(admin.TabularInline):
     model = Album.pictures.through
     extra = 0
     readonly_fields = ['picture_image']
+    verbose_name = "Album"
+    verbose_name_plural = "Albums"
 
     def picture_image(self, instance):
         return format_html("<a href=" + instance.picture.image.url + ">" + str(instance.picture.image) + "</a>")
@@ -69,7 +91,7 @@ class AlbumAdmin(admin.ModelAdmin):
     fields = ('name', 'share_status', 'author')
     readonly_fields = ('author',)
     list_display = ('name', 'author', 'get_pictures')
-    inlines = [PictureInline]
+    inlines = [PictureInline, SharedToUsersInline]
 
     @display(description='Pictures')
     def get_pictures(self, obj):
