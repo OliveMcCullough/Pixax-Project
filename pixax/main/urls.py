@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AlbumView, PictureDeleteView, RootRedirectView, MyAlbumsView, UploadPicturesView, UnsortedPicturesView, AlbumDeleteView, AlbumEditNameView, AlbumRateSortIntroView, AboutView, UnsortedRateSortIntroView, UnsortedRateSortActiveView, AlbumRateSortActiveView, PictureEditView, SetAlbumShareSettings, AlbumPublicView
+from .views import AlbumSharedView, AlbumView, FriendSharedAlbumsView, PictureDeleteView, RootRedirectView, MyAlbumsView, UploadPicturesView, UnsortedPicturesView, AlbumDeleteView, AlbumEditNameView, AlbumRateSortIntroView, AboutView, UnsortedRateSortIntroView, UnsortedRateSortActiveView, AlbumRateSortActiveView, PictureEditView, SetAlbumShareSettings, AlbumPublicView
 
 app_name = "main"
 
@@ -7,6 +7,8 @@ urlpatterns = [
     path('', RootRedirectView.as_view(), name='root'),
     path('albums/', MyAlbumsView.as_view(), name='albums'),
     path('albums/<int:pk>/', AlbumView.as_view(), name='album'),
+    path('shared/users/<int:pk>/', FriendSharedAlbumsView.as_view(), name='friend_shared_album_list'),
+    path('shared/albums/<int:pk>/', AlbumSharedView.as_view(), name='album_shared'),
     path('public/albums/<int:pk>/', AlbumPublicView.as_view(), name='album_public'),
     path('albums/<int:pk>/delete/', AlbumDeleteView.as_view(), name='album_delete'),
     path('albums/<int:pk>/edit/', AlbumEditNameView.as_view(), name="album_edit_name"),

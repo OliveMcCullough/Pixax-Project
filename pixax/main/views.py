@@ -5,10 +5,11 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import RedirectView, CreateView, FormView, ListView, DeleteView, UpdateView, TemplateView
+from django.views.generic import RedirectView, CreateView, DetailView, FormView, ListView, DeleteView, UpdateView, TemplateView
 
 from .forms import AlbumCreateForm, AlbumShareSettingsForm, PictureUploadForm, RateAndSortIntroForm, RateAndSortActiveForm
 from .models import Album, Picture
+from users.models import Friendship, User
 
 
 class RootRedirectView(RedirectView):
@@ -122,8 +123,30 @@ class AlbumView(AlbumBaseView):
         return super().dispatch(*args, **kwargs)
 
 
+class AlbumSharedView(AlbumBaseView):
+    template_name = "album_shared.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        pk = self.kwargs['pk']
+        album = Album.objects.filter(id=pk).first()
+        user = self.request.user
+
+        if album == None:
+            raise Http404
+
+        if album.share_status == "shared":
+            if not (user in album.shared_with.all()):
+                raise Http404
+        else:
+            if album.share_status != "public":
+                raise Http404
+
+        return super().dispatch(*args, **kwargs)
+
+
 class AlbumPublicView(AlbumBaseView):
-    template_name = "album_shared_or_public.html"
+    template_name = "album_public.html"
 
     def dispatch(self, *args, **kwargs):
         pk = self.kwargs['pk']
@@ -559,8 +582,45 @@ class SetAlbumShareSettings(UpdateView):
 
     def get_success_url(self):
         pk = self.kwargs.get('pk')
-        return reverse_lazy("main:album", kwargs={"pk":pk})
+        return reverse_lazy("main:album_share_settings_set", kwargs={"pk":pk})
+
+    def get_form_kwargs(self):
+        user = self.request.user
+        form_kwargs = super().get_form_kwargs()
+        album = self.get_object()
+        form_kwargs["shared"] = (album.share_status == 'shared')
+        form_kwargs["user"] = user
+        form_kwargs["album"] = album
+        return form_kwargs
+
+    def form_valid(self, form):
+        shared_with_ids = form.cleaned_data.get("shared_with")
+        share_status = form.cleaned_data.get("share_status")
+        if share_status == "shared" and shared_with_ids != None:
+            shared_with_users = User.objects.filter(id__in=shared_with_ids)
+            self.object.shared_with.set(shared_with_users)
+        else:
+            self.object.shared_with.clear()
+        form_valid = super().form_valid(form)
+        return form_valid
+
+
+class FriendSharedAlbumsView(DetailView):
+    template_name = "friend_album_listing.html"
+    model = User
+    context_object_name = "friend"
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        friend = self.get_object()
+        user = self.request.user
+
+        shared_albums = Album.objects.filter(author=friend, share_status="shared", shared_with=user).order_by("name")
+        public_albums = Album.objects.filter(author=friend, share_status='public').order_by("name")
+
+        context["shared_albums"] = shared_albums
+        context["public_albums"] = public_albums
+        return context
 
 
 class AboutView(TemplateView):

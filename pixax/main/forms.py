@@ -2,6 +2,8 @@ from django import forms
 from django.db.models.functions import Lower
 import uuid
 
+from users.models import Friendship
+
 from .models import Album, Picture
 from .services import CustomCheckboxSelectMultiple, remove_exif
 
@@ -83,3 +85,15 @@ class AlbumShareSettingsForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = ["share_status"]
+
+    def __init__(self, album, shared, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if shared:
+            friend_list = Friendship.list_friends(user)
+            self.fields["shared_with"] = forms.MultipleChoiceField(
+            label="Select friends to share with:",
+            choices=[(friend.id, str(friend)) for friend in friend_list],
+            widget=CustomCheckboxSelectMultiple,
+            required=False
+            )
+            self.initial["shared_with"] = [user.id for user in album.shared_with.all()] 
