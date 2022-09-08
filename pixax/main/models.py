@@ -64,6 +64,7 @@ class Album(models.Model):
         choices=SHARE_STATUS,
         default="private"
     )
+    shared_with = models.ManyToManyField(User, related_name='albums_shared_with', blank=True, null=True)
 
     def __str__(self):
         return self.name

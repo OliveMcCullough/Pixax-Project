@@ -114,7 +114,7 @@ class FriendList(ListView):
     template_name = "friends_list.html"
     model = User
     context_object_name = "friends"
-    paginate_by = 2
+    paginate_by = 3
     ordering = ["username"]
 
     @method_decorator(login_required)

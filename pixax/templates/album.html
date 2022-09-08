@@ -7,8 +7,20 @@
     <div class="main">
         <div class="container_80"> 
             <h1> {{album.name}}  </h1>
-            {%if album.share_status != "private"%}
-            <p> {{album.get_share_status_display}} album </p>
+            {%if album.share_status == "public"%}
+                <p> Public album </p>
+            {%elif album.share_status == "shared"%}
+                {% if album.shared_with.count == 0 %}
+                <p> Shared album </p>
+                {% else %}
+                    {% if album.shared_with.count <= 5 %}
+                        <p> Album shared with 
+                            {%for friend in album.shared_with.all%}{% if not forloop.first %}, {%endif%}{{friend}}{% endfor %}
+                        </p>
+                    {% else %}
+                        <p> Album shared with {{album.shared_with.count}} friends</p>
+                    {% endif %}
+                {% endif %}
             {%endif%}
             <div class="button_row">
                 <a title="Share settings" class="button" href="{% url 'main:album_share_settings_set' album.id %}"> Share settings </a>
