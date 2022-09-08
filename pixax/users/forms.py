@@ -65,3 +65,6 @@ class FriendAddForm(forms.Form):
 
 class FriendLinkConfirmForm(forms.Form):
     pass
+
+class UnfriendConfirmationForm(forms.Form):
+    pass
