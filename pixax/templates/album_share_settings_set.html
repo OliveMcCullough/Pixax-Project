@@ -5,8 +5,14 @@
 
 {% block core_content %}
     <h1> Share Settings </h1>
-    <p> This album is currently {{album.get_share_status_display|lower}}{%if album.share_status == "shared"%} with nobody{%endif%}. </p>
-    <p> <strong>Private:</strong> Only you can see the album </p>
+    <p> This album is currently {{album.get_share_status_display|lower}}{%if album.share_status == "shared"%} with
+            {% if album.shared_with.count != 0 %}
+                {{album.shared_with.count}} {%if album.shared_with.count == 1%}friend.{%else%}friends.{%endif%}
+            {%else%}
+                nobody.
+            {%endif%}
+        {%endif%} </p>
+    <p> <strong>Private:</strong> Only you can see the album. </p>
     <p> <strong>Shared:</strong> The specific friends you share the album with can access it. </p>
     <p> <strong>Public:</strong> Anyone with a direct link to the album can access it.</p>
     <p> <strong>Do not:</strong> <ul>
@@ -15,4 +21,5 @@
     </ul> </p>
     <p> The username or contact information of album authors will not be shown publicly. </p>
     {% include "form_renderer.html" with submit_message="Save share settings" %}
+    <a class="button secondary" href="{% url 'main:album' album.id %}"> Back to album </a>
 {% endblock %}
