@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+import uuid
 
 
 class UserManager(BaseUserManager):
@@ -14,9 +15,7 @@ class User(AbstractUser):
     email = models.EmailField('email address', unique=True, blank = False, null=False)
     is_active = models.BooleanField(default=True)
     profile_pic = models.ImageField(upload_to="profile_pics/", null=True, blank=True, default=None)
-    unique_link_id = models.UUIDField(null=True, editable=False)
-    """Reinstate following link instead of above as soon as migration completed and UUIDs forced
-    # unique_link_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)"""
+    unique_link_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     def __str__(self):
         return self.username
