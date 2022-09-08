@@ -1188,6 +1188,12 @@ button, .button {
 button.secondary, .button.secondary {
   background-color: #93d9be;
 }
+button.negative, .button.negative {
+  background-color: #753928;
+}
+button.negative:hover, .button.negative:hover {
+  background-color: #AD482B;
+}
 button .button, .button .button {
   margin-bottom: 25px;
 }

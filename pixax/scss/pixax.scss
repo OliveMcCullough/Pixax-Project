@@ -3,6 +3,7 @@ $green: #64B6AC; /* colour for interactive elements and softer borders */
 $light-green: #93d9be;
 $lightest-green: #afe3cf;
 $red: #AD482B; /* colour for errors and issues */
+$dark-red: #753928;
 $blue: #2B96AD; /* colour for info and highlights */
 $dark-blue: #456990;
 $yellow: #f0e464;
@@ -1111,6 +1112,13 @@ button, .button{
 
     &.secondary{
         background-color: $secondary-button-color;
+    }
+
+    &.negative{
+        background-color: $dark-red;
+        &:hover{
+            background-color: $red;
+        }
     }
 
     .button{
