@@ -561,9 +561,9 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   text-align: right;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  /*flex-wrap:wrap;*/
   min-height: 40px;
-  width: 90%;
+  width: 100%;
   margin: 20px auto;
   justify-content: flex-end;
 }
@@ -582,6 +582,7 @@ input:focus-visible, a:focus-visible, select:focus-visible {
   border: 1px solid #42706B;
   border-left: none;
   width: 40px;
+  min-width: 30px;
   box-sizing: content-box;
   background-image: url("../images/SearchIcon.png");
   background-size: 50%;
