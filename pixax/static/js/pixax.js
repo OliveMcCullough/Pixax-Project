@@ -15,16 +15,25 @@ function init() {
 /* Setup text copiers */
 function setup_text_copier() {
     let text_copier_buttons = document.querySelectorAll(".text_copier button");
-    for (let i = 0; i < text_copier_buttons.length; i++) {
-        text_copier_buttons[i].addEventListener("click", copy_text_to_clipboard);
+    if (text_copier_buttons.length > 0) {
+        for (let i = 0; i < text_copier_buttons.length; i++) {
+            text_copier_buttons[i].addEventListener("click", copy_text_to_clipboard);
+        }
     }
 }
 function copy_text_to_clipboard(e) {
-    let text_copy_button = e.target;
-    let text_copy_div = text_copy_button.closest(".text_copier");
-    let text_copy_input = text_copy_div.querySelector("input");
-    navigator.clipboard.writeText(text_copy_input.value);
-    alert("Link copied to clipboard");
+    if (e.target instanceof HTMLElement) {
+        let text_copy_button = e.target;
+        let text_copy_div = text_copy_button.closest(".text_copier");
+        if (text_copy_div === null)
+            return;
+        let text_copy_inputs = text_copy_div.getElementsByTagName("input");
+        if (text_copy_inputs.length == 0)
+            return;
+        let text_copy_input = text_copy_inputs[0];
+        navigator.clipboard.writeText(text_copy_input.value);
+        alert("Link copied to clipboard");
+    }
 }
 /* Setup organise form */
 function setup_organise_form() {
@@ -43,22 +52,29 @@ function setup_organise_form() {
     }
 }
 function update_rating(e) {
-    let star_rating_element = e.target;
-    let element_x = star_rating_element.getBoundingClientRect().left;
-    let click_x_pos_pixels = e.clientX - element_x;
-    let precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100;
-    let percentage_rounded = Math.round(precise_percentage / 5) * 5;
-    let star_visual = star_rating_element.querySelector(".star_visual");
-    star_visual.style.background = "linear-gradient(to right, #f0e464 0%,#f0e464 " + percentage_rounded + "%,rgba(255, 255, 255, 0.75) " + percentage_rounded + "%,rgba(255, 255, 255, 0.75) 100%)";
-    let form_rating = document.getElementById("id_rating");
-    form_rating.value = percentage_rounded.toString();
+    if (e.target instanceof HTMLElement) {
+        let star_rating_element = e.target;
+        let element_x = star_rating_element.getBoundingClientRect().left;
+        let click_x_pos_pixels = e.clientX - element_x;
+        let precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100;
+        let percentage_rounded = Math.round(precise_percentage / 5) * 5;
+        let star_visual = star_rating_element.querySelector(".star_visual");
+        if (star_visual instanceof HTMLElement)
+            star_visual.style.background = "linear-gradient(to right, #f0e464 0%,#f0e464 " + percentage_rounded + "%,rgba(255, 255, 255, 0.75) " + percentage_rounded + "%,rgba(255, 255, 255, 0.75) 100%)";
+        let form_rating = document.getElementById("id_rating");
+        if (form_rating instanceof HTMLInputElement)
+            form_rating.value = percentage_rounded.toString();
+    }
 }
 function update_albums(e) {
-    let checkbox = e.target;
-    let checkbox_value = checkbox.value;
-    let checkbox_checked = checkbox.checked;
-    let equivalent_checkbox = document.querySelector("form input[type=checkbox][value='" + checkbox_value + "']");
-    equivalent_checkbox.checked = checkbox_checked;
+    if (e.target instanceof HTMLInputElement) {
+        let checkbox = e.target;
+        let checkbox_value = checkbox.value;
+        let checkbox_checked = checkbox.checked;
+        let equivalent_checkbox = document.querySelector("form input[type=checkbox][value='" + checkbox_value + "']");
+        if (equivalent_checkbox instanceof HTMLInputElement)
+            equivalent_checkbox.checked = checkbox_checked;
+    }
 }
 /* Setup select inputs */
 function setup_multiple_select() {
@@ -73,15 +89,17 @@ function setup_multiple_select() {
     }
 }
 function toggle_multiple_select(e) {
-    if (e.buttons === 1) {
-        e.preventDefault();
-        let option = e.target;
-        // let multiple_select = option.closest("select")
-        if (option.selected) {
-            option.selected = false;
-        }
-        else {
-            option.selected = true;
+    if (e.target instanceof HTMLOptionElement) {
+        if (e.buttons === 1) {
+            e.preventDefault();
+            let option = e.target;
+            // let multiple_select = option.closest("select")
+            if (option.selected) {
+                option.selected = false;
+            }
+            else {
+                option.selected = true;
+            }
         }
     }
 }
@@ -96,26 +114,39 @@ function setup_form_popup() {
         form_popup_button.addEventListener("click", open_form_popup);
     }
     let form_popup_close_buttons = document.querySelectorAll(".popup .close_button");
-    for (let i = 0; i < form_popup_close_buttons.length; i++) {
-        form_popup_close_buttons[i].addEventListener("click", close_button_close_form_popup);
+    if (form_popup_close_buttons.length > 0) {
+        for (let i = 0; i < form_popup_close_buttons.length; i++) {
+            form_popup_close_buttons[i].addEventListener("click", close_button_close_form_popup);
+        }
     }
 }
 function open_form_popup() {
     let form_popup = document.querySelector(".form_popup");
-    let backgroundUI = document.querySelectorAll(".main, .navbar_wrapper");
-    form_popup.classList.add("open");
-    for (let i = 0; i < backgroundUI.length; i++) {
-        backgroundUI[i].inert = true;
-        console.log(backgroundUI[i]);
+    let backgroundUIs = document.querySelectorAll(".main, .navbar_wrapper");
+    if (form_popup !== null && backgroundUIs.length > 0) {
+        form_popup.classList.add("open");
+        for (let i = 0; i < backgroundUIs.length; i++) {
+            let backgroundUI = backgroundUIs[i];
+            if (backgroundUI instanceof HTMLElement) {
+                backgroundUI.inert = true;
+            }
+        }
     }
 }
 function close_button_close_form_popup(e) {
-    let close_button = e.target;
-    let backgroundUI = document.querySelectorAll(".main, .navbar_wrapper");
-    let popup = close_button.closest(".popup");
-    popup.classList.remove("open");
-    for (let i = 0; i < backgroundUI.length; i++) {
-        backgroundUI[i].inert = false;
+    if (e.target instanceof HTMLElement) {
+        let close_button = e.target;
+        let backgroundUIs = document.querySelectorAll(".main, .navbar_wrapper");
+        let popup = close_button.closest(".popup");
+        if (popup !== null && backgroundUIs.length > 0) {
+            popup.classList.remove("open");
+            for (let i = 0; i < backgroundUIs.length; i++) {
+                let backgroundUI = backgroundUIs[i];
+                if (backgroundUI instanceof HTMLElement) {
+                    backgroundUI.inert = true;
+                }
+            }
+        }
     }
 }
 /* Setup slideshow */
@@ -160,18 +191,23 @@ function setup_profile_toggle_menu() {
 }
 function menu_icon_toggle_profile_menu(e) {
     let profile_list = document.querySelector(".profile_list");
-    toggle_menu(profile_list);
+    if (profile_list instanceof HTMLElement)
+        toggle_menu(profile_list);
 }
 function link_focus_open_profile_menu(e) {
     close_open_nav_bar_menus();
-    let link = e.target;
-    let menu = link.closest("ul");
-    menu.classList.add("open");
+    if (e.target instanceof HTMLElement) {
+        let link = e.target;
+        let menu = link.closest("ul");
+        menu.classList.add("open");
+    }
 }
 function link_blur_close_profile_menu(e) {
-    let link = e.target;
-    let menu = link.closest("ul");
-    menu.classList.remove("open");
+    if (e.target instanceof HTMLElement) {
+        let link = e.target;
+        let menu = link.closest("ul");
+        menu.classList.remove("open");
+    }
 }
 /* Toggling the phone menu */
 function setup_phone_toggle_menu() {
@@ -189,19 +225,24 @@ function setup_phone_toggle_menu() {
 function link_focus_open_phone_menu_if_phone(e) {
     close_open_nav_bar_menus();
     if (window.innerWidth <= breakpoint_phone) {
-        let link = e.target;
-        let menu = link.closest("ul");
-        menu.classList.add("open");
+        if (e.target instanceof HTMLElement) {
+            let link = e.target;
+            let menu = link.closest("ul");
+            menu.classList.add("open");
+        }
     }
 }
 function link_blur_close_phone_menu(e) {
-    let link = e.target;
-    let menu = link.closest("ul");
-    menu.classList.remove("open");
+    if (e.target instanceof HTMLElement) {
+        let link = e.target;
+        let menu = link.closest("ul");
+        menu.classList.remove("open");
+    }
 }
 function toggle_phone_menu() {
     let item_list = document.querySelector(".item_list");
-    toggle_menu(item_list);
+    if (item_list instanceof HTMLElement)
+        toggle_menu(item_list);
 }
 function resize_close_phone_toggle_menu_if_not_phone() {
     let open_item_list = document.querySelector(".item_list.open");
@@ -233,9 +274,11 @@ function setup_errored_inputs() {
     }
 }
 function remove_field_error(e) {
-    let errored_input = e.target;
-    let form_input_container = errored_input.closest(".form_element_container");
-    form_input_container.classList.remove("field_has_error");
+    if (e.target instanceof HTMLElement) {
+        let errored_input = e.target;
+        let form_input_container = errored_input.closest(".form_element_container");
+        form_input_container.classList.remove("field_has_error");
+    }
 }
 /* Allow help icons to show information on hover */
 function setup_help_icons() {
@@ -254,8 +297,14 @@ function hide_help_text(e) {
     help_text.classList.remove("help_text_open");
 }
 function getHelpText(e) {
-    let help_icon_element = e.target;
-    let form_element_container = help_icon_element.closest(".form_element_container");
-    let help_text = form_element_container.getElementsByClassName("help_text")[0];
-    return help_text;
+    if (e.target instanceof HTMLElement) {
+        let help_icon_element = e.target;
+        let form_element_container = help_icon_element.closest(".form_element_container");
+        let help_texts = form_element_container.getElementsByClassName("help_text");
+        if (help_texts.length > 0) {
+            let help_text = help_texts[0];
+            if (help_text instanceof HTMLElement)
+                return help_text;
+        }
+    }
 }
