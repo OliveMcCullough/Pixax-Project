@@ -145,8 +145,8 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-"""try:
+try:
     from .local_settings import *
     print("imported local_settings.py")
 except ImportError:
-    print("couldn't find local_settings.py")"""
+    print("couldn't find local_settings.py")
