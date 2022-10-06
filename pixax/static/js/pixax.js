@@ -1,7 +1,7 @@
 const breakpoint_phone = 768
 const breakpoint_desktop = 1020
 
-window.addEventListener("load", init)
+window.addEventListener("DOMCOntentLoaded", init)
 
 function init() {
     setup_text_copier()
