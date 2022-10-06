@@ -18,25 +18,34 @@ function init() {
 /* Setup text copiers */
 
 function setup_text_copier(){
-    let text_copier_buttons = document.querySelectorAll(".text_copier button") as NodeListOf<HTMLElement>
-    for(let i=0; i<text_copier_buttons.length; i++){
-        text_copier_buttons[i].addEventListener("click",copy_text_to_clipboard)
+    let text_copier_buttons = document.querySelectorAll(".text_copier button")
+    if (text_copier_buttons.length > 0){
+        for(let i=0; i<text_copier_buttons.length; i++){
+            text_copier_buttons[i].addEventListener("click",copy_text_to_clipboard)
+        }
     }
 }
 
 function copy_text_to_clipboard(e: MouseEvent){
-    let text_copy_button = e.target as HTMLElement
-    let text_copy_div = text_copy_button.closest(".text_copier") as HTMLElement
-    let text_copy_input = text_copy_div.querySelector("input") as HTMLInputElement
-    navigator.clipboard.writeText(text_copy_input.value);
-    alert("Link copied to clipboard")
+    if (e.target instanceof HTMLElement){
+        let text_copy_button = e.target
+        let text_copy_div = text_copy_button.closest(".text_copier")
+        if (text_copy_div === null)
+            return
+        let text_copy_inputs = text_copy_div.getElementsByTagName("input")
+        if (text_copy_inputs.length == 0)
+            return
+        let text_copy_input = text_copy_inputs[0]
+        navigator.clipboard.writeText(text_copy_input.value);
+        alert("Link copied to clipboard")
+    }
 }
 
 
 /* Setup organise form */
 
 function setup_organise_form(){
-    let star_rating_ui = document.querySelector(".star_rating") as HTMLElement
+    let star_rating_ui = document.querySelector(".star_rating")
     if (!!star_rating_ui){
         star_rating_ui.addEventListener("click", update_rating)
         star_rating_ui.classList.remove("inactive")
@@ -53,25 +62,32 @@ function setup_organise_form(){
 }
 
 function update_rating(e: MouseEvent){
-    let star_rating_element = e.target as HTMLElement
-    let element_x = star_rating_element.getBoundingClientRect().left
-    let click_x_pos_pixels = e. clientX - element_x
-    let precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100
-    let percentage_rounded = Math.round(precise_percentage/5)*5
-    let star_visual = star_rating_element.querySelector(".star_visual") as HTMLElement
-    star_visual.style.background = "linear-gradient(to right, #f0e464 0%,#f0e464 "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) 100%)"
-    
-    let form_rating = document.getElementById("id_rating") as HTMLInputElement
-    form_rating.value = percentage_rounded.toString()
+    if (e.target instanceof HTMLElement){
+        let star_rating_element = e.target
+        let element_x = star_rating_element.getBoundingClientRect().left
+        let click_x_pos_pixels = e. clientX - element_x
+        let precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100
+        let percentage_rounded = Math.round(precise_percentage/5)*5
+        let star_visual = star_rating_element.querySelector(".star_visual")
+        if (star_visual instanceof HTMLElement)
+            star_visual.style.background = "linear-gradient(to right, #f0e464 0%,#f0e464 "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) 100%)"
+        
+        let form_rating = document.getElementById("id_rating")
+        if (form_rating instanceof HTMLInputElement)
+            form_rating.value = percentage_rounded.toString()
+    }
 }
 
 function update_albums(e: Event){
-    let checkbox = e.target as HTMLInputElement
-    let checkbox_value = checkbox.value
-    let checkbox_checked = checkbox.checked
-    
-    let equivalent_checkbox = document.querySelector("form input[type=checkbox][value='"+ checkbox_value + "']") as HTMLInputElement
-    equivalent_checkbox.checked = checkbox_checked
+    if (e.target instanceof HTMLInputElement){
+        let checkbox = e.target
+        let checkbox_value = checkbox.value
+        let checkbox_checked = checkbox.checked
+        
+        let equivalent_checkbox = document.querySelector("form input[type=checkbox][value='"+ checkbox_value + "']")
+        if (equivalent_checkbox instanceof HTMLInputElement)
+            equivalent_checkbox.checked = checkbox_checked
+    }
 }
 
 /* Setup select inputs */
@@ -89,14 +105,16 @@ function setup_multiple_select(){
 }
 
 function toggle_multiple_select(e: MouseEvent){
-    if(e.buttons === 1){
-        e.preventDefault()
-        let option = e.target as HTMLOptionElement
-        // let multiple_select = option.closest("select")
-        if(option.selected){
-            option.selected = false
-        }else{
-            option.selected = true
+    if (e.target instanceof HTMLOptionElement){
+        if(e.buttons === 1){
+            e.preventDefault()
+            let option = e.target
+            // let multiple_select = option.closest("select")
+            if(option.selected){
+                option.selected = false
+            }else{
+                option.selected = true
+            }
         }
     }
 }
@@ -112,36 +130,49 @@ function setup_form_popup(){
     if(!!form_popup_button){
         form_popup_button.addEventListener("click", open_form_popup)
     }
-    let form_popup_close_buttons = document.querySelectorAll(".popup .close_button") as NodeListOf<HTMLElement>
-    for(let i=0; i<form_popup_close_buttons.length; i++){
-        form_popup_close_buttons[i].addEventListener("click", close_button_close_form_popup)
+    let form_popup_close_buttons = document.querySelectorAll(".popup .close_button")
+    if (form_popup_close_buttons.length > 0){
+        for(let i=0; i<form_popup_close_buttons.length; i++){
+            form_popup_close_buttons[i].addEventListener("click", close_button_close_form_popup)
+        }
     }
 }
 
 function open_form_popup(){
-    let form_popup = document.querySelector(".form_popup") as HTMLElement
-    let backgroundUI = document.querySelectorAll(".main, .navbar_wrapper") as NodeListOf<HTMLElement>
-    form_popup.classList.add("open");
-    for(let i=0; i< backgroundUI.length; i++){
-        backgroundUI[i].inert = true
-        console.log(backgroundUI[i])
+    let form_popup = document.querySelector(".form_popup")
+    let backgroundUIs = document.querySelectorAll(".main, .navbar_wrapper")
+    if(form_popup !== null && backgroundUIs.length > 0){
+        form_popup.classList.add("open");
+        for(let i=0; i< backgroundUIs.length; i++){
+            let backgroundUI = backgroundUIs[i]
+            if (backgroundUI instanceof HTMLElement){
+                backgroundUI.inert = true
+            }
+        }
     }
 }
 
 function close_button_close_form_popup(e: MouseEvent){
-    let close_button = e.target as HTMLElement
-    let backgroundUI = document.querySelectorAll(".main, .navbar_wrapper") as NodeListOf<HTMLElement>
-    let popup = close_button.closest(".popup") as HTMLElement
-    popup.classList.remove("open")
-    for(let i=0; i< backgroundUI.length; i++){
-        backgroundUI[i].inert = false
+    if (e.target instanceof HTMLElement){
+        let close_button = e.target
+        let backgroundUIs = document.querySelectorAll(".main, .navbar_wrapper")
+        let popup = close_button.closest(".popup")
+        if(popup !== null && backgroundUIs.length > 0){
+            popup.classList.remove("open")
+            for(let i=0; i< backgroundUIs.length; i++){
+                let backgroundUI = backgroundUIs[i]
+                if (backgroundUI instanceof HTMLElement){
+                    backgroundUI.inert = true
+                }
+            }
+        }
     }
 }
 
 /* Setup slideshow */
 
 function setup_slideshow() {
-    let slideshow = document.querySelector(".slideshow_presentation") as HTMLElement
+    let slideshow = document.querySelector(".slideshow_presentation")
     if(!!slideshow){
         set_slide_timeout()
     }
@@ -152,11 +183,11 @@ function set_slide_timeout(){
 }
 
 function change_slide(){
-    let previous_slide = document.querySelector(".slideshow_presentation .slide.previous") as HTMLElement
+    let previous_slide = document.querySelector(".slideshow_presentation .slide.previous")
     if (!!previous_slide)
         previous_slide.classList.remove("previous")
 
-    let current_slide = document.querySelector(".slideshow_presentation .slide.current") as HTMLElement
+    let current_slide = document.querySelector(".slideshow_presentation .slide.current")
     current_slide.classList.add("previous")
     current_slide.classList.remove("current")
 
@@ -176,7 +207,7 @@ function change_slide(){
 /* Toggling the profile menu */
 
 function setup_profile_toggle_menu() {
-    let menu_icon = document.querySelector(".profile_icon") as HTMLElement
+    let menu_icon = document.querySelector(".profile_icon")
     if(!!menu_icon){
         menu_icon.addEventListener("click", menu_icon_toggle_profile_menu)
         let profile_list_links = document.querySelectorAll("ul.profile_list li a");
@@ -188,21 +219,26 @@ function setup_profile_toggle_menu() {
 }
 
 function menu_icon_toggle_profile_menu(e: MouseEvent){
-    let profile_list = document.querySelector(".profile_list") as HTMLElement
-    toggle_menu(profile_list)
+    let profile_list = document.querySelector(".profile_list")
+    if (profile_list instanceof HTMLElement)
+        toggle_menu(profile_list)
 }
 
 function link_focus_open_profile_menu(e: Event){
     close_open_nav_bar_menus()
-    let link = e.target as HTMLElement
-    let menu = link.closest("ul") as HTMLElement
-    menu.classList.add("open")
+    if (e.target instanceof HTMLElement){
+        let link = e.target
+        let menu = link.closest("ul")
+        menu.classList.add("open")
+    }
 }
 
 function link_blur_close_profile_menu(e: Event){
-    let link = e.target as HTMLElement
-    let menu = link.closest("ul") as HTMLElement
-    menu.classList.remove("open")
+    if (e.target instanceof HTMLElement){
+        let link = e.target
+        let menu = link.closest("ul")
+        menu.classList.remove("open")
+    }
 }
 
 /* Toggling the phone menu */
@@ -223,21 +259,26 @@ function setup_phone_toggle_menu() {
 function link_focus_open_phone_menu_if_phone(e: Event) {
     close_open_nav_bar_menus()
     if (window.innerWidth <= breakpoint_phone) {
-        let link = e.target as HTMLElement
-        let menu = link.closest("ul") as HTMLElement
-        menu.classList.add("open")
+        if (e.target instanceof HTMLElement){
+            let link = e.target
+            let menu = link.closest("ul")
+            menu.classList.add("open")
+        }
     }
 }
 
 function link_blur_close_phone_menu(e: Event) {
-    let link = e.target as HTMLElement
-    let menu = link.closest("ul") as HTMLElement
-    menu.classList.remove("open")
+    if (e.target instanceof HTMLElement){
+        let link = e.target
+        let menu = link.closest("ul")
+        menu.classList.remove("open")
+    }
 }
 
 function toggle_phone_menu() {
-    let item_list = document.querySelector(".item_list") as HTMLElement;
-    toggle_menu(item_list)
+    let item_list = document.querySelector(".item_list");
+    if (item_list instanceof HTMLElement)
+        toggle_menu(item_list)
 }
 
 function resize_close_phone_toggle_menu_if_not_phone() {
@@ -270,7 +311,7 @@ function close_open_nav_bar_menus() {
 /* Updating forms that are corrected */
 
 function setup_errored_inputs() {
-    let errored_inputs = document.querySelectorAll(".field_has_error input, .field_has_error textarea") as NodeListOf<HTMLInputElement>
+    let errored_inputs = document.querySelectorAll(".field_has_error input, .field_has_error textarea")
 
     for(let i =0; i < errored_inputs.length; i++) {
         errored_inputs[i].addEventListener("change", remove_field_error)
@@ -278,15 +319,17 @@ function setup_errored_inputs() {
 }
 
 function remove_field_error(e: Event) {
-    let errored_input = e.target as HTMLInputElement;
-    let form_input_container = errored_input.closest(".form_element_container") as HTMLElement
-    form_input_container.classList.remove("field_has_error")
+    if (e.target instanceof HTMLElement){
+        let errored_input = e.target;
+        let form_input_container = errored_input.closest(".form_element_container")
+        form_input_container.classList.remove("field_has_error")
+    }
 }
 
 /* Allow help icons to show information on hover */
 
 function setup_help_icons() {
-    let help_icons_elements = document.getElementsByClassName("help_text_icon") as HTMLCollectionOf<HTMLElement>
+    let help_icons_elements = document.getElementsByClassName("help_text_icon")
     
     for(let i = 0; i < help_icons_elements.length; i++) {
         help_icons_elements[i].addEventListener("mouseover", reveal_help_text)
@@ -305,8 +348,14 @@ function hide_help_text(e: MouseEvent) {
 }
 
 function getHelpText(e: Event):HTMLElement {
-    let help_icon_element = e.target as HTMLElement
-    let form_element_container = help_icon_element.closest(".form_element_container") as HTMLElement
-    let help_text = form_element_container.getElementsByClassName("help_text")[0] as HTMLElement
-    return help_text
+    if (e.target instanceof HTMLElement){
+        let help_icon_element = e.target
+        let form_element_container = help_icon_element.closest(".form_element_container")
+        let help_texts = form_element_container.getElementsByClassName("help_text")
+        if (help_texts.length > 0){
+            let help_text = help_texts[0]
+            if(help_text instanceof HTMLElement)
+                return help_text
+        }
+    }
 }
