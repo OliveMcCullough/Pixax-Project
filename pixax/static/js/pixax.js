@@ -18,16 +18,16 @@ function init() {
 /* Setup text copiers */
 
 function setup_text_copier(){
-    text_copier_buttons = document.querySelectorAll(".text_copier button")
+    let text_copier_buttons = document.querySelectorAll(".text_copier button")
     for(let i=0; i<text_copier_buttons.length; i++){
         text_copier_buttons[i].addEventListener("click",copy_text_to_clipboard)
     }
 }
 
 function copy_text_to_clipboard(e){
-    text_copy_button = e.target
-    text_copy_div = text_copy_button.closest(".text_copier")
-    text_copy_input = text_copy_div.querySelector("input")
+    let text_copy_button = e.target
+    let text_copy_div = text_copy_button.closest(".text_copier")
+    let text_copy_input = text_copy_div.querySelector("input")
     navigator.clipboard.writeText(text_copy_input.value);
     alert("Link copied to clipboard")
 }
@@ -36,15 +36,15 @@ function copy_text_to_clipboard(e){
 /* Setup organise form */
 
 function setup_organise_form(){
-    star_rating_ui = document.querySelector(".star_rating")
+    let star_rating_ui = document.querySelector(".star_rating")
     if (!!star_rating_ui){
         star_rating_ui.addEventListener("click", update_rating)
         star_rating_ui.classList.remove("inactive")
     }
-    album_list_ui = document.querySelector(".out_of_form.checkbox_container")
+    let album_list_ui = document.querySelector(".out_of_form.checkbox_container")
     if (!!album_list_ui){
         album_list_ui.classList.remove("inactive")
-        album_list_checkboxes = album_list_ui.querySelectorAll("input")
+        let album_list_checkboxes = album_list_ui.querySelectorAll("input")
         for(let i=0; i < album_list_checkboxes.length; i++){
             album_list_checkboxes[i].addEventListener("change", update_albums)
         }
@@ -53,25 +53,24 @@ function setup_organise_form(){
 }
 
 function update_rating(e){
-    star_rating_element = e.target
-    element_x = star_rating_element.getBoundingClientRect().left
-    click_x_pos_pixels = e. clientX - element_x
-    precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100
-    percentage_rounded = Math.round(precise_percentage/5)*5
-    star_visual = star_rating_element.querySelector(".star_visual")
+    let star_rating_element = e.target
+    let element_x = star_rating_element.getBoundingClientRect().left
+    let click_x_pos_pixels = e. clientX - element_x
+    let precise_percentage = click_x_pos_pixels / star_rating_element.getBoundingClientRect().width * 100
+    let percentage_rounded = Math.round(precise_percentage/5)*5
+    let star_visual = star_rating_element.querySelector(".star_visual")
     star_visual.style.background = "linear-gradient(to right, #f0e464 0%,#f0e464 "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) "+ percentage_rounded +"%,rgba(255, 255, 255, 0.75) 100%)"
     
-    form_rating = document.getElementById("id_rating")
+    let form_rating = document.getElementById("id_rating")
     form_rating.value = percentage_rounded
 }
 
 function update_albums(e){
-    checkbox = e.target
-    checkbox_value = checkbox.value
-    checkbox_checked = checkbox.checked
+    let checkbox = e.target
+    let checkbox_value = checkbox.value
+    let checkbox_checked = checkbox.checked
     
-    equivalent_checkbox = document.querySelector("form input[type=checkbox][value='"+ checkbox_value + "']")
-    console.log(equivalent_checkbox)
+    let equivalent_checkbox = document.querySelector("form input[type=checkbox][value='"+ checkbox_value + "']")
     equivalent_checkbox.checked = checkbox_checked
 }
 
@@ -92,8 +91,8 @@ function setup_multiple_select(){
 function toggle_multiple_select(e){
     if(e.buttons === 1){
         e.preventDefault()
-        option = e.target
-        multiple_select = option.closest("select")
+        let option = e.target
+        // let multiple_select = option.closest("select")
         if(option.selected){
             option.selected = false
         }else{
@@ -154,22 +153,22 @@ function set_slide_timeout(){
 }
 
 function change_slide(){
-    previous_slide = document.querySelector(".slideshow_presentation .slide.previous")
+    let previous_slide = document.querySelector(".slideshow_presentation .slide.previous")
     if (!!previous_slide)
         previous_slide.classList.remove("previous");
 
-    current_slide = document.querySelector(".slideshow_presentation .slide.current")
+    let current_slide = document.querySelector(".slideshow_presentation .slide.current")
     current_slide.classList.add("previous")
     current_slide.classList.remove("current")
 
-    slides = document.querySelectorAll(".slideshow_presentation .slide")
-    amount_slides = slides.length;
-    current_slide_number = Array.prototype.indexOf.call(slides, current_slide)
-    new_slide_number = current_slide_number+1
+    let slides = document.querySelectorAll(".slideshow_presentation .slide")
+    let amount_slides = slides.length;
+    let current_slide_number = Array.prototype.indexOf.call(slides, current_slide)
+    let new_slide_number = current_slide_number+1
     if(new_slide_number == amount_slides){
         new_slide_number = 0;
     }
-    new_slide = slides[new_slide_number];
+    let new_slide = slides[new_slide_number];
     new_slide.classList.add("current");
 
     set_slide_timeout()
@@ -243,7 +242,7 @@ function toggle_phone_menu() {
 }
 
 function resize_close_phone_toggle_menu_if_not_phone() {
-    open_item_list = document.querySelector(".item_list.open");
+    let open_item_list = document.querySelector(".item_list.open");
     
     if (!!open_item_list && window.innerWidth > breakpoint_phone){
         open_item_list.classList.remove("open");
@@ -280,8 +279,8 @@ function setup_errored_inputs() {
 }
 
 function remove_field_error(e) {
-    errored_input = e.target;
-    form_input_container = errored_input.closest(".form_element_container")
+    let errored_input = e.target;
+    let form_input_container = errored_input.closest(".form_element_container")
     form_input_container.classList.remove("field_has_error")
 }
 
@@ -297,17 +296,18 @@ function setup_help_icons() {
 }
 
 function reveal_help_text(e) {
-    help_text = getHelpText(e)
+    let help_text = getHelpText(e)
     help_text.classList.add("help_text_open")
 }
 
 function hide_help_text(e) {
-    help_text = getHelpText(e)
+    let help_text = getHelpText(e)
     help_text.classList.remove("help_text_open")
 }
 
 function getHelpText(e) {
-    help_icon_element = e.target
-    form_element_container = help_icon_element.closest(".form_element_container")
-    return help_text = form_element_container.getElementsByClassName("help_text")[0]
+    let help_icon_element = e.target
+    let form_element_container = help_icon_element.closest(".form_element_container")
+    let help_text = form_element_container.getElementsByClassName("help_text")[0]
+    return help_text
 }
