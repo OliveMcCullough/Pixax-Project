@@ -30,7 +30,11 @@ def determine_exif_image_rotation_and_flip(image):
     """Get exif dataset for the image"""
     exif = dict(image._getexif().items())
 
-    orientation_exif = exif[orientation_id]
+    """Check orientation data is present before proceeding"""
+    if orientation_id in exif:
+        orientation_exif = exif[orientation_id]
+    else:
+        orientation_exif = 0
 
     return determine_exif_rotation(orientation_exif), determine_exif_flip(orientation_exif)
 
