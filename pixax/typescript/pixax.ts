@@ -1,10 +1,7 @@
 const breakpoint_phone = 768
 const breakpoint_desktop = 1020
 
-window.addEventListener("DOMContentLoaded", init)
-
-function init() {
-    setup_text_copier()
+window.addEventListener("DOMContentLoaded",() => {
     setup_organise_form()
     setup_multiple_select()
     setup_form_popup()
@@ -13,7 +10,7 @@ function init() {
     setup_phone_toggle_menu()
     setup_profile_toggle_menu()
     setup_slideshow()
-}
+});
 
 /* Setup text copiers */
 
